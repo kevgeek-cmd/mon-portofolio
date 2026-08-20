@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import useEmblaCarousel from 'embla-carousel-react';
 
 interface Project {
   id: string;
@@ -20,6 +20,16 @@ interface LightProjectsProps {
 }
 
 export default function LightProjects({ projects }: LightProjectsProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
   if (!projects || projects.length === 0) return null;
 
   return (
@@ -32,48 +42,69 @@ export default function LightProjects({ projects }: LightProjectsProps) {
             </h2>
             <div className="w-16 h-1.5 bg-brand-blue rounded-full" />
           </div>
-          <Link href="/projets" className="hidden md:flex items-center gap-2 text-brand-blue font-bold hover:text-brand-blueDark transition-colors">
-            Voir tous les projets <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="hidden md:flex items-center gap-4">
+            <div className="flex gap-2 mr-4">
+              <button onClick={scrollPrev} className="p-2 rounded-full border border-gray-200 text-brand-dark hover:bg-gray-50 transition-colors">
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button onClick={scrollNext} className="p-2 rounded-full border border-gray-200 text-brand-dark hover:bg-gray-50 transition-colors">
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+            <Link href="/projets" className="flex items-center gap-2 text-brand-blue font-bold hover:text-brand-blueDark transition-colors">
+              Voir tous les projets <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.slice(0, 4).map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col"
-            >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-light">
-                <img 
-                  src={project.coverImage} 
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {project.category && (
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-brand-blue/90 backdrop-blur-sm text-white text-xs font-bold rounded-full">
-                    {project.category.name}
-                  </div>
-                )}
-              </div>
-              
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-lg font-bold text-brand-dark mb-2 line-clamp-1">{project.title}</h3>
-                <p className="text-brand-gray text-sm mb-4 line-clamp-2 flex-1">{project.summary}</p>
-                <Link href={`/projets/${project.slug}`} className="inline-flex items-center gap-2 text-brand-blue text-sm font-bold hover:text-brand-blueDark transition-colors mt-auto">
-                  Voir le projet <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-          ))}
+        {/* Embla Carousel */}
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(25%-18px)] min-w-0 bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-light">
+                  <img 
+                    src={project.coverImage} 
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  {project.category && (
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-brand-blue/90 backdrop-blur-sm text-white text-xs font-bold rounded-full">
+                      {project.category.name}
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold text-brand-dark mb-2 line-clamp-1">{project.title}</h3>
+                  <p className="text-brand-gray text-sm mb-4 line-clamp-2 flex-1">{project.summary}</p>
+                  <Link href={`/projets/${project.slug}`} className="inline-flex items-center gap-2 text-brand-blue text-sm font-bold hover:text-brand-blueDark transition-colors mt-auto">
+                    Voir le projet <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-10 text-center md:hidden">
+        <div className="mt-10 flex items-center justify-between md:hidden">
+          <div className="flex gap-2">
+            <button onClick={scrollPrev} className="p-2 rounded-full border border-gray-200 text-brand-dark hover:bg-gray-50 transition-colors">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button onClick={scrollNext} className="p-2 rounded-full border border-gray-200 text-brand-dark hover:bg-gray-50 transition-colors">
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
           <Link href="/projets" className="inline-flex items-center gap-2 text-brand-blue font-bold hover:text-brand-blueDark transition-colors">
-            Voir tous les projets <ArrowRight className="w-4 h-4" />
+            Voir tous <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

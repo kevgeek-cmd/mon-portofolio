@@ -34,6 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { name: 'Tableau de bord', href: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Projets', href: '/admin/projects', icon: FolderKanban },
+    { name: 'Pages Sociales', href: '/admin/managed-pages', icon: Globe },
     { name: 'Articles Blog', href: '/admin/blog', icon: FileText },
     { name: 'Vidéos YouTube', href: '/admin/videos', icon: Video },
     { name: 'Galerie Photos', href: '/admin/gallery', icon: ImageIcon },

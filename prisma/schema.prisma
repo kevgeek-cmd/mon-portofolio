@@ -354,3 +354,19 @@ model Tool {
 
   @@map("tools")
 }
+
+model ManagedPage {
+  id          String   @id @default(uuid())
+  name        String
+  platform    String
+  url         String?
+  imageUrl    String
+  stats       String?
+  description String?  @db.Text
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("managed_pages")
+}
