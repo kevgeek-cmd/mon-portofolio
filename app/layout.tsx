@@ -60,7 +60,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-brand-dark text-brand-beige font-sans antialiased">
+      <body className="bg-brand-light text-brand-dark font-sans antialiased">
         {children}
       </body>
     </html>
