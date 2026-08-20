@@ -12,7 +12,7 @@ interface FooterProps {
   socials?: SocialLinkItem[];
 }
 
-export const Footer: React.FC<FooterProps> = ({ settings, socials }) => {
+export default function Footer({ settings, socials }: FooterProps) {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
