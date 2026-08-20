@@ -14,6 +14,7 @@ import {
   Settings,
   LogOut,
   Globe,
+  Wrench,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -36,6 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Articles Blog', href: '/admin/blog', icon: FileText },
     { name: 'Vidéos YouTube', href: '/admin/videos', icon: Video },
     { name: 'Galerie Photos', href: '/admin/gallery', icon: ImageIcon },
+    { name: 'Outils & Tech', href: '/admin/tools', icon: Wrench },
     { name: 'Messages & Contact', href: '/admin/messages', icon: Mail },
     { name: 'Paramètres Site', href: '/admin/settings', icon: Settings },
   ];

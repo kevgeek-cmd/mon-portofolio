@@ -273,11 +273,15 @@ model Settings {
   companyLogoUrl String?
 
   // Hero Section
-  heroTitle      String   @default("INNOVEZ AVEC EXCELLENCE")
-  heroSubtitle   String   @default("Nous concevons des solutions numériques modernes et performantes pour propulser votre entreprise.")
+  heroTitle      String   @default("Je transforme des idées en expériences digitales")
+  heroSubtitle   String   @default("Référent digital polyvalent, j'accompagne les marques dans leur croissance...")
   heroVideoUrl   String   @default("")
-  heroCtaText    String   @default("DÉCOUVRIR NOS SERVICES")
+  heroCtaText    String   @default("Découvrir mon travail")
   heroCtaLink    String   @default("#projets")
+  heroImageMain       String?
+  heroFloatingIcon1   String?
+  heroFloatingIcon2   String?
+  heroFloatingIcon3   String?
 
   // About Section
   aboutBadge     String   @default("À PROPOS DE NOUS →")
@@ -288,15 +292,21 @@ model Settings {
   aboutBadgeStat String   @default("100%")
   aboutBadgeLabel String  @default("Excellence | Savoir-faire")
 
+  // Stats Section
+  statProjects    Int     @default(30)
+  statClients     Int     @default(15)
+  statExperience  Int     @default(3)
+  statPassion     Int     @default(100)
+
   // About 4 Values
-  aboutValue1Title String @default("Écoute & Conseil")
-  aboutValue1Desc  String @default("Nous comprenons vos besoins pour vous proposer les meilleures solutions.")
-  aboutValue2Title String @default("Qualité & Performance")
-  aboutValue2Desc  String @default("Nous développons des produits fiables, sécurisés et évolutifs.")
-  aboutValue3Title String @default("Innovation Continue")
-  aboutValue3Desc  String @default("Nous intégrons les dernières technologies pour vous garder en avance.")
-  aboutValue4Title String @default("Engagement & Rigueur")
-  aboutValue4Desc  String @default("Nous vous offrons un accompagnement d'excellence de la conception au déploiement.")
+  aboutValue1Title String @default("Créativité")
+  aboutValue1Desc  String @default("Des idées uniques et percutantes.")
+  aboutValue2Title String @default("Polyvalence")
+  aboutValue2Desc  String @default("Une expertise multi-compétences.")
+  aboutValue3Title String @default("Résultats")
+  aboutValue3Desc  String @default("Des solutions orientées impact.")
+  aboutValue4Title String @default("Innovation")
+  aboutValue4Desc  String @default("IA & nouvelles technologies.")
 
   // Contact & Address
   companyEmail   String   @default("contact@votre-entreprise.com")
@@ -331,4 +341,16 @@ model SeoSettings {
   updatedAt      DateTime @updatedAt
 
   @@map("seo_settings")
+}
+
+model Tool {
+  id        String   @id @default(uuid())
+  name      String
+  iconUrl   String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tools")
 }

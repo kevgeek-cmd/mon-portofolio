@@ -45,8 +45,8 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-brand-dark/85 backdrop-blur-xl border-b border-brand-gold/15 py-3.5 shadow-2xl'
-          : 'bg-gradient-to-b from-brand-dark/80 via-brand-dark/40 to-transparent py-5'
+          ? 'bg-white/90 backdrop-blur-md shadow-sm py-4'
+          : 'bg-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -56,20 +56,20 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
             name={settings?.companyName}
             subtitle={settings?.companySubtitle}
             logoUrl={settings?.companyLogoUrl}
-            variant="light"
+            variant="dark"
           />
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-7 bg-brand-dark/40 border border-brand-gold/20 backdrop-blur-md px-6 py-2 rounded-full shadow-inner">
+        <nav className="hidden lg:flex items-center space-x-7">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-xs font-medium uppercase tracking-wider text-brand-beige/90 hover:text-brand-gold transition-colors relative py-1 group"
+              className="text-xs font-medium uppercase tracking-wider text-gray-900 hover:text-blue-600 transition-colors relative py-1 group"
             >
               {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-gold transition-all duration-300 group-hover:w-full" />
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </nav>
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         <div className="hidden lg:flex items-center space-x-4">
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-gold-gradient hover:bg-gold-gradient-hover shadow-lg hover:shadow-brand-gold/25 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+            className="inline-flex items-center gap-2 px-6, py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-300"
           >
             <span>Parlons de votre projet</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         <div className="lg:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-brand-beige hover:text-brand-gold focus:outline-none bg-brand-dark/60 border border-brand-gold/20"
+            className="p-2 rounded-xl text-gray-900 hover:text-blue-600 focus:outline-none"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -105,7 +105,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-brand-dark/95 backdrop-blur-2xl border-b border-brand-gold/20 px-6 py-6"
+            className="lg:hidden bg-white border-b border-gray-100 px-6 py-6"
           >
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm uppercase tracking-wider font-semibold text-brand-beige hover:text-brand-gold py-2 border-b border-brand-gold/10"
+                  className="text-sm uppercase tracking-wider font-semibold text-gray-900 hover:text-blue-600 py-2 border-b border-gray-100"
                 >
                   {link.name}
                 </Link>
@@ -122,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
               <Link
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mt-4 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-gold-gradient shadow-lg"
+                className="mt-4 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 shadow-lg"
               >
                 <span>Parlons de votre projet</span>
                 <ArrowUpRight className="w-4 h-4" />
