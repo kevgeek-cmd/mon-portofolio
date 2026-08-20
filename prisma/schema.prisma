@@ -1,0 +1,334 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  passwordHash  String
+  name          String
+  role          Role       @default(ADMIN)
+  avatar        String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  posts         BlogPost[]
+
+  @@map("users")
+}
+
+model ProjectCategory {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  projects    Project[]
+
+  @@map("project_categories")
+}
+
+model Project {
+  id            String          @id @default(uuid())
+  title         String
+  slug          String          @unique
+  summary       String
+  description   String          @db.Text
+  coverImage    String
+  images        String[]
+  liveUrl       String?
+  githubUrl     String?
+  technologies  String[]
+  isFeatured    Boolean         @default(false)
+  order         Int             @default(0)
+  categoryId    String?
+  category      ProjectCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@map("projects")
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  posts       BlogPost[]
+
+  @@map("categories")
+}
+
+model Tag {
+  id        String          @id @default(uuid())
+  name      String          @unique
+  slug      String          @unique
+  posts     PostTag[]
+
+  @@map("tags")
+}
+
+model BlogPost {
+  id             String      @id @default(uuid())
+  title          String
+  slug           String      @unique
+  excerpt        String      @db.Text
+  content        String      @db.Text
+  featuredImage  String
+  galleryImages  String[]
+  status         PostStatus  @default(PUBLISHED)
+  publishedAt    DateTime?   @default(now())
+  readingTime    Int         @default(5)
+  authorId       String?
+  author         User?       @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorName     String?     @default("Équipe Rédaction")
+  authorAvatar   String?
+  categoryId     String?
+  category       Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  allowComments  Boolean     @default(true)
+  seoTitle       String?
+  seoDescription String?     @db.Text
+  views          Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  tags           PostTag[]
+  comments       Comment[]
+
+  @@map("blog_posts")
+}
+
+model PostTag {
+  postId String
+  tagId  String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  name      String
+  email     String
+  content   String   @db.Text
+  isApproved Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("comments")
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  clientName String
+  role       String
+  company    String
+  avatar     String?
+  quote      String   @db.Text
+  rating     Int      @default(5)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  icon        String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@map("services")
+}
+
+model Faq {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String   @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("faq")
+}
+
+model Gallery {
+  id          String         @id @default(uuid())
+  title       String
+  slug        String         @unique
+  category    String         @default("Général")
+  description String?
+  images      GalleryImage[]
+  createdAt   DateTime       @default(now())
+
+  @@map("galleries")
+}
+
+model GalleryImage {
+  id        String   @id @default(uuid())
+  galleryId String
+  gallery   Gallery  @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  title     String?
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("gallery_images")
+}
+
+model YoutubeVideo {
+  id          String   @id @default(uuid())
+  title       String
+  youtubeId   String
+  description String?
+  isPlaylist  Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@map("youtube_videos")
+}
+
+model YoutubePlaylist {
+  id          String   @id @default(uuid())
+  title       String
+  playlistId  String
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@map("youtube_playlists")
+}
+
+model SocialLink {
+  id        String   @id @default(uuid())
+  platform  String   @unique // Facebook, LinkedIn, Instagram, TikTok, YouTube, GitHub
+  url       String
+  icon      String
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+
+  @@map("social_links")
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  fullName  String
+  company   String?
+  phone     String?
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contacts")
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+  isActive     Boolean  @default(true)
+
+  @@map("newsletters")
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  filename  String
+  url       String
+  publicId  String?
+  format    String?
+  size      Int?
+  createdAt DateTime @default(now())
+
+  @@map("media")
+}
+
+model Settings {
+  id             String   @id @default("default")
+  // Branding
+  companyName    String   @default("VOTRE ENTREPRISE")
+  companySubtitle String  @default("AGENCE DIGITALE")
+  companyLogoUrl String?
+
+  // Hero Section
+  heroTitle      String   @default("INNOVEZ AVEC EXCELLENCE")
+  heroSubtitle   String   @default("Nous concevons des solutions numériques modernes et performantes pour propulser votre entreprise.")
+  heroVideoUrl   String   @default("")
+  heroCtaText    String   @default("DÉCOUVRIR NOS SERVICES")
+  heroCtaLink    String   @default("#projets")
+
+  // About Section
+  aboutBadge     String   @default("À PROPOS DE NOUS →")
+  aboutTitle     String   @default("L'innovation et la performance au service de vos ambitions")
+  aboutMainText  String   @default("Nous sommes une équipe d'experts dédiée à la conception d'outils numériques performants, modernes et sur mesure.")
+  aboutSubText   String   @default("Notre mission est d'accompagner les entreprises et entrepreneurs dans leur croissance grâce à des technologies de pointe et un design d'exception.")
+  aboutImageUrl  String   @default("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80")
+  aboutBadgeStat String   @default("100%")
+  aboutBadgeLabel String  @default("Excellence | Savoir-faire")
+
+  // About 4 Values
+  aboutValue1Title String @default("Écoute & Conseil")
+  aboutValue1Desc  String @default("Nous comprenons vos besoins pour vous proposer les meilleures solutions.")
+  aboutValue2Title String @default("Qualité & Performance")
+  aboutValue2Desc  String @default("Nous développons des produits fiables, sécurisés et évolutifs.")
+  aboutValue3Title String @default("Innovation Continue")
+  aboutValue3Desc  String @default("Nous intégrons les dernières technologies pour vous garder en avance.")
+  aboutValue4Title String @default("Engagement & Rigueur")
+  aboutValue4Desc  String @default("Nous vous offrons un accompagnement d'excellence de la conception au déploiement.")
+
+  // Contact & Address
+  companyEmail   String   @default("contact@votre-entreprise.com")
+  companyPhone   String   @default("+33 1 23 45 67 89")
+  companyAddress String   @default("Paris, France")
+  mapEmbedUrl    String?  @default("")
+
+  // Footer & General
+  footerTagline  String   @default("Concepteur de solutions digitales d'excellence.")
+  copyrightText  String   @default("© 2026 Votre Entreprise. Tous droits réservés.")
+
+  // Colors & Theme
+  primaryColor   String   @default("#D4AF37")
+  darkBgColor    String   @default("#0B0B0C")
+  beigeBgColor   String   @default("#F7F5F0")
+
+  // Menu Items (JSON string or object)
+  menuItems      Json?
+
+  updatedAt      DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model SeoSettings {
+  id             String   @id @default("default")
+  siteTitle      String   @default("Template Landing Page | Agence Digitale")
+  siteDescription String  @default("Solutions numériques modernes et performantes conçues pour booster votre visibilité.")
+  ogImage        String?
+  keywords       String[]
+  twitterHandle  String?  @default("@agence_digitale")
+  updatedAt      DateTime @updatedAt
+
+  @@map("seo_settings")
+}

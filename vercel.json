@@ -1,0 +1,5 @@
+{
+  "name": "landing-page-template",
+  "framework": "nextjs",
+  "buildCommand": "prisma generate && next build"
+}
