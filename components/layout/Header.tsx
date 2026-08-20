@@ -11,7 +11,7 @@ interface HeaderProps {
   settings?: SiteSettingsData | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ settings }) => {
+export default function Header({ settings }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
