@@ -22,6 +22,10 @@ export default function AdminSettingsPage() {
     heroVideoUrl: '',
     heroCtaText: '',
     heroCtaLink: '',
+    heroImageMain: '',
+    heroFloatingIcon1: '',
+    heroFloatingIcon2: '',
+    heroFloatingIcon3: '',
 
     // About
     aboutBadge: '',
@@ -41,6 +45,12 @@ export default function AdminSettingsPage() {
     aboutValue3Desc: '',
     aboutValue4Title: '',
     aboutValue4Desc: '',
+
+    // Stats
+    statProjects: 30,
+    statClients: 15,
+    statExperience: 3,
+    statPassion: 100,
 
     // Contact
     companyEmail: '',
@@ -89,6 +99,10 @@ export default function AdminSettingsPage() {
           heroVideoUrl: data.settings.heroVideoUrl || '',
           heroCtaText: data.settings.heroCtaText || '',
           heroCtaLink: data.settings.heroCtaLink || '',
+          heroImageMain: data.settings.heroImageMain || '',
+          heroFloatingIcon1: data.settings.heroFloatingIcon1 || '',
+          heroFloatingIcon2: data.settings.heroFloatingIcon2 || '',
+          heroFloatingIcon3: data.settings.heroFloatingIcon3 || '',
 
           aboutBadge: data.settings.aboutBadge || '',
           aboutTitle: data.settings.aboutTitle || '',
@@ -106,6 +120,11 @@ export default function AdminSettingsPage() {
           aboutValue3Desc: data.settings.aboutValue3Desc || '',
           aboutValue4Title: data.settings.aboutValue4Title || '',
           aboutValue4Desc: data.settings.aboutValue4Desc || '',
+
+          statProjects: data.settings.statProjects || 30,
+          statClients: data.settings.statClients || 15,
+          statExperience: data.settings.statExperience || 3,
+          statPassion: data.settings.statPassion || 100,
 
           companyEmail: data.settings.companyEmail || '',
           companyPhone: data.settings.companyPhone || '',
@@ -428,7 +447,7 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                URL de la Vidéo de Fond (Optionnel)
+                URL de la Vidéo de Fond (Optionnel - Pour le mode sombre)
               </label>
               <input
                 type="text"
@@ -437,6 +456,28 @@ export default function AdminSettingsPage() {
                 onChange={(e) => setSettings({ ...settings, heroVideoUrl: e.target.value })}
                 className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
               />
+            </div>
+
+            <div className="pt-4 border-t border-brand-gold/20">
+              <h4 className="text-sm font-bold text-white mb-4">Images du Hero (Mode Clair/Moderne)</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Image Principale (Toi)</label>
+                  <input type="text" value={settings.heroImageMain} onChange={e => setSettings({...settings, heroImageMain: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/hero-main.png" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 1 (ex: Facebook)</label>
+                  <input type="text" value={settings.heroFloatingIcon1} onChange={e => setSettings({...settings, heroFloatingIcon1: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-fb.png" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 2 (ex: Instagram)</label>
+                  <input type="text" value={settings.heroFloatingIcon2} onChange={e => setSettings({...settings, heroFloatingIcon2: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-ig.png" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 3 (ex: TikTok)</label>
+                  <input type="text" value={settings.heroFloatingIcon3} onChange={e => setSettings({...settings, heroFloatingIcon3: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-tiktok.png" />
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -637,6 +678,29 @@ export default function AdminSettingsPage() {
                     onChange={(e) => setSettings({ ...settings, aboutValue4Desc: e.target.value })}
                     className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
                   />
+                </div>
+              </div>
+            </div>
+
+            {/* Stats Section */}
+            <div className="pt-4 border-t border-brand-gold/20">
+              <h4 className="text-sm font-bold text-white mb-4">Statistiques du Bannière (Compteurs)</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Projets Réalisés</label>
+                  <input type="number" value={settings.statProjects} onChange={e => setSettings({...settings, statProjects: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Clients Satisfaits</label>
+                  <input type="number" value={settings.statClients} onChange={e => setSettings({...settings, statClients: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Années d'Expérience</label>
+                  <input type="number" value={settings.statExperience} onChange={e => setSettings({...settings, statExperience: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Passion (%)</label>
+                  <input type="number" value={settings.statPassion} onChange={e => setSettings({...settings, statPassion: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
               </div>
             </div>

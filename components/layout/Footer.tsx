@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import { FacebookIcon, LinkedinIcon, InstagramIcon, YoutubeIcon, GithubIcon, TwitterXIcon } from '@/components/ui/SocialIcons';
+import { FacebookIcon, InstagramIcon, YoutubeIcon, GithubIcon, TwitterXIcon } from '@/components/ui/SocialIcons';
 import { Send, Check } from 'lucide-react';
 import { SiteSettingsData, SocialLinkItem } from '@/lib/types';
 
@@ -39,7 +39,6 @@ export const Footer: React.FC<FooterProps> = ({ settings, socials }) => {
 
   const defaultSocials = [
     { platform: 'Facebook', url: 'https://facebook.com', icon: FacebookIcon },
-    { platform: 'LinkedIn', url: 'https://linkedin.com', icon: LinkedinIcon },
     { platform: 'Instagram', url: 'https://instagram.com', icon: InstagramIcon },
     { platform: 'YouTube', url: 'https://youtube.com', icon: YoutubeIcon },
     { platform: 'GitHub', url: 'https://github.com', icon: GithubIcon },
@@ -47,18 +46,18 @@ export const Footer: React.FC<FooterProps> = ({ settings, socials }) => {
   ];
 
   return (
-    <footer className="bg-brand-dark text-brand-beige border-t border-brand-gold/15 py-12">
+    <footer className="bg-white text-brand-dark border-t border-gray-100 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between pb-8 border-b border-brand-gold/10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between pb-8 border-b border-gray-100">
           {/* Logo & Slogan */}
           <div className="md:col-span-4 flex flex-col space-y-3">
             <Logo
               name={settings?.companyName}
               subtitle={settings?.companySubtitle}
               logoUrl={settings?.companyLogoUrl}
-              variant="light"
+              variant="dark"
             />
-            <p className="text-xs text-brand-beige/70">
+            <p className="text-xs text-gray-500">
               {tagline}
             </p>
           </div>
@@ -74,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, socials }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.platform}
-                  className="p-2.5 rounded-full bg-brand-darkCard border border-brand-gold/20 text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 transform hover:-translate-y-0.5"
+                  className="p-2.5 rounded-full bg-gray-50 border border-gray-200 text-brand-dark hover:bg-brand-gold hover:text-white transition-all duration-300 transform hover:-translate-y-0.5"
                 >
                   <IconComp className="w-4 h-4" />
                 </a>
@@ -84,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, socials }) => {
 
           {/* Newsletter Box */}
           <div className="md:col-span-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">
               Abonnez-vous à la newsletter
             </h4>
             {subscribed ? (
