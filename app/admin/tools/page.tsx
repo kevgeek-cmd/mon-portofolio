@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
+import ImageUploader from '@/components/admin/ImageUploader';
 
 interface Tool {
   id: string;
@@ -38,30 +39,7 @@ export default function AdminToolsPage() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.url) {
-        setCurrentTool({ ...currentTool, iconUrl: data.url });
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Erreur lors du téléchargement');
-    } finally {
-      setUploading(false);
-    }
-  };
+  // Upload handled by ImageUploader now
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,20 +125,10 @@ export default function AdminToolsPage() {
 
           <div>
             <label className="block text-xs font-bold text-brand-gold uppercase mb-2">Logo (URL ou Upload)</label>
-            <div className="flex gap-4">
-              <input
-                type="text"
-                required
-                value={currentTool.iconUrl}
-                onChange={e => setCurrentTool({...currentTool, iconUrl: e.target.value})}
-                className="flex-1 p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-white"
-                placeholder="https://..."
-              />
-              <label className="flex items-center justify-center px-4 py-3 bg-brand-dark border border-brand-gold/20 text-brand-gold rounded-xl cursor-pointer hover:bg-brand-gold/10">
-                {uploading ? '...' : <ImageIcon className="w-5 h-5" />}
-                <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
-              </label>
-            </div>
+            <ImageUploader
+              value={currentTool.iconUrl || ''}
+              onChange={(url) => setCurrentTool({ ...currentTool, iconUrl: url })}
+            />
             {currentTool.iconUrl && (
               <div className="mt-4 p-4 bg-white rounded-xl inline-block">
                 <img src={currentTool.iconUrl} alt="Aperçu" className="h-12 object-contain" />

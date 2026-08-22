@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle, Sparkles, Layout, Info, MapPin, Search, Menu as MenuIcon, Palette, Plus, Trash2, RefreshCw, Building2 } from 'lucide-react';
+import ImageUploader from '@/components/admin/ImageUploader';
 
 export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState<'branding' | 'hero' | 'about' | 'contact' | 'footer' | 'menu' | 'colors'>('branding');
@@ -470,12 +471,10 @@ export default function AdminSettingsPage() {
               <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
                 URL de l'image de Logo (Optionnel - laisse vide pour l'emblème géométrique moderne)
               </label>
-              <input
-                type="text"
-                placeholder="https://..."
-                value={settings.companyLogoUrl}
-                onChange={(e) => setSettings({ ...settings, companyLogoUrl: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+              <ImageUploader
+                value={settings.companyLogoUrl || ''}
+                onChange={(url) => setSettings({ ...settings, companyLogoUrl: url })}
+                placeholder="https://... ou télécharger une image"
               />
               <p className="text-[11px] text-brand-beige/60 mt-1">
                 Si vide, l'emblème doré vectoriel haute définition sera affiché automatiquement avec le nom de l'entreprise.
@@ -576,7 +575,11 @@ export default function AdminSettingsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Image Principale (Toi)</label>
-                  <input type="text" value={settings.heroImageMain} onChange={e => setSettings({...settings, heroImageMain: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/hero-main.png" />
+                  <ImageUploader
+                    value={settings.heroImageMain || ''}
+                    onChange={(url) => setSettings({ ...settings, heroImageMain: url })}
+                    placeholder="/images/hero-main.png"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Widget Vidéo (ex: 🎬)</label>
@@ -632,11 +635,10 @@ export default function AdminSettingsPage() {
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
                   URL Image de Présentation
                 </label>
-                <input
-                  type="text"
-                  value={settings.aboutImageUrl}
-                  onChange={(e) => setSettings({ ...settings, aboutImageUrl: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                <ImageUploader
+                  value={settings.aboutImageUrl || ''}
+                  onChange={(url) => setSettings({ ...settings, aboutImageUrl: url })}
+                  placeholder="URL de l'image"
                 />
               </div>
             </div>

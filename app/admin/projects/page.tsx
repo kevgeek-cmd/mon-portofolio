@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ProjectItem } from '@/lib/types';
 import { Plus, Trash2, ExternalLink, Upload, RefreshCw } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import ImageUploader from '@/components/admin/ImageUploader';
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -38,38 +39,7 @@ export default function AdminProjectsPage() {
     fetchProjects();
   }, []);
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    try {
-      const ext = file.name.split('.').pop() || 'png';
-      const safeName = file.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-      const filename = `${Date.now()}-${safeName}.${ext}`;
-
-      const { error } = await supabase.storage
-        .from('uploads')
-        .upload(filename, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (error) throw error;
-
-      const { data: publicUrlData } = supabase.storage
-        .from('uploads')
-        .getPublicUrl(filename);
-      
-      setFormData((prev) => ({ ...prev, coverImage: publicUrlData.publicUrl }));
-    } catch (err) {
-      console.error('Erreur upload:', err);
-      alert("Erreur lors du téléchargement de l'image. Veuillez réessayer avec une image plus petite.");
-    } finally {
-      setUploading(false);
-    }
-  };
-
+  // Upload handled by ImageUploader now
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -226,24 +196,10 @@ export default function AdminProjectsPage() {
 
               <div>
                 <label className="block text-xs text-brand-beige/80 mb-1 font-bold">Image de couverture</label>
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="text"
-                    required
-                    placeholder="https://... ou téléchargez une image"
-                    value={formData.coverImage}
-                    onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-                    className="flex-1 p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                  />
-                  <label className="p-3 rounded-xl bg-brand-gold/20 border border-brand-gold/40 text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors cursor-pointer flex items-center justify-center shrink-0">
-                    {uploading ? (
-                      <RefreshCw className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Upload className="w-5 h-5" />
-                    )}
-                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
-                  </label>
-                </div>
+                <ImageUploader
+                  value={formData.coverImage}
+                  onChange={(url) => setFormData({ ...formData, coverImage: url })}
+                />
                 {formData.coverImage && (
                   <div className="mt-2 relative aspect-video rounded-xl overflow-hidden border border-brand-gold/20">
                     <img src={formData.coverImage} alt="Aperçu" className="w-full h-full object-cover" />

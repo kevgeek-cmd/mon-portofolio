@@ -32,6 +32,8 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    const ext = path.extname(file.name) || '.png';
+
     let finalBuffer = buffer;
     let finalContentType = file.type || 'image/png';
     let finalExt = ext;

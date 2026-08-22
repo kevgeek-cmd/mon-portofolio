@@ -5,6 +5,8 @@ import LightHero from '@/components/sections/LightHero';
 import LightAbout from '@/components/sections/LightAbout';
 import LightExpertise from '@/components/sections/LightExpertise';
 import LightProjects from '@/components/sections/LightProjects';
+import LightVideos from '@/components/sections/LightVideos';
+import LightGallery from '@/components/sections/LightGallery';
 import LightManagedPages from '@/components/sections/LightManagedPages';
 import StatsBanner from '@/components/sections/StatsBanner';
 import ToolsCarousel from '@/components/sections/ToolsCarousel';
@@ -14,7 +16,7 @@ export const revalidate = 0; // Fetch fresh data
 
 export default async function Home() {
   // Fetch data from CMS (Prisma)
-  const [settings, services, projects, tools, socialLinks, managedPages] = await Promise.all([
+  const [settings, services, projects, tools, socialLinks, managedPages, videos, galleryImages] = await Promise.all([
     prisma.settings.findUnique({ where: { id: 'default' } }),
     prisma.service.findMany({ orderBy: { order: 'asc' } }),
     prisma.project.findMany({
@@ -23,7 +25,9 @@ export default async function Home() {
     }),
     prisma.tool.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
     prisma.socialLink.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
-    prisma.managedPage.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } })
+    prisma.managedPage.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
+    prisma.youtubeVideo.findMany({ orderBy: { order: 'asc' } }),
+    prisma.galleryImage.findMany({ orderBy: { order: 'asc' } })
   ]);
 
   // Fallback for tools if empty (until user adds them in CMS)
@@ -35,21 +39,26 @@ export default async function Home() {
     { id: '5', name: 'React', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' },
   ];
 
+  const typedSettings = settings as any;
+  const typedManagedPages = managedPages.map(page => ({ ...page, url: page.url || '' }));
+
   return (
     <main className="min-h-screen bg-brand-light flex flex-col">
-      <Header settings={settings} />
+      <Header settings={typedSettings} />
       
       {/* Dynamic Sections from CMS */}
-      <LightHero settings={settings} socialLinks={socialLinks} />
-      <LightAbout settings={settings} />
-      <LightExpertise services={services} settings={settings} />
-      <LightProjects projects={projects} settings={settings} />
-      <LightManagedPages pages={managedPages} />
-      <StatsBanner settings={settings} />
-      <ToolsCarousel tools={displayTools} settings={settings} />
-      <LightContact settings={settings} />
+      <LightHero settings={typedSettings} socialLinks={socialLinks} />
+      <LightAbout settings={typedSettings} />
+      <LightExpertise services={services} settings={typedSettings} />
+      <LightProjects projects={projects} settings={typedSettings} />
+      <LightVideos videos={videos} />
+      <LightGallery images={galleryImages} />
+      <LightManagedPages pages={typedManagedPages as any} />
+      <StatsBanner settings={typedSettings} />
+      <ToolsCarousel tools={displayTools} settings={typedSettings} />
+      <LightContact settings={typedSettings} />
       
-      <Footer settings={settings} socials={socialLinks} />
+      <Footer settings={typedSettings} socials={socialLinks} />
     </main>
   );
 }

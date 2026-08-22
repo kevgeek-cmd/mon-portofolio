@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import ImageUploader from '@/components/admin/ImageUploader';
 
 interface ManagedPage {
   id: string;
@@ -42,30 +43,7 @@ export default function AdminManagedPagesPage() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.url) {
-        setCurrentPage({ ...currentPage, imageUrl: data.url });
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Erreur lors du téléchargement');
-    } finally {
-      setUploading(false);
-    }
-  };
+  // Upload handled by ImageUploader now
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,20 +163,10 @@ export default function AdminManagedPagesPage() {
 
           <div>
             <label className="block text-xs font-bold text-brand-gold uppercase mb-2">Image de couverture / Profil (URL ou Upload)</label>
-            <div className="flex gap-4">
-              <input
-                type="text"
-                required
-                value={currentPage.imageUrl}
-                onChange={e => setCurrentPage({...currentPage, imageUrl: e.target.value})}
-                className="flex-1 p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-white"
-                placeholder="https://..."
-              />
-              <label className="flex items-center justify-center px-4 py-3 bg-brand-dark border border-brand-gold/20 text-brand-gold rounded-xl cursor-pointer hover:bg-brand-gold/10">
-                {uploading ? '...' : <ImageIcon className="w-5 h-5" />}
-                <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
-              </label>
-            </div>
+            <ImageUploader
+              value={currentPage.imageUrl || ''}
+              onChange={(url) => setCurrentPage({ ...currentPage, imageUrl: url })}
+            />
             {currentPage.imageUrl && (
               <div className="mt-4 p-2 bg-brand-dark rounded-xl inline-block">
                 <img src={currentPage.imageUrl} alt="Aperçu" className="h-32 object-cover rounded-lg" />
