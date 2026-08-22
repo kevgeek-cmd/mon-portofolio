@@ -13,28 +13,28 @@ export default function StatsBanner({ settings }: StatsBannerProps) {
     {
       icon: <Rocket className="w-6 h-6" />,
       value: `+ ${settings?.statProjects || 30}`,
-      label: "Projets réalisés",
+      label: settings?.statLabelProjects || "Projets réalisés",
       bg: "bg-blue-50",
       color: "text-blue-500"
     },
     {
       icon: <Users className="w-6 h-6" />,
       value: `+ ${settings?.statClients || 15}`,
-      label: "Clients satisfaits",
+      label: settings?.statLabelClients || "Clients satisfaits",
       bg: "bg-indigo-50",
       color: "text-indigo-500"
     },
     {
       icon: <Calendar className="w-6 h-6" />,
       value: `+ ${settings?.statExperience || 3}`,
-      label: "Années d'expérience",
+      label: settings?.statLabelExperience || "Années d'expérience",
       bg: "bg-purple-50",
       color: "text-purple-500"
     },
     {
       icon: <Heart className="w-6 h-6" />,
       value: `${settings?.statPassion || 100}%`,
-      label: "Passion & Engagement",
+      label: settings?.statLabelPassion || "Passion & Engagement",
       bg: "bg-pink-50",
       color: "text-pink-500"
     }

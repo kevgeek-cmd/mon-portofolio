@@ -17,12 +17,22 @@ export default function AdminSettingsPage() {
     companyLogoUrl: '',
 
     // Hero
+    heroBadgeText: '',
     heroTitle: '',
     heroSubtitle: '',
+    heroSkills: '',
     heroVideoUrl: '',
     heroCtaText: '',
     heroCtaLink: '',
+    heroSecondaryCtaText: '',
+    heroSecondaryCtaLink: '',
     heroImageMain: '',
+    heroWidget1Icon: '',
+    heroWidget1Title: '',
+    heroWidget1Subtitle: '',
+    heroWidget2Title: '',
+    heroWidget2Value: '',
+    heroWidget2Subtitle: '',
     heroFloatingIcon1: '',
     heroFloatingIcon2: '',
     heroFloatingIcon3: '',
@@ -32,27 +42,53 @@ export default function AdminSettingsPage() {
     aboutTitle: '',
     aboutMainText: '',
     aboutSubText: '',
+    aboutLocation1: '',
+    aboutLocation2: '',
+    aboutCtaText: '',
+    aboutCtaLink: '',
+    aboutExperienceText: '',
     aboutImageUrl: '',
     aboutBadgeStat: '',
     aboutBadgeLabel: '',
 
     // About Values
+    aboutValue1Icon: '',
     aboutValue1Title: '',
     aboutValue1Desc: '',
+    aboutValue2Icon: '',
     aboutValue2Title: '',
     aboutValue2Desc: '',
+    aboutValue3Icon: '',
     aboutValue3Title: '',
     aboutValue3Desc: '',
+    aboutValue4Icon: '',
     aboutValue4Title: '',
     aboutValue4Desc: '',
 
     // Stats
+    statLabelProjects: '',
     statProjects: 30,
+    statLabelClients: '',
     statClients: 15,
+    statLabelExperience: '',
     statExperience: 3,
+    statLabelPassion: '',
     statPassion: 100,
 
+    // Expertise & Projects & Tools
+    expertiseSectionTitle: '',
+    projectsSectionTitle: '',
+    projectsCtaText: '',
+    toolsSectionTitle: '',
+    toolsSectionSubtitle: '',
+
     // Contact
+    contactTitle: '',
+    contactSubtitle: '',
+    contactPrimaryBtnText: '',
+    contactSecondaryBtnText: '',
+    contactWhatsappBtnText: '',
+    contactWhatsappUrl: '',
     companyEmail: '',
     companyPhone: '',
     companyAddress: '',
@@ -94,12 +130,22 @@ export default function AdminSettingsPage() {
           companySubtitle: data.settings.companySubtitle || '',
           companyLogoUrl: data.settings.companyLogoUrl || '',
 
+          heroBadgeText: data.settings.heroBadgeText || '',
           heroTitle: data.settings.heroTitle || '',
           heroSubtitle: data.settings.heroSubtitle || '',
+          heroSkills: data.settings.heroSkills || '',
           heroVideoUrl: data.settings.heroVideoUrl || '',
           heroCtaText: data.settings.heroCtaText || '',
           heroCtaLink: data.settings.heroCtaLink || '',
+          heroSecondaryCtaText: data.settings.heroSecondaryCtaText || '',
+          heroSecondaryCtaLink: data.settings.heroSecondaryCtaLink || '',
           heroImageMain: data.settings.heroImageMain || '',
+          heroWidget1Icon: data.settings.heroWidget1Icon || '',
+          heroWidget1Title: data.settings.heroWidget1Title || '',
+          heroWidget1Subtitle: data.settings.heroWidget1Subtitle || '',
+          heroWidget2Title: data.settings.heroWidget2Title || '',
+          heroWidget2Value: data.settings.heroWidget2Value || '',
+          heroWidget2Subtitle: data.settings.heroWidget2Subtitle || '',
           heroFloatingIcon1: data.settings.heroFloatingIcon1 || '',
           heroFloatingIcon2: data.settings.heroFloatingIcon2 || '',
           heroFloatingIcon3: data.settings.heroFloatingIcon3 || '',
@@ -108,24 +154,49 @@ export default function AdminSettingsPage() {
           aboutTitle: data.settings.aboutTitle || '',
           aboutMainText: data.settings.aboutMainText || '',
           aboutSubText: data.settings.aboutSubText || '',
+          aboutLocation1: data.settings.aboutLocation1 || '',
+          aboutLocation2: data.settings.aboutLocation2 || '',
+          aboutCtaText: data.settings.aboutCtaText || '',
+          aboutCtaLink: data.settings.aboutCtaLink || '',
+          aboutExperienceText: data.settings.aboutExperienceText || '',
           aboutImageUrl: data.settings.aboutImageUrl || '',
           aboutBadgeStat: data.settings.aboutBadgeStat || '',
           aboutBadgeLabel: data.settings.aboutBadgeLabel || '',
 
+          aboutValue1Icon: data.settings.aboutValue1Icon || '',
           aboutValue1Title: data.settings.aboutValue1Title || '',
           aboutValue1Desc: data.settings.aboutValue1Desc || '',
+          aboutValue2Icon: data.settings.aboutValue2Icon || '',
           aboutValue2Title: data.settings.aboutValue2Title || '',
           aboutValue2Desc: data.settings.aboutValue2Desc || '',
+          aboutValue3Icon: data.settings.aboutValue3Icon || '',
           aboutValue3Title: data.settings.aboutValue3Title || '',
           aboutValue3Desc: data.settings.aboutValue3Desc || '',
+          aboutValue4Icon: data.settings.aboutValue4Icon || '',
           aboutValue4Title: data.settings.aboutValue4Title || '',
           aboutValue4Desc: data.settings.aboutValue4Desc || '',
 
           statProjects: data.settings.statProjects || 30,
+          statLabelProjects: data.settings.statLabelProjects || '',
           statClients: data.settings.statClients || 15,
+          statLabelClients: data.settings.statLabelClients || '',
           statExperience: data.settings.statExperience || 3,
+          statLabelExperience: data.settings.statLabelExperience || '',
           statPassion: data.settings.statPassion || 100,
+          statLabelPassion: data.settings.statLabelPassion || '',
 
+          expertiseSectionTitle: data.settings.expertiseSectionTitle || '',
+          projectsSectionTitle: data.settings.projectsSectionTitle || '',
+          projectsCtaText: data.settings.projectsCtaText || '',
+          toolsSectionTitle: data.settings.toolsSectionTitle || '',
+          toolsSectionSubtitle: data.settings.toolsSectionSubtitle || '',
+
+          contactTitle: data.settings.contactTitle || '',
+          contactSubtitle: data.settings.contactSubtitle || '',
+          contactPrimaryBtnText: data.settings.contactPrimaryBtnText || '',
+          contactSecondaryBtnText: data.settings.contactSecondaryBtnText || '',
+          contactWhatsappBtnText: data.settings.contactWhatsappBtnText || '',
+          contactWhatsappUrl: data.settings.contactWhatsappUrl || '',
           companyEmail: data.settings.companyEmail || '',
           companyPhone: data.settings.companyPhone || '',
           companyAddress: data.settings.companyAddress || '',
@@ -421,16 +492,29 @@ export default function AdminSettingsPage() {
               Contenu de la Section Hero (Bannière d'Accueil)
             </h3>
 
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Titre Principal (Hero)
-              </label>
-              <input
-                type="text"
-                value={settings.heroTitle}
-                onChange={(e) => setSettings({ ...settings, heroTitle: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Badge Supérieur
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroBadgeText}
+                  onChange={(e) => setSettings({ ...settings, heroBadgeText: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Titre Principal (Hero)
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroTitle}
+                  onChange={(e) => setSettings({ ...settings, heroTitle: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
             </div>
 
             <div>
@@ -447,62 +531,77 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                URL de la Vidéo de Fond (Optionnel - Pour le mode sombre)
+                Compétences (séparées par des virgules)
               </label>
               <input
                 type="text"
-                placeholder="Ex: /videos/hero.mp4 ou https://..."
-                value={settings.heroVideoUrl}
-                onChange={(e) => setSettings({ ...settings, heroVideoUrl: e.target.value })}
+                placeholder="Communication, Design, IA, Développement..."
+                value={settings.heroSkills}
+                onChange={(e) => setSettings({ ...settings, heroSkills: e.target.value })}
                 className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
               />
             </div>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 border border-brand-gold/15 rounded-xl">
+                <h4 className="text-sm font-bold text-white mb-4">Bouton Principal</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte</label>
+                    <input type="text" value={settings.heroCtaText} onChange={e => setSettings({...settings, heroCtaText: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Lien</label>
+                    <input type="text" value={settings.heroCtaLink} onChange={e => setSettings({...settings, heroCtaLink: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border border-brand-gold/15 rounded-xl">
+                <h4 className="text-sm font-bold text-white mb-4">Bouton Secondaire</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte</label>
+                    <input type="text" value={settings.heroSecondaryCtaText} onChange={e => setSettings({...settings, heroSecondaryCtaText: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Lien</label>
+                    <input type="text" value={settings.heroSecondaryCtaLink} onChange={e => setSettings({...settings, heroSecondaryCtaLink: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="pt-4 border-t border-brand-gold/20">
-              <h4 className="text-sm font-bold text-white mb-4">Images du Hero (Mode Clair/Moderne)</h4>
+              <h4 className="text-sm font-bold text-white mb-4">Widgets & Images</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Image Principale (Toi)</label>
                   <input type="text" value={settings.heroImageMain} onChange={e => setSettings({...settings, heroImageMain: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/hero-main.png" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 1 (ex: Facebook)</label>
-                  <input type="text" value={settings.heroFloatingIcon1} onChange={e => setSettings({...settings, heroFloatingIcon1: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-fb.png" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Widget Vidéo (ex: 🎬)</label>
+                  <input type="text" value={settings.heroWidget1Icon} onChange={e => setSettings({...settings, heroWidget1Icon: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 2 (ex: Instagram)</label>
-                  <input type="text" value={settings.heroFloatingIcon2} onChange={e => setSettings({...settings, heroFloatingIcon2: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-ig.png" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Widget Vidéo</label>
+                  <input type="text" value={settings.heroWidget1Title} onChange={e => setSettings({...settings, heroWidget1Title: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Flottante 3 (ex: TikTok)</label>
-                  <input type="text" value={settings.heroFloatingIcon3} onChange={e => setSettings({...settings, heroFloatingIcon3: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" placeholder="/images/icon-tiktok.png" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Widget Vidéo</label>
+                  <input type="text" value={settings.heroWidget1Subtitle} onChange={e => setSettings({...settings, heroWidget1Subtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Texte du Bouton d'Action
-                </label>
-                <input
-                  type="text"
-                  value={settings.heroCtaText}
-                  onChange={(e) => setSettings({ ...settings, heroCtaText: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Lien du Bouton (ex: #projets ou #contact)
-                </label>
-                <input
-                  type="text"
-                  value={settings.heroCtaLink}
-                  onChange={(e) => setSettings({ ...settings, heroCtaLink: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Widget Croissance</label>
+                  <input type="text" value={settings.heroWidget2Title} onChange={e => setSettings({...settings, heroWidget2Title: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Widget Croissance (+125%)</label>
+                  <input type="text" value={settings.heroWidget2Value} onChange={e => setSettings({...settings, heroWidget2Value: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Widget Croissance</label>
+                  <input type="text" value={settings.heroWidget2Subtitle} onChange={e => setSettings({...settings, heroWidget2Subtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                </div>
               </div>
             </div>
           </div>
@@ -537,6 +636,56 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={settings.aboutImageUrl}
                   onChange={(e) => setSettings({ ...settings, aboutImageUrl: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Localisation 1 (ex: Basé en Côte d'Ivoire)
+                </label>
+                <input
+                  type="text"
+                  value={settings.aboutLocation1}
+                  onChange={(e) => setSettings({ ...settings, aboutLocation1: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Localisation 2 (ex: Disponible à distance)
+                </label>
+                <input
+                  type="text"
+                  value={settings.aboutLocation2}
+                  onChange={(e) => setSettings({ ...settings, aboutLocation2: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Texte du Bouton (À propos)
+                </label>
+                <input
+                  type="text"
+                  value={settings.aboutCtaText}
+                  onChange={(e) => setSettings({ ...settings, aboutCtaText: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Lien du Bouton
+                </label>
+                <input
+                  type="text"
+                  value={settings.aboutCtaLink}
+                  onChange={(e) => setSettings({ ...settings, aboutCtaLink: e.target.value })}
                   className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
                 />
               </div>
@@ -581,12 +730,23 @@ export default function AdminSettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Badge Statistique (ex: 100% ou +10 ans)
+                  Badge Statistique (ex: 100% ou 3)
                 </label>
                 <input
                   type="text"
                   value={settings.aboutBadgeStat}
                   onChange={(e) => setSettings({ ...settings, aboutBadgeStat: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Texte badge statistique (ex: d'expérience dans le digital)
+                </label>
+                <input
+                  type="text"
+                  value={settings.aboutExperienceText}
+                  onChange={(e) => setSettings({ ...settings, aboutExperienceText: e.target.value })}
                   className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
                 />
               </div>
@@ -612,6 +772,13 @@ export default function AdminSettingsPage() {
                   <span className="text-xs font-bold text-brand-gold">Valeur 1</span>
                   <input
                     type="text"
+                    placeholder="Icône (ex: Lightbulb)"
+                    value={settings.aboutValue1Icon}
+                    onChange={(e) => setSettings({ ...settings, aboutValue1Icon: e.target.value })}
+                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                  />
+                  <input
+                    type="text"
                     placeholder="Titre"
                     value={settings.aboutValue1Title}
                     onChange={(e) => setSettings({ ...settings, aboutValue1Title: e.target.value })}
@@ -628,6 +795,13 @@ export default function AdminSettingsPage() {
 
                 <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
                   <span className="text-xs font-bold text-brand-gold">Valeur 2</span>
+                  <input
+                    type="text"
+                    placeholder="Icône (ex: Wrench)"
+                    value={settings.aboutValue2Icon}
+                    onChange={(e) => setSettings({ ...settings, aboutValue2Icon: e.target.value })}
+                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                  />
                   <input
                     type="text"
                     placeholder="Titre"
@@ -648,6 +822,13 @@ export default function AdminSettingsPage() {
                   <span className="text-xs font-bold text-brand-gold">Valeur 3</span>
                   <input
                     type="text"
+                    placeholder="Icône (ex: TrendingUp)"
+                    value={settings.aboutValue3Icon}
+                    onChange={(e) => setSettings({ ...settings, aboutValue3Icon: e.target.value })}
+                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                  />
+                  <input
+                    type="text"
                     placeholder="Titre"
                     value={settings.aboutValue3Title}
                     onChange={(e) => setSettings({ ...settings, aboutValue3Title: e.target.value })}
@@ -664,6 +845,13 @@ export default function AdminSettingsPage() {
 
                 <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
                   <span className="text-xs font-bold text-brand-gold">Valeur 4</span>
+                  <input
+                    type="text"
+                    placeholder="Icône (ex: Sparkles)"
+                    value={settings.aboutValue4Icon}
+                    onChange={(e) => setSettings({ ...settings, aboutValue4Icon: e.target.value })}
+                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                  />
                   <input
                     type="text"
                     placeholder="Titre"
@@ -687,20 +875,28 @@ export default function AdminSettingsPage() {
               <h4 className="text-sm font-bold text-white mb-4">Statistiques du Bannière (Compteurs)</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Projets Réalisés</label>
-                  <input type="number" value={settings.statProjects} onChange={e => setSettings({...settings, statProjects: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Projets Réalisés</label>
+                  <input type="number" value={settings.statProjects} onChange={e => setSettings({...settings, statProjects: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Projets réalisés)</label>
+                  <input type="text" value={settings.statLabelProjects} onChange={e => setSettings({...settings, statLabelProjects: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Clients Satisfaits</label>
-                  <input type="number" value={settings.statClients} onChange={e => setSettings({...settings, statClients: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Clients Satisfaits</label>
+                  <input type="number" value={settings.statClients} onChange={e => setSettings({...settings, statClients: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Clients satisfaits)</label>
+                  <input type="text" value={settings.statLabelClients} onChange={e => setSettings({...settings, statLabelClients: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Années d'Expérience</label>
-                  <input type="number" value={settings.statExperience} onChange={e => setSettings({...settings, statExperience: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Années d'Expérience</label>
+                  <input type="number" value={settings.statExperience} onChange={e => setSettings({...settings, statExperience: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Années d'expérience)</label>
+                  <input type="text" value={settings.statLabelExperience} onChange={e => setSettings({...settings, statLabelExperience: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Passion (%)</label>
-                  <input type="number" value={settings.statPassion} onChange={e => setSettings({...settings, statPassion: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Passion (%)</label>
+                  <input type="number" value={settings.statPassion} onChange={e => setSettings({...settings, statPassion: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Passion & Engagement)</label>
+                  <input type="text" value={settings.statLabelPassion} onChange={e => setSettings({...settings, statLabelPassion: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                 </div>
               </div>
             </div>
@@ -715,55 +911,77 @@ export default function AdminSettingsPage() {
               Coordonnées de Contact & Carte Google Maps
             </h3>
 
+            <div>
+              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Contact (ex: Vous avez un projet ?)</label>
+              <input type="text" value={settings.contactTitle} onChange={e => setSettings({...settings, contactTitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-4" />
+              
+              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Contact</label>
+              <textarea rows={2} value={settings.contactSubtitle} onChange={e => setSettings({...settings, contactSubtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white resize-none mb-4" />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Adresse Email de Contact
-                </label>
-                <input
-                  type="email"
-                  value={settings.companyEmail}
-                  onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Bouton Principal (ex: Me contacter)</label>
+                <input type="text" value={settings.contactPrimaryBtnText} onChange={e => setSettings({...settings, contactPrimaryBtnText: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Bouton Secondaire (ex: Voir mes services)</label>
+                <input type="text" value={settings.contactSecondaryBtnText} onChange={e => setSettings({...settings, contactSecondaryBtnText: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-brand-gold/20">
+              <h4 className="text-sm font-bold text-white mb-4">Informations de Contact & Localisation</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                    Adresse Email de Contact
+                  </label>
+                  <input
+                    type="email"
+                    value={settings.companyEmail}
+                    onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                    Numéro de Téléphone
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.companyPhone}
+                    onChange={(e) => setSettings({ ...settings, companyPhone: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
               </div>
 
-              <div>
+              <div className="mt-4">
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Numéro de Téléphone
+                  Adresse Physique
                 </label>
                 <input
                   type="text"
-                  value={settings.companyPhone}
-                  onChange={(e) => setSettings({ ...settings, companyPhone: e.target.value })}
+                  value={settings.companyAddress}
+                  onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
                   className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
                 />
               </div>
-            </div>
 
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Adresse Physique
-              </label>
-              <input
-                type="text"
-                value={settings.companyAddress}
-                onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Lien d'Intégration Google Maps (URL iframe src)
-              </label>
-              <input
-                type="text"
-                placeholder="https://www.google.com/maps/embed?..."
-                value={settings.mapEmbedUrl}
-                onChange={(e) => setSettings({ ...settings, mapEmbedUrl: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
+              <div className="mt-4">
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Lien d'Intégration Google Maps (URL iframe src)
+                </label>
+                <input
+                  type="text"
+                  placeholder="https://www.google.com/maps/embed?..."
+                  value={settings.mapEmbedUrl}
+                  onChange={(e) => setSettings({ ...settings, mapEmbedUrl: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
             </div>
           </div>
         )}
@@ -909,6 +1127,37 @@ export default function AdminSettingsPage() {
                   </button>
                 </div>
               ))}
+            </div>
+
+            <div className="pt-4 border-t border-brand-gold/20 space-y-4">
+              <h4 className="text-sm font-bold text-white">Titres des Sections</h4>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Section Expertise</label>
+                  <input type="text" value={settings.expertiseSectionTitle} onChange={e => setSettings({...settings, expertiseSectionTitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Section Projets</label>
+                  <input type="text" value={settings.projectsSectionTitle} onChange={e => setSettings({...settings, projectsSectionTitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Section Outils</label>
+                  <input type="text" value={settings.toolsSectionTitle} onChange={e => setSettings({...settings, toolsSectionTitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Section Outils</label>
+                  <input type="text" value={settings.toolsSectionSubtitle} onChange={e => setSettings({...settings, toolsSectionSubtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte Bouton Projets (ex: Voir tous les projets)</label>
+                <input type="text" value={settings.projectsCtaText} onChange={e => setSettings({...settings, projectsCtaText: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold" />
+              </div>
             </div>
           </div>
         )}

@@ -13,9 +13,10 @@ interface Service {
 
 interface LightExpertiseProps {
   services: Service[];
+  settings?: any;
 }
 
-export default function LightExpertise({ services }: LightExpertiseProps) {
+export default function LightExpertise({ services, settings }: LightExpertiseProps) {
   // Mapping string icon names to Lucide icons + specific colors for the light theme
   const getIconData = (iconName: string) => {
     switch (iconName.toLowerCase()) {
@@ -29,12 +30,18 @@ export default function LightExpertise({ services }: LightExpertiseProps) {
     }
   };
 
+  const titleText = settings?.expertiseSectionTitle || "Mes domaines d'expertise";
+  // Attempt to colorize the last word if it's multiple words
+  const words = titleText.split(' ');
+  const lastWord = words.length > 1 ? words.pop() : '';
+  const firstPart = words.join(' ');
+
   return (
     <section className="py-20 bg-brand-light" id="services">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-extrabold text-brand-dark mb-4">
-            Mes domaines d'<span className="text-brand-blue">expertise</span>
+            {firstPart} {lastWord && <span className="text-brand-blue">{lastWord}</span>}
           </h2>
           <div className="w-16 h-1.5 bg-brand-blue mx-auto rounded-full" />
         </div>

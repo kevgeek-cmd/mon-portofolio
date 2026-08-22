@@ -272,13 +272,27 @@ model Settings {
   companySubtitle String  @default("AGENCE DIGITALE")
   companyLogoUrl String?
 
+  // Header
+  headerCtaText  String   @default("Parlons de votre projet ↗")
+  headerCtaLink  String   @default("#contact")
+
   // Hero Section
+  heroBadgeText  String   @default("Disponible pour de nouveaux projets")
   heroTitle      String   @default("Je transforme des idées en expériences digitales")
   heroSubtitle   String   @default("Référent digital polyvalent, j'accompagne les marques dans leur croissance...")
+  heroSkills     String   @default("Communication, Design, IA, Développement, Vidéo, Photo")
   heroVideoUrl   String   @default("")
   heroCtaText    String   @default("Découvrir mon travail")
   heroCtaLink    String   @default("#projets")
+  heroSecondaryCtaText String @default("Me contacter")
+  heroSecondaryCtaLink String @default("#contact")
   heroImageMain       String?
+  heroWidget1Icon     String  @default("🎬")
+  heroWidget1Title    String  @default("Montage Vidéo")
+  heroWidget1Subtitle String  @default("Premiere Pro, After Effects")
+  heroWidget2Title    String  @default("Croissance")
+  heroWidget2Value    String  @default("+125%")
+  heroWidget2Subtitle String  @default("Engagement")
   heroFloatingIcon1   String?
   heroFloatingIcon2   String?
   heroFloatingIcon3   String?
@@ -288,27 +302,54 @@ model Settings {
   aboutTitle     String   @default("L'innovation et la performance au service de vos ambitions")
   aboutMainText  String   @default("Nous sommes une équipe d'experts dédiée à la conception d'outils numériques performants, modernes et sur mesure.")
   aboutSubText   String   @default("Notre mission est d'accompagner les entreprises et entrepreneurs dans leur croissance grâce à des technologies de pointe et un design d'exception.")
+  aboutLocation1 String   @default("Basé en Côte d'Ivoire")
+  aboutLocation2 String   @default("Disponible à distance")
+  aboutCtaText   String   @default("En savoir plus sur mon parcours")
+  aboutCtaLink   String   @default("#")
   aboutImageUrl  String   @default("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80")
   aboutBadgeStat String   @default("100%")
   aboutBadgeLabel String  @default("Excellence | Savoir-faire")
+  aboutExperienceText String @default("d'expérience dans le digital")
 
   // Stats Section
   statProjects    Int     @default(30)
+  statLabelProjects String @default("Projets réalisés")
   statClients     Int     @default(15)
+  statLabelClients String @default("Clients satisfaits")
   statExperience  Int     @default(3)
+  statLabelExperience String @default("Années d'expérience")
   statPassion     Int     @default(100)
+  statLabelPassion String @default("Passion & Engagement")
 
   // About 4 Values
+  aboutValue1Icon  String @default("Lightbulb")
   aboutValue1Title String @default("Créativité")
   aboutValue1Desc  String @default("Des idées uniques et percutantes.")
+  aboutValue2Icon  String @default("Wrench")
   aboutValue2Title String @default("Polyvalence")
   aboutValue2Desc  String @default("Une expertise multi-compétences.")
+  aboutValue3Icon  String @default("TrendingUp")
   aboutValue3Title String @default("Résultats")
   aboutValue3Desc  String @default("Des solutions orientées impact.")
+  aboutValue4Icon  String @default("Sparkles")
   aboutValue4Title String @default("Innovation")
   aboutValue4Desc  String @default("IA & nouvelles technologies.")
 
+  // Expertise & Projects & Tools
+  expertiseSectionTitle String @default("Mes domaines d'expertise")
+  projectsSectionTitle  String @default("Mes projets récents")
+  projectsCtaText       String @default("Voir tous les projets")
+  toolsSectionTitle     String @default("Outils & Technologies")
+  toolsSectionSubtitle  String @default("Mon stack technique pour créer des expériences remarquables")
+
   // Contact & Address
+  contactTitle   String   @default("Vous avez un projet ? Parlons-en !")
+  contactSubtitle String  @default("Je suis disponible pour de nouvelles opportunités et la création de vos prochains produits digitaux.")
+  contactPrimaryBtnText String @default("Me contacter")
+  contactSecondaryBtnText String @default("Voir mes services")
+  contactWhatsappBtnText String @default("Discutons sur WhatsApp")
+  contactWhatsappUrl String @default("https://wa.me/2250000000000")
+  
   companyEmail   String   @default("contact@votre-entreprise.com")
   companyPhone   String   @default("+33 1 23 45 67 89")
   companyAddress String   @default("Paris, France")

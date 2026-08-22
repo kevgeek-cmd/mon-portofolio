@@ -17,9 +17,10 @@ interface Project {
 
 interface LightProjectsProps {
   projects: Project[];
+  settings?: any;
 }
 
-export default function LightProjects({ projects }: LightProjectsProps) {
+export default function LightProjects({ projects, settings }: LightProjectsProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' });
 
   const scrollPrev = useCallback(() => {
@@ -32,13 +33,19 @@ export default function LightProjects({ projects }: LightProjectsProps) {
 
   if (!projects || projects.length === 0) return null;
 
+  const titleText = settings?.projectsSectionTitle || "Mes projets récents";
+  const words = titleText.split(' ');
+  const lastWord = words.length > 1 ? words.pop() : '';
+  const firstPart = words.join(' ');
+  const ctaText = settings?.projectsCtaText || "Voir tous les projets";
+
   return (
     <section className="py-20 bg-white" id="projets">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex justify-between items-end mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-brand-dark mb-4">
-              Mes projets <span className="text-brand-blue">récents</span>
+              {firstPart} {lastWord && <span className="text-brand-blue">{lastWord}</span>}
             </h2>
             <div className="w-16 h-1.5 bg-brand-blue rounded-full" />
           </div>
@@ -52,7 +59,7 @@ export default function LightProjects({ projects }: LightProjectsProps) {
               </button>
             </div>
             <Link href="/projets" className="flex items-center gap-2 text-brand-blue font-bold hover:text-brand-blueDark transition-colors">
-              Voir tous les projets <ArrowRight className="w-4 h-4" />
+              {ctaText} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

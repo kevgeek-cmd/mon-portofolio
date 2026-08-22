@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, Facebook, Instagram, Youtube, Globe } from 'lucide-react';
+import { ArrowRight, Mail, Globe } from 'lucide-react';
 import Image from 'next/image';
 
 interface LightHeroProps {
@@ -13,6 +13,8 @@ interface LightHeroProps {
 export default function LightHero({ settings, socialLinks }: LightHeroProps) {
   // Extract blue highlighted part if needed, or just use CSS
   const title = settings?.heroTitle || 'Je transforme des idées en expériences digitales et produits innovants';
+  const subtitle = settings?.heroSubtitle || "Référent digital polyvalent, créatif et tech, j'accompagne les marques et entreprises dans leur croissance grâce à la communication, la création de contenu, l'IA et la conception de produits.";
+  const skillsList = settings?.heroSkills ? settings.heroSkills.split(',').map((s: string) => s.trim()) : ['Communication', 'Design', 'IA', 'Développement', 'Vidéo', 'Photo'];
   
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden" id="accueil">
@@ -28,11 +30,11 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-brand-blue text-xs font-bold uppercase tracking-wider mb-6">
               <span className="w-2 h-2 rounded-full bg-brand-blue animate-pulse" />
-              Disponible pour de nouveaux projets
+              {settings?.heroBadgeText || 'Disponible pour de nouveaux projets'}
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark leading-tight mb-6">
-              {title.split('expériences digitales').map((part, i, arr) => (
+              {title.split('expériences digitales').map((part: string, i: number, arr: any[]) => (
                 <React.Fragment key={i}>
                   {part}
                   {i < arr.length - 1 && <span className="text-brand-blue">expériences digitales</span>}
@@ -41,12 +43,12 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
             </h1>
             
             <p className="text-lg text-brand-gray mb-8 max-w-2xl mx-auto lg:mx-0">
-              {settings?.heroSubtitle || "Référent digital polyvalent, créatif et tech, j'accompagne les marques et entreprises dans leur croissance grâce à la communication, la création de contenu, l'IA et la conception de produits."}
+              {subtitle}
             </p>
 
             {/* Skills Pills */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-8">
-              {['Communication', 'Design', 'IA', 'Développement', 'Vidéo', 'Photo'].map(skill => (
+              {skillsList.map((skill: string) => (
                 <span key={skill} className="px-4 py-2 bg-white border border-gray-200 text-brand-dark text-sm font-semibold rounded-full shadow-sm">
                   {skill}
                 </span>
@@ -62,11 +64,11 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
                 <ArrowRight className="w-5 h-5" />
               </a>
               <a 
-                href="#contact" 
+                href={settings?.heroSecondaryCtaLink || '#contact'} 
                 className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-brand-dark font-bold border border-gray-200 hover:border-gray-300 transition-all flex items-center justify-center gap-2 shadow-sm"
               >
                 <Mail className="w-5 h-5" />
-                Me contacter
+                {settings?.heroSecondaryCtaText || 'Me contacter'}
               </a>
             </div>
 
@@ -110,7 +112,7 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
               <div className="absolute inset-0 z-10 flex items-end justify-center">
                 <img 
                   src={settings?.heroImageMain || "https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=800&q=80"} 
-                  alt="Kevin Stéphane Assamoi" 
+                  alt="Hero Image" 
                   className="object-contain h-full w-full drop-shadow-2xl"
                 />
               </div>
@@ -123,11 +125,11 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
               >
                 <div className="glass-card p-3 flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🎬</span>
+                    <span className="text-xl">{settings?.heroWidget1Icon || '🎬'}</span>
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-brand-dark">Montage Vidéo</p>
-                    <p className="text-[10px] text-brand-gray">Premiere Pro, After Effects</p>
+                    <p className="text-xs font-bold text-brand-dark">{settings?.heroWidget1Title || 'Montage Vidéo'}</p>
+                    <p className="text-[10px] text-brand-gray">{settings?.heroWidget1Subtitle || 'Premiere Pro, After Effects'}</p>
                   </div>
                 </div>
               </motion.div>
@@ -138,9 +140,9 @@ export default function LightHero({ settings, socialLinks }: LightHeroProps) {
                 className="absolute bottom-20 -left-10 z-20"
               >
                 <div className="glass-card p-4">
-                  <p className="text-xs text-brand-gray font-semibold">Croissance</p>
-                  <p className="text-2xl font-black text-brand-blue">+125%</p>
-                  <p className="text-[10px] text-brand-gray">Engagement</p>
+                  <p className="text-xs text-brand-gray font-semibold">{settings?.heroWidget2Title || 'Croissance'}</p>
+                  <p className="text-2xl font-black text-brand-blue">{settings?.heroWidget2Value || '+125%'}</p>
+                  <p className="text-[10px] text-brand-gray">{settings?.heroWidget2Subtitle || 'Engagement'}</p>
                 </div>
               </motion.div>
 

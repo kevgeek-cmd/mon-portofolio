@@ -21,11 +21,11 @@ export default function LightContact({ settings }: LightContactProps) {
             
             {/* Left Content */}
             <div className="flex-1 p-10 md:p-16 text-white">
-              <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
-                Vous avez un projet ?<br/>Parlons-en !
+              <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight whitespace-pre-wrap">
+                {settings?.contactTitle || "Vous avez un projet ?\nParlons-en !"}
               </h2>
-              <p className="text-blue-100 text-lg mb-10 max-w-md">
-                Je suis disponible pour de nouvelles opportunités et la création de vos prochains produits digitaux.
+              <p className="text-blue-100 text-lg mb-10 max-w-md whitespace-pre-wrap">
+                {settings?.contactSubtitle || "Je suis disponible pour de nouvelles opportunités et la création de vos prochains produits digitaux."}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -33,13 +33,13 @@ export default function LightContact({ settings }: LightContactProps) {
                   href={`mailto:${settings?.companyEmail || 'contact@kevinstephene.com'}`}
                   className="px-8 py-4 bg-white text-brand-blue font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors shadow-lg"
                 >
-                  Me contacter
+                  {settings?.contactPrimaryBtnText || 'Me contacter'}
                 </a>
                 <a 
                   href="#projets"
                   className="px-8 py-4 bg-brand-blue/20 text-white font-bold rounded-xl border border-white/20 flex items-center justify-center gap-2 hover:bg-brand-blue/30 transition-colors"
                 >
-                  Voir mes services
+                  {settings?.contactSecondaryBtnText || 'Voir mes services'}
                 </a>
               </div>
             </div>

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAdminFromCookies } from '@/lib/auth';
 import { createClient } from '@supabase/supabase-js';
 import path from 'path';
+import sharp from 'sharp';
 
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -31,19 +32,35 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Clean filename
-    const ext = path.extname(file.name) || '.png';
+    let finalBuffer = buffer;
+    let finalContentType = file.type || 'image/png';
+    let finalExt = ext;
+
+    // Convert to webp if it's an image
+    if (finalContentType.startsWith('image/')) {
+      try {
+        finalBuffer = await sharp(buffer)
+          .webp({ quality: 80 })
+          .toBuffer();
+        finalContentType = 'image/webp';
+        finalExt = '.webp';
+      } catch (err) {
+        console.error('Error compressing image with sharp:', err);
+        // Fallback to original buffer if sharp fails
+      }
+    }
+
     const safeBaseName = path
       .basename(file.name, ext)
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '-');
-    const filename = `${Date.now()}-${safeBaseName}${ext}`;
+    const filename = `${Date.now()}-${safeBaseName}${finalExt}`;
 
     // Upload to Supabase Storage
     const { error } = await supabase.storage
       .from('uploads')
-      .upload(filename, buffer, {
-        contentType: file.type || 'image/png',
+      .upload(filename, finalBuffer, {
+        contentType: finalContentType,
         upsert: false
       });
 

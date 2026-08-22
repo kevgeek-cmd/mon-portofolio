@@ -10,16 +10,21 @@ interface Tool {
 
 interface ToolsCarouselProps {
   tools: Tool[];
+  settings?: any;
 }
 
-export default function ToolsCarousel({ tools }: ToolsCarouselProps) {
+export default function ToolsCarousel({ tools, settings }: ToolsCarouselProps) {
   if (!tools || tools.length === 0) return null;
 
   return (
     <section className="py-16 bg-white overflow-hidden border-t border-gray-50">
       <div className="container mx-auto px-6 max-w-7xl mb-10 text-center">
-        <h3 className="text-2xl font-bold text-brand-dark mb-2">Outils & Technologies</h3>
-        <p className="text-brand-gray text-sm">Mon stack technique pour créer des expériences remarquables</p>
+        <h3 className="text-2xl font-bold text-brand-dark mb-2">
+          {settings?.toolsSectionTitle || "Outils & Technologies"}
+        </h3>
+        <p className="text-brand-gray text-sm">
+          {settings?.toolsSectionSubtitle || "Mon stack technique pour créer des expériences remarquables"}
+        </p>
       </div>
 
       <div className="relative flex overflow-x-hidden">

@@ -18,7 +18,6 @@ export default async function Home() {
     prisma.settings.findUnique({ where: { id: 'default' } }),
     prisma.service.findMany({ orderBy: { order: 'asc' } }),
     prisma.project.findMany({
-      where: { isFeatured: true },
       orderBy: { order: 'asc' },
       include: { category: true }
     }),
@@ -43,14 +42,14 @@ export default async function Home() {
       {/* Dynamic Sections from CMS */}
       <LightHero settings={settings} socialLinks={socialLinks} />
       <LightAbout settings={settings} />
-      <LightExpertise services={services} />
-      <LightProjects projects={projects} />
+      <LightExpertise services={services} settings={settings} />
+      <LightProjects projects={projects} settings={settings} />
       <LightManagedPages pages={managedPages} />
       <StatsBanner settings={settings} />
-      <ToolsCarousel tools={displayTools} />
+      <ToolsCarousel tools={displayTools} settings={settings} />
       <LightContact settings={settings} />
       
-      <Footer settings={settings} socialLinks={socialLinks} />
+      <Footer settings={settings} socials={socialLinks} />
     </main>
   );
 }
