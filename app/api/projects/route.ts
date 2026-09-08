@@ -1,6 +1,22 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getAdminFromCookies } from '@/lib/auth';
+import { z } from 'zod';
+
+const createProjectSchema = z.object({
+  title: z.string().min(1, 'Le titre est requis'),
+  slug: z.string().optional(),
+  summary: z.string().min(1, 'Le résumé est requis'),
+  description: z.string().optional().default(''),
+  coverImage: z.string().min(1, 'Image de couverture requise'),
+  images: z.array(z.string()).optional(),
+  liveUrl: z.string().optional().nullable(),
+  githubUrl: z.string().optional().nullable(),
+  technologies: z.array(z.string()).optional().default([]),
+  isFeatured: z.boolean().optional().default(true),
+  order: z.number().int().optional().default(0),
+  categoryId: z.string().optional().nullable(),
+});
 
 export async function GET() {
   try {
@@ -21,7 +37,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    const validated = createProjectSchema.safeParse(rawBody);
+    if (!validated.success) {
+      return NextResponse.json({ error: 'Données invalides', details: validated.error.format() }, { status: 400 });
+    }
+
+    const body = validated.data;
     const project = await prisma.project.create({
       data: {
         title: body.title,
@@ -30,8 +52,8 @@ export async function POST(request: Request) {
         description: body.description || '',
         coverImage: body.coverImage,
         images: body.images || [body.coverImage],
-        liveUrl: body.liveUrl,
-        githubUrl: body.githubUrl,
+        liveUrl: body.liveUrl || null,
+        githubUrl: body.githubUrl || null,
         technologies: body.technologies || [],
         isFeatured: body.isFeatured ?? true,
         order: body.order ?? 0,
@@ -63,3 +85,4 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+

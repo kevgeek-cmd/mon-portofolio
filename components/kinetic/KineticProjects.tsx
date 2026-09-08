@@ -62,20 +62,25 @@ export default function KineticProjects({ onSelectView, projects }: KineticProje
     githubUrl: p.githubUrl,
   })) : defaultProjects;
 
+  // Extract dynamic list of unique categories
+  const dynamicCategories = Array.from(
+    new Set(
+      projectList
+        .map(p => p.category?.name)
+        .filter((name): name is string => Boolean(name && name.trim()))
+    )
+  );
+
   const filteredProjects = projectList.filter(p => {
     if (activeFilter === 'all') return true;
-    const catName = p.category?.name?.toLowerCase() || '';
-    if (activeFilter === 'ai') return catName.includes('ia') || catName.includes('ai') || p.title.toLowerCase().includes('ia') || p.title.toLowerCase().includes('aura');
-    if (activeFilter === 'fintech') return catName.includes('fintech') || catName.includes('mobile') || p.title.toLowerCase().includes('flow') || p.title.toLowerCase().includes('e-commerce');
-    if (activeFilter === 'brand') return catName.includes('brand') || catName.includes('3d') || catName.includes('design') || p.title.toLowerCase().includes('kromatik');
-    return true;
+    return p.category?.name === activeFilter;
   });
 
   return (
     <section className="w-full h-full flex flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between">
       
       {/* Header with Interactive Filter Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5 shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5 shrink-0 gap-4">
         <div>
           <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">
             Études de cas
@@ -85,48 +90,34 @@ export default function KineticProjects({ onSelectView, projects }: KineticProje
           </h2>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 mt-3 sm:mt-0 bg-white/5 p-1 rounded-full border border-white/10 text-xs font-medium">
+        {/* Dynamic Filter Pills */}
+        <div className="flex items-center flex-wrap gap-1.5 bg-white/5 p-1 rounded-2xl sm:rounded-full border border-white/10 text-xs font-medium">
           <button 
             onClick={() => setActiveFilter('all')}
-            className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer font-medium ${
               activeFilter === 'all' 
-                ? 'bg-[#FF7A00] text-black font-semibold shadow-sm' 
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-[#FF7A00] text-black font-bold shadow-md shadow-[#FF7A00]/20' 
+                : 'text-zinc-400 hover:text-white hover:bg-white/5'
             }`}
           >
             Tous ({projectList.length})
           </button>
-          <button 
-            onClick={() => setActiveFilter('ai')}
-            className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
-              activeFilter === 'ai' 
-                ? 'bg-[#FF7A00] text-black font-semibold shadow-sm' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            Plateforme IA
-          </button>
-          <button 
-            onClick={() => setActiveFilter('fintech')}
-            className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
-              activeFilter === 'fintech' 
-                ? 'bg-[#FF7A00] text-black font-semibold shadow-sm' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            FinTech
-          </button>
-          <button 
-            onClick={() => setActiveFilter('brand')}
-            className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
-              activeFilter === 'brand' 
-                ? 'bg-[#FF7A00] text-black font-semibold shadow-sm' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            Brand 3D
-          </button>
+          {dynamicCategories.map(catName => {
+            const count = projectList.filter(p => p.category?.name === catName).length;
+            return (
+              <button 
+                key={catName}
+                onClick={() => setActiveFilter(catName)}
+                className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer font-medium ${
+                  activeFilter === catName 
+                    ? 'bg-[#FF7A00] text-black font-bold shadow-md shadow-[#FF7A00]/20' 
+                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {catName} ({count})
+              </button>
+            );
+          })}
         </div>
       </div>
 
