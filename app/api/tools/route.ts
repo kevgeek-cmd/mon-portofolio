@@ -1,5 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
+
+const createToolSchema = z.object({
+  name: z.string().min(1, 'Le nom est requis'),
+  iconUrl: z.string().min(1, "L'URL de l'icône est requise"),
+  order: z.number().int().optional().default(0),
+  isActive: z.boolean().optional().default(true),
+});
 
 export async function GET() {
   try {
@@ -15,18 +23,20 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
+    const body = await request.json();
+    const validated = createToolSchema.parse(body);
+
     const tool = await prisma.tool.create({
       data: {
-        name: data.name,
-        iconUrl: data.iconUrl,
-        order: data.order || 0,
-        isActive: data.isActive !== undefined ? data.isActive : true,
+        name: validated.name,
+        iconUrl: validated.iconUrl,
+        order: validated.order,
+        isActive: validated.isActive,
       },
     });
     return NextResponse.json(tool, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating tool:', error);
-    return NextResponse.json({ error: 'Failed to create tool' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Failed to create tool' }, { status: 400 });
   }
 }

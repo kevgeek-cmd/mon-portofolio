@@ -2,8 +2,8 @@ import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import { Calendar, Clock, ArrowLeft, Share2, MessageSquare } from 'lucide-react';
 import { FacebookIcon, LinkedinIcon, TwitterXIcon } from '@/components/ui/SocialIcons';
 
@@ -186,14 +186,14 @@ export default async function BlogPostDetailPage({ params }: { params: Promise<{
           <section className="mt-16 pt-10 border-t border-brand-gold/20">
             <h3 className="text-2xl font-bold text-brand-beigeLight mb-6 flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-brand-gold" />
-              Commentaires ({post.comments.length})
+              Commentaires ({(post.comments || []).length})
             </h3>
 
-            {post.comments.length === 0 ? (
+            {(!post.comments || post.comments.length === 0) ? (
               <p className="text-sm text-brand-beige/60">Soyez le premier à commenter cet article.</p>
             ) : (
               <div className="space-y-4">
-                {post.comments.map((comment) => (
+                {post.comments.map((comment: any) => (
                   <div key={comment.id} className="p-4 rounded-2xl bg-brand-darkCard border border-brand-gold/15">
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-bold text-sm text-white">{comment.name}</span>
