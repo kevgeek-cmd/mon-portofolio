@@ -26,40 +26,56 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [post, settings] = await Promise.all([
-    prisma.blogPost.findUnique({ where: { slug } }),
-    prisma.settings.findUnique({ where: { id: 'default' } }),
-  ]);
+  try {
+    const [post, settings] = await Promise.all([
+      prisma.blogPost.findUnique({ where: { slug } }).catch(() => null),
+      prisma.settings.findUnique({ where: { id: 'default' } }).catch(() => null),
+    ]);
 
-  if (!post) return { title: 'Article non trouvé' };
+    if (!post) return { title: 'Article non trouvé' };
 
-  const companyName = (settings as any)?.companyName || 'Notre Entreprise';
+    const companyName = (settings as any)?.companyName || 'Notre Entreprise';
 
-  return {
-    title: `${post.seoTitle || post.title} | ${companyName}`,
-    description: post.seoDescription || post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.featuredImage],
-    },
-  };
+    return {
+      title: `${post.seoTitle || post.title} | ${companyName}`,
+      description: post.seoDescription || post.excerpt,
+      openGraph: {
+        title: post.title,
+        description: post.excerpt,
+        images: [post.featuredImage],
+      },
+    };
+  } catch {
+    return { title: 'Article' };
+  }
 }
 
 export default async function BlogPostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const [post, settings, socials] = await Promise.all([
-    prisma.blogPost.findUnique({
-      where: { slug },
-      include: {
-        category: true,
-        comments: { orderBy: { createdAt: 'desc' } },
-      },
-    }),
-    prisma.settings.findUnique({ where: { id: 'default' } }),
-    prisma.socialLink.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
-  ]);
+  let post: any = null;
+  let settings: any = null;
+  let socials: any[] = [];
+
+  try {
+    const results = await Promise.allSettled([
+      prisma.blogPost.findUnique({
+        where: { slug },
+        include: {
+          category: true,
+          comments: { orderBy: { createdAt: 'desc' } },
+        },
+      }),
+      prisma.settings.findUnique({ where: { id: 'default' } }),
+      prisma.socialLink.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
+    ]);
+
+    if (results[0].status === 'fulfilled') post = results[0].value;
+    if (results[1].status === 'fulfilled') settings = results[1].value;
+    if (results[2].status === 'fulfilled' && Array.isArray(results[2].value)) socials = results[2].value;
+  } catch (err) {
+    console.error('Error fetching blog post:', err);
+  }
 
   if (!post) {
     notFound();
