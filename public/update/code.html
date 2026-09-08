@@ -1,0 +1,801 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Kevin Assamoi — Product Builder, UI/UX &amp; AI</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ffb68b",
+            "primary-container": "#ff7a00",
+            "on-primary-container": "#432100",
+            "surface": "#090909",
+            "surface-container": "#121414",
+            "surface-container-high": "#1a1c1c",
+            "surface-container-highest": "#282a2a",
+            "on-surface": "#f5f5f5",
+            "on-surface-variant": "#a79c94",
+            "outline": "#4d4541"
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    }
+    .view-pane {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .view-pane.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 122, 0, 0.25);
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 122, 0, 0.5);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col bg-[#090909] text-[#F5F5F5] font-sans relative select-none antialiased">
+<!-- Subtle Ambient Glowing Backlights -->
+<div class="absolute -top-32 -left-20 w-[600px] h-[600px] bg-[#FF7A00]/12 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+<div class="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-[#FF7A00]/8 rounded-full blur-[130px] pointer-events-none -z-10"></div>
+<div class="absolute bottom-0 right-10 w-[550px] h-[550px] bg-[#FF7A00]/10 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+<!-- Framed App Viewport Container (100vh full frame) -->
+<div class="border border-white/10 rounded-2xl md:rounded-3xl m-2 sm:m-4 flex-1 flex flex-col overflow-hidden relative backdrop-blur-3xl bg-[#0D0D0D]/90 shadow-2xl">
+<!-- PERSISTENT TOP HEADER -->
+<header class="backdrop-blur-md bg-black/50 border-b border-white/5 px-4 sm:px-8 py-3.5 flex items-center justify-between z-50 shrink-0">
+<!-- Brand Profile Monogram -->
+<a class="nav-brand flex items-center gap-3 group transition-transform hover:scale-[1.02] cursor-pointer" href="#hero">
+<span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-tr from-[#FF7A00] to-[#FF9E40] text-black font-extrabold flex items-center justify-center text-sm sm:text-base shadow-[0_0_18px_rgba(255,122,0,0.45)]">K</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm sm:text-base font-bold tracking-tight text-white group-hover:text-primary transition-colors">Kevin Assamoi</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+</div>
+<span class="text-[10px] font-mono tracking-widest text-[#FF7A00] uppercase font-semibold">Studio • Product</span>
+</div>
+</a>
+<!-- Center Floating Pill Navigation -->
+<nav class="hidden md:flex items-center bg-[#151515]/90 border border-white/10 p-1 rounded-full shadow-inner text-xs font-medium">
+<button class="nav-tab px-4 py-1.5 rounded-full text-black bg-[#FF7A00] font-semibold shadow-[0_0_20px_rgba(255,122,0,0.45)] transition-all" data-target="hero">Accueil</button>
+<button class="nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all" data-target="about">À propos</button>
+<button class="nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all" data-target="projects">Projets</button>
+<button class="nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all" data-target="skills">Compétences</button>
+<button class="nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all" data-target="testimonials">Témoignages</button>
+<button class="nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all" data-target="contact">Contact</button>
+</nav>
+<!-- Right Action Cluster -->
+<div class="flex items-center gap-3">
+<button class="nav-cta inline-flex items-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] hover:brightness-110 text-black font-semibold text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full shadow-[0_0_24px_rgba(255,122,0,0.35)] transition-all hover:scale-105" data-target="contact">
+<span class="">Discutons</span>
+<span class="material-symbols-outlined text-sm sm:text-base font-bold">arrow_forward</span>
+</button>
+<!-- Mobile Dropdown Selector Button -->
+<button class="md:hidden w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white" id="mobile-menu-btn">
+<span class="material-symbols-outlined text-lg">menu</span>
+</button>
+</div>
+</header>
+<!-- Mobile Drawer / Popover Menu -->
+<div class="hidden md:hidden absolute top-[68px] inset-x-2 z-40 bg-[#121212]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-3 shadow-2xl flex-col gap-1" id="mobile-drawer">
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="hero">Accueil</button>
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="about">À propos</button>
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="projects">Projets</button>
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="skills">Compétences</button>
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="testimonials">Témoignages</button>
+<button class="mobile-nav-item text-left px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-white/5" data-target="contact">Contact</button>
+</div>
+<!-- MAIN VIEW CONTAINER (Single-screen multi-view host) -->
+<main class="flex-1 relative overflow-hidden w-full h-full">
+<!-- ==================== SCREEN 01: HERO (ACCUEIL) ==================== -->
+<section class="view-pane active w-full h-full flex-col lg:flex-row items-center justify-between px-6 sm:px-12 lg:px-16 py-6 lg:py-0 relative overflow-y-auto lg:overflow-hidden custom-scroll" id="view-hero">
+<!-- Social Vertical Bar -->
+<aside class="hidden xl:flex flex-col items-center gap-3 absolute left-6 top-1/2 -translate-y-1/2 z-20">
+<a aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all" href="https://linkedin.com" target="_blank">
+<span class="material-symbols-outlined text-[17px]">work</span>
+</a>
+<a aria-label="GitHub" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all" href="https://github.com" target="_blank">
+<span class="material-symbols-outlined text-[17px]">code</span>
+</a>
+<a aria-label="Dribbble" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all" href="https://dribbble.com" target="_blank">
+<span class="material-symbols-outlined text-[17px]">sports_volleyball</span>
+</a>
+<a aria-label="Email" class="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all" href="mailto:contact@kevinassamoi.com">
+<span class="material-symbols-outlined text-[17px]">mail</span>
+</a>
+</aside>
+<!-- Left Column: Portrait with Cinematic Backlight -->
+<div class="w-full lg:w-1/2 h-full flex items-center justify-center relative pt-4 lg:pt-0">
+<div class="relative w-full max-w-[480px] xl:max-w-[540px] aspect-[4/4.8] sm:aspect-[4/4.6] flex items-center justify-center">
+<!-- Warm Amber Studio Glow Halo -->
+<div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7A00]/35 via-[#FF7A00]/15 to-transparent blur-3xl pointer-events-none"></div>
+<!-- Kevin's Studio Portrait (High Resolution Asset) -->
+<img alt="Kevin Assamoi - Product Builder" class="w-full h-full object-cover object-center rounded-2xl shadow-2xl relative z-10 border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuu1invwLa0s2-XMZsz8SbKym4O7yKwbAMqL4BYePgxqw_VujC864oZhcRArkspYHdO1mUZdOhSgFOfypIq_1DCXmEiwin_ZQpNcXeM9owavpajrxJMu8w3gdhhRq0wv_moFY5662UIbwPxwEhmMvh-KQGrvyW8_6wd6H7TP0LedRFiu3YBUZ-uepTMWg2ZNWKJicrti0VyudqU-eP_VYEsrNBMlbqEK-lKF04Epp7Z8THxqsYs7FeQS800nAW9J379hE">
+<!-- Edge Vignette / Radial fade overlay -->
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0D0D0D] via-transparent to-transparent opacity-85 z-10 pointer-events-none"></div>
+<div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 z-10 pointer-events-none"></div>
+<!-- Micro Floating Credential Capsule -->
+<div class="absolute bottom-6 right-5 z-20 hidden sm:flex items-center gap-2 bg-[#121212]/90 border border-white/10 backdrop-blur-xl px-3.5 py-1.5 rounded-full shadow-xl">
+<span class="material-symbols-outlined text-[#FF7A00] text-sm">auto_awesome</span>
+<span class="font-mono text-[10px] text-white uppercase tracking-wider font-semibold">AI &amp; Product Craft</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Monolith Narrative & Switchers -->
+<div class="w-full lg:w-1/2 flex flex-col justify-center py-6 lg:py-0 lg:pl-10 xl:pl-16 z-10">
+<!-- Availability Pill Badge -->
+<div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md px-3.5 py-1 rounded-full w-fit mb-5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-[#FF7A00] shadow-[0_0_10px_rgba(255,122,0,0.9)] animate-pulse"></span>
+<span class="font-mono text-[10px] text-zinc-300 uppercase tracking-widest font-semibold">Disponible pour de nouveaux projets</span>
+</div>
+<!-- Giant Headline -->
+<h1 class="text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.02]">
+            Hi, I’m <span class="text-[#FF7A00] drop-shadow-[0_0_35px_rgba(255,122,0,0.35)]">Kevin.</span>
+</h1>
+<!-- Subtitle Eyebrow -->
+<p class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary font-semibold mt-3">
+            Product Builder • UI/UX Designer • AI Builder
+          </p>
+<!-- Descriptive Narrative -->
+<p class="text-zinc-400 text-sm sm:text-base max-w-lg mt-4 leading-relaxed">
+            J’aide les marques et les entrepreneurs à transformer leurs idées en produits digitaux élégants, utiles et mémorables.
+          </p>
+<!-- CTAs Navigation Links -->
+<div class="flex flex-wrap items-center gap-3.5 mt-7">
+<button class="nav-switch inline-flex items-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] text-black font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-[0_8px_25px_rgba(255,122,0,0.38)] hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,122,0,0.55)] transition-all" data-target="projects">
+<span class="">Voir mes projets</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+<button class="nav-switch inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs sm:text-sm px-5 py-3 rounded-full backdrop-blur-md hover:scale-105 transition-all" data-target="contact">
+<span class="material-symbols-outlined text-base text-[#FF7A00]">mail</span>
+<span class="">Me contacter</span>
+</button>
+</div>
+<!-- Bottom Metrics Bar -->
+<div class="grid grid-cols-3 gap-4 pt-8 mt-6 border-t border-white/5 max-w-lg">
+<div class="flex flex-col">
+<span class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">10<span class="text-[#FF7A00]">+</span></span>
+<span class="text-xs text-zinc-400 font-medium">Projets réalisés</span>
+</div>
+<div class="flex flex-col">
+<span class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">3<span class="text-[#FF7A00]">+</span></span>
+<span class="text-xs text-zinc-400 font-medium">Années d'expérience</span>
+</div>
+<div class="flex flex-col">
+<span class="text-2xl sm:text-3xl font-extrabold text-[#FF7A00] tracking-tight">100<span class="text-white">%</span></span>
+<span class="text-xs text-zinc-400 font-medium">Passionné</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== SCREEN 02: ABOUT (À PROPOS) ==================== -->
+<section class="view-pane w-full h-full flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between" id="view-about">
+<!-- Header Strip -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-6">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">Manifeste &amp; Vision</span>
+<h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
+              Je transforme les idées en <span class="text-[#FF7A00]">produits</span>.
+            </h2>
+</div>
+<div class="text-xs text-zinc-400 font-mono mt-2 sm:mt-0 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Design suisse • Next.js fullstack • Architectures IA
+          </div>
+</div>
+<!-- Agency Bento Grid composition (1-screen fitted) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1 items-stretch">
+<!-- Left Pillar Narrative (5 cols) -->
+<div class="lg:col-span-5 bg-white/[0.03] border border-white/5 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#FF7A00]/30 transition-all">
+<div class="absolute -right-10 -bottom-10 w-44 h-44 bg-[#FF7A00]/10 rounded-full blur-2xl pointer-events-none"></div>
+<div>
+<div class="w-10 h-10 rounded-xl bg-[#FF7A00]/15 text-[#FF7A00] flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-xl">psychology</span>
+</div>
+<h3 class="text-xl sm:text-2xl font-bold text-white leading-snug">
+                Artisanat numérique guidé par le sens, la rigueur et la performance.
+              </h3>
+<p class="text-xs sm:text-sm text-zinc-400 mt-3 leading-relaxed">
+                Chaque produit que je conçois commence par une écoute attentive des frictions réelles. Je ne produis pas de simples maquettes : je structure des modèles mentaux fluides, bâtis sur des design systems cohérents et capables d’évoluer à grande échelle.
+              </p>
+</div>
+<div class="pt-5 border-t border-white/5 mt-5">
+<span class="text-[10px] font-mono uppercase text-zinc-400 tracking-wider">Stack de prédilection</span>
+<div class="flex flex-wrap gap-1.5 mt-2">
+<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">Figma Maestro</span>
+<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">Design Systems Tokens</span>
+<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">Next.js &amp; Tailwind</span>
+<span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-[#FF7A00]">LLM &amp; Agents</span>
+</div>
+</div>
+</div>
+<!-- Right Bento Matrix (7 cols) -->
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Pillar 1 -->
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300">
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-[#FF7A00]">01</span>
+<span class="material-symbols-outlined text-zinc-400 text-lg">track_changes</span>
+</div>
+<div>
+<h4 class="text-base font-bold text-white mb-1">Product Strategy</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Discovery utilisateur, définition d'objectifs ROI, priorisation de features MVP et validation marché en cycles courts.</p>
+</div>
+</div>
+<!-- Pillar 2 -->
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300">
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-[#FF7A00]">02</span>
+<span class="material-symbols-outlined text-zinc-400 text-lg">palette</span>
+</div>
+<div>
+<h4 class="text-base font-bold text-white mb-1">Haute Couture UI/UX</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Direction artistique de précision, micro-interactions tactiles, tokens synchronisés et respect absolu des conventions d'ergonomie.</p>
+</div>
+</div>
+<!-- Pillar 3 -->
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300">
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-[#FF7A00]">03</span>
+<span class="material-symbols-outlined text-zinc-400 text-lg">smart_toy</span>
+</div>
+<div>
+<h4 class="text-base font-bold text-white mb-1">AI Agents &amp; Neural Products</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Intégration d'assistants contextuels, chaînes RAG, orchestration de flux génératifs et interfaces human-in-the-loop.</p>
+</div>
+</div>
+<!-- Pillar 4 -->
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300">
+<div class="flex items-center justify-between mb-3">
+<span class="font-mono text-xs font-bold text-[#FF7A00]">04</span>
+<span class="material-symbols-outlined text-zinc-400 text-lg">bolt</span>
+</div>
+<div>
+<h4 class="text-base font-bold text-white mb-1">Rapid Fullstack Prototyping</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Du design cliquable au code de production déployé sur infrastructure Vercel/Cloudflare en moins de 14 jours.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Strip Navigation Prompt -->
+<div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5 text-xs text-zinc-400">
+<span class="">Prêt à explorer les réalisations concrètes ?</span>
+<button class="nav-switch inline-flex items-center gap-1.5 text-[#FF7A00] font-semibold hover:underline" data-target="projects">
+<span class="">Voir les études de cas</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- ==================== SCREEN 03: PROJECTS (PROJETS) ==================== -->
+<section class="view-pane w-full h-full flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between" id="view-projects">
+<!-- Header with Interactive Filter Tabs -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">Études de cas</span>
+<h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
+              Projets sélectionnés
+            </h2>
+</div>
+<!-- Filter Pills -->
+<div class="flex items-center gap-1.5 mt-3 sm:mt-0 bg-white/5 p-1 rounded-full border border-white/10 text-xs font-medium">
+<button class="project-filter active px-3 py-1 rounded-full bg-[#FF7A00] text-black font-semibold transition-all" data-filter="all">Tous (3)</button>
+<button class="project-filter px-3 py-1 rounded-full text-zinc-400 hover:text-white transition-all" data-filter="ai">Plateforme IA</button>
+<button class="project-filter px-3 py-1 rounded-full text-zinc-400 hover:text-white transition-all" data-filter="fintech">FinTech</button>
+<button class="project-filter px-3 py-1 rounded-full text-zinc-400 hover:text-white transition-all" data-filter="brand">Brand 3D</button>
+</div>
+</div>
+<!-- Interactive 3-Card Asymmetric Portfolio Showcase -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 flex-1 items-stretch">
+<!-- Project 1: Aura Intelligence -->
+<div class="project-card group bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-[#FF7A00]/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl cursor-pointer" data-cat="ai" onclick="openProjectModal('aura')">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-black/50">
+<img alt="Aura Intelligence Interface" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByG89r1e27rZGPwgbNbMjbgNHF2qLTYYCL1lNBi9yxpCswP9vZGzXYKXFs-VcXLHQAzJrvXPlTJW28V_8hN6NnWvXWuKVknk8n0bU6MyagPkRSwReukT-7zZEUylLuTdWDjnMDbfo9zmbQ3BzD7mQ3OOJ8LmLruv8Jtks0QY6V_XN9dOmBXWbsJIVRI32KUDnaQjkprCG2CV3gaihA3ZWCzyVx1ELd2ECtzpDbPKK9ydlrj0ahNSUr3Q">
+<div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-[10px] font-mono text-[#FF7A00] font-bold">
+                Plateforme IA • B2B
+              </div>
+</div>
+<div class="p-5 flex flex-col justify-between flex-1">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-white group-hover:text-[#FF7A00] transition-colors">Aura Intelligence</h3>
+<span class="text-xs font-mono text-emerald-400 font-bold">+184% Vélocité</span>
+</div>
+<p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  Orchestration générative pour équipes de marque, déclinaison d'actifs multi-canaux et gouvernance d'assets visuels.
+                </p>
+</div>
+<div class="pt-4 border-t border-white/5 mt-4 flex items-center justify-between text-xs">
+<span class="text-zinc-400 font-mono text-[10px]">Next.js • OpenAI API</span>
+<span class="inline-flex items-center gap-1 text-[#FF7A00] font-semibold group-hover:translate-x-1 transition-transform">
+<span class="">Détails</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Project 2: Kromatik Studio -->
+<div class="project-card group bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-[#FF7A00]/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl cursor-pointer" data-cat="brand" onclick="openProjectModal('kromatik')">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-black/50">
+<img alt="Kromatik Studio 3D Web" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdL_3Bb7iMuW7r1-2mE2N8LUvYn6y9uzfi0C344Uz9TvRF-5CHDKBigAvu7LLBFtVoPfJLtuNFKFH-nKXcDqer-C0_oR3eErIvGrzrRvHQgxU0PBqaKUIWzZ4E4zZmEBfq9sn3WLgFjHjoxawLx65m4Ac5-EOeh4wuL-ybn-QR060L39K2S_hcF713l5Zeej6vWwwgEGlaSyBaJuU99xRhhSYsTtTN400NJqFEij3993wBj7c2GBFQ-w">
+<div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-[10px] font-mono text-[#FF7A00] font-bold">
+                Brand • 3D Web
+              </div>
+</div>
+<div class="p-5 flex flex-col justify-between flex-1">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-white group-hover:text-[#FF7A00] transition-colors">Kromatik Studio</h3>
+<span class="text-xs font-mono text-zinc-300">Site de l'année 2024</span>
+</div>
+<p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  Identité de marque haut de gamme et expérience web WebGL interactive pour un collectif mondial de créateurs visuels.
+                </p>
+</div>
+<div class="pt-4 border-t border-white/5 mt-4 flex items-center justify-between text-xs">
+<span class="text-zinc-400 font-mono text-[10px]">Three.js • GSAP • UI/UX</span>
+<span class="inline-flex items-center gap-1 text-[#FF7A00] font-semibold group-hover:translate-x-1 transition-transform">
+<span class="">Détails</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Project 3: FlowPulse Wealth -->
+<div class="project-card group bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-[#FF7A00]/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 shadow-xl cursor-pointer" data-cat="fintech" onclick="openProjectModal('flowpulse')">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-black/50">
+<img alt="FlowPulse Wealth Mobile App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrwugo9rXufkpN1rbIx4KeEsadOu_Wj0PJ7dq9p3WDitc1j1rHECrU6q1ahMcFPb7aLCZbkJmSCzj2FTuX3y6HZMxCJ6GiCvJZXK3Of9e-HUptlIAzyMpwWYoGWE1F8Uw07dNBZxXhxVYWeZpXxFMhxOrL2w9NL-p4NP4KOUZ4_rsSz6OkV1OQagPtDANBaYnHSzEzzPWlAr15ZXL3L4n2t-fEV4cVmPuC2qPi2AC595AY4joQ1AmjQA">
+<div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-[10px] font-mono text-[#FF7A00] font-bold">
+                Fintech • iOS / Android
+              </div>
+</div>
+<div class="p-5 flex flex-col justify-between flex-1">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-white group-hover:text-[#FF7A00] transition-colors">FlowPulse Wealth</h3>
+<span class="text-xs font-mono text-[#FF7A00] font-bold">42k Utilisateurs</span>
+</div>
+<p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  Application mobile de gestion patrimoniale et trésorerie intelligente pour entrepreneurs et nomades digitaux.
+                </p>
+</div>
+<div class="pt-4 border-t border-white/5 mt-4 flex items-center justify-between text-xs">
+<span class="text-zinc-400 font-mono text-[10px]">React Native • Design Tokens</span>
+<span class="inline-flex items-center gap-1 text-[#FF7A00] font-semibold group-hover:translate-x-1 transition-transform">
+<span class="">Détails</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Modal trigger footnote -->
+<div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5 text-xs text-zinc-400">
+<span class="">* Cliquez sur un projet pour inspecter l’architecture sans quitter l’écran</span>
+<button class="nav-switch inline-flex items-center gap-1.5 text-[#FF7A00] font-semibold hover:underline" data-target="skills">
+<span class="">Explorer mes compétences</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- ==================== SCREEN 04: SKILLS (COMPÉTENCES) ==================== -->
+<section class="view-pane w-full h-full flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between" id="view-skills">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">Champs d'intervention</span>
+<h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
+              Ce que je construis.
+            </h2>
+</div>
+<p class="text-xs text-zinc-400 max-w-sm mt-2 sm:mt-0 leading-relaxed">
+            De l’esquisse conceptuelle jusqu’au déploiement d’interfaces vivantes et optimisées pour le scale.
+          </p>
+</div>
+<!-- 6-Matrix Skill Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-1 items-stretch">
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">devices</span>
+<h3 class="text-base font-bold text-white">Product Design</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Conception orientée conversion, fluidité des flux d’onboarding et ergonomie centrée utilisateur.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> Discovery • Wireframes • User Flow
+            </div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">grid_view</span>
+<h3 class="text-base font-bold text-white">UI/UX &amp; Design Systems</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Systèmes scalables, bibliothèques de tokens synchronisées, mode sombre natif et micro-animations.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> Figma Pro • Design Tokens • UI Motion
+            </div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">code_blocks</span>
+<h3 class="text-base font-bold text-white">Web Apps &amp; Jamstack</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Applications web véloces, tableaux de bord interactifs SaaS et composants réactifs modernes.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> Next.js 15 • TypeScript • Tailwind
+            </div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">smart_toy</span>
+<h3 class="text-base font-bold text-white">AI Products &amp; Agents</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Expériences conversationnelles, assistants de productivité contextuels et chaînes d'automatisation.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> LLM Chains • Embeddings • Copilots
+            </div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">phone_iphone</span>
+<h3 class="text-base font-bold text-white">Mobile Experiences</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Ergonomie tactile raffinée pour iOS et Android avec feedback haptique et prototypage réaliste.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> Mobile UI • Gestures • React Native
+            </div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#FF7A00]/40 p-5 rounded-2xl flex flex-col justify-between transition-all group shadow-sm">
+<div>
+<span class="material-symbols-outlined text-2xl text-[#FF7A00] mb-2 group-hover:scale-110 transition-transform">blur_on</span>
+<h3 class="text-base font-bold text-white">Brand Identity &amp; 3D</h3>
+<p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Direction artistique mémorable, typographie singulière et univers 3D immersifs qui captivent.</p>
+</div>
+<div class="pt-3 border-t border-white/5 mt-3 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+<span class="text-[#FF7A00]">●</span> Art Direction • Three.js • Motion
+            </div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5 text-xs text-zinc-400">
+<span class="">Besoin d’un mix sur-mesure pour votre équipe ?</span>
+<button class="nav-switch inline-flex items-center gap-1.5 text-[#FF7A00] font-semibold hover:underline" data-target="testimonials">
+<span class="">Lire les témoignages clients</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- ==================== SCREEN 05: TESTIMONIALS (TÉMOIGNAGES) ==================== -->
+<section class="view-pane w-full h-full flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between" id="view-testimonials">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5">
+<div>
+<span class="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">Confiance &amp; Retours</span>
+<h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
+              Ce qu'ils disent du travail ensemble.
+            </h2>
+</div>
+<div class="flex items-center gap-1 text-[#FF7A00] text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs text-zinc-300 font-mono ml-2 font-bold">5.0 / 5</span>
+</div>
+</div>
+<!-- 3 Premium Editorial Testimonial Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 flex-1 items-stretch">
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-6 rounded-2xl flex flex-col justify-between shadow-lg relative overflow-hidden transition-all">
+<div>
+<div class="text-[#FF7A00] text-3xl font-serif leading-none mb-3">“</div>
+<p class="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
+                Kevin possède cette double compétence rarissime : une exigence esthétique digne des plus grands studios et la rapidité d'exécution d'un ingénieur produit senior. Notre MVP a levé en seed 2 mois après son intervention.
+              </p>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-white/5 mt-4">
+<img alt="Camille Laurent" class="w-10 h-10 rounded-full object-cover border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuyCeI4uYtGtPDrAORwbLqtEHeB3Cszj7snTjEzFJMA9iUfFx4Y-jxqxBJueoCSqySax4DuhT7-7v6XCwqrQKgZxuho8jXDLtGA3Wf9c7d2vaRcDJLnHBbPw8l6YK-nmZfZ7KJxQbb2wMPkqSfHvXSTKjrgSfUVBWVhPX90D3U2PiC6BqCUToc-QSbgw59G-OWVIid9cJIX1Ma1HcpHvb06Y-PE_YMqBumPOqE9_w9sr8V415CU_54Ng">
+<div>
+<h4 class="text-xs font-bold text-white">Camille Laurent</h4>
+<p class="text-[10px] text-zinc-400 font-mono">Co-fondatrice &amp; CEO, Novaflow</p>
+</div>
+</div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-6 rounded-2xl flex flex-col justify-between shadow-lg relative overflow-hidden transition-all">
+<div>
+<div class="text-[#FF7A00] text-3xl font-serif leading-none mb-3">“</div>
+<p class="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
+                Travailler avec Kevin a redéfini notre vision du design produit. Les retours de nos utilisateurs sur la simplicité de l'interface ont été unanimes. Il ne fait aucun compromis sur la qualité.
+              </p>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-white/5 mt-4">
+<img alt="Marc Kouassi" class="w-10 h-10 rounded-full object-cover border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY3KbG1IjXDASV6-wfBbP-tWNamIite4R-uaD0VAMAM_r37g7Jij6e0Qkdw8geAGrI3dk2tdLDPjCq4Qh80bXBLu1Z54mhWHNp7EuktHv-TLGw5ylE8OjyO8Dlcs7xF1QwOspQbDKwokG-SWmxYCU41FKs18zMUqxRzbJpUpqH3_OoDIG9ZT37sCZ_bMNYE_K1nhRwMcK-ooLcBd7121PSSsAouIZCnHodEJOMmuCY4c8oiuiFX6fNZw">
+<div>
+<h4 class="text-xs font-bold text-white">Marc Kouassi</h4>
+<p class="text-[10px] text-zinc-400 font-mono">Head of Product, Apex Africa</p>
+</div>
+</div>
+</div>
+<div class="bg-white/[0.03] hover:bg-white/[0.05] border border-white/5 hover:border-[#FF7A00]/40 p-6 rounded-2xl flex flex-col justify-between shadow-lg relative overflow-hidden transition-all">
+<div>
+<div class="text-[#FF7A00] text-3xl font-serif leading-none mb-3">“</div>
+<p class="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
+                L'intégration des composants d'IA dans notre application a été rendue tellement intuitive et élégante grâce à son architecture UI. C’est un partenaire stratégique inestimable.
+              </p>
+</div>
+<div class="flex items-center gap-3 pt-4 border-t border-white/5 mt-4">
+<img alt="Alexander Vance" class="w-10 h-10 rounded-full object-cover border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMOF3iLIbQ9-cWrKzX8I0VFubBGzphuRm9L675lCinSCljgOrleeMJHKvEQMZ4kA0FqL29hMAIkuIqrfn_rts7JU1izgvTB2kmSdiyUpUrSgLDi8iMBwJpbk9uxGMvYZhH4YLiCLp6Kj6vvSEpPw1_sKW67Y-h7h-9-kToMniqnaOv4okoi6wAXaDiLzVg6F16w3nB_Enz4ewqfXeQCsTJYT-8s7yOCL7WUfvpzVH6bHlwJA2S3Db5hw">
+<div>
+<h4 class="text-xs font-bold text-white">Alexander Vance</h4>
+<p class="text-[10px] text-zinc-400 font-mono">Managing Partner, Studio V</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 mt-4 border-t border-white/5 text-xs text-zinc-400">
+<span class="">Envie de démarrer une collaboration similaire ?</span>
+<button class="nav-switch inline-flex items-center gap-1.5 text-[#FF7A00] font-semibold hover:underline" data-target="contact">
+<span class="">Passer à l’étape suivante</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- ==================== SCREEN 06: CONTACT ==================== -->
+<section class="view-pane w-full h-full flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between" id="view-contact">
+<!-- Central Card Container -->
+<div class="max-w-3xl w-full mx-auto my-auto flex flex-col items-center text-center">
+<div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1 rounded-full mb-4 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-[#FF7A00] animate-pulse"></span>
+<span class="font-mono text-[10px] text-[#FF7A00] uppercase tracking-widest font-semibold">Q2 / Q3 2026 Ouvert aux projets sélectifs</span>
+</div>
+<h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Un projet en tête ? <br>
+<span class="text-[#FF7A00] drop-shadow-[0_0_35px_rgba(255,122,0,0.4)]">Construisons-le ensemble.</span>
+</h2>
+<p class="text-zinc-400 text-sm sm:text-base max-w-lg mt-4 leading-relaxed">
+            Construisons quelque chose qui mérite d’exister. Parlons de votre roadmap produit ou de votre prochaine refonte d'expérience digitale.
+          </p>
+<!-- Interactive Action Center -->
+<div class="flex flex-col sm:flex-row items-center gap-3.5 mt-8 w-full justify-center">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] text-black font-bold text-xs sm:text-sm px-7 py-3 rounded-full shadow-[0_8px_30px_rgba(255,122,0,0.4)] hover:scale-105 transition-all" href="mailto:contact@kevinassamoi.com">
+<span class="">Discutons de votre projet</span>
+<span class="material-symbols-outlined text-base font-bold">arrow_forward</span>
+</a>
+<!-- Copy button with live feedback -->
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs sm:text-sm px-6 py-3 rounded-full transition-all relative" id="copy-email-btn">
+<span class="material-symbols-outlined text-base text-[#FF7A00]">content_copy</span>
+<span class="">contact@kevinassamoi.com</span>
+<span class="absolute -top-8 px-2.5 py-0.5 rounded bg-[#FF7A00] text-black text-[11px] font-mono font-bold opacity-0 transition-opacity pointer-events-none shadow-lg" id="copied-toast">Copié !</span>
+</button>
+</div>
+<!-- Timezones & Locations -->
+<div class="flex flex-wrap items-center justify-center gap-5 text-zinc-400 font-mono text-[11px] pt-8 mt-6 border-t border-white/5 w-full">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-[#FF7A00]">location_on</span>
+<span class="">Paris, France (CET)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-[#FF7A00]">location_on</span>
+<span class="">Abidjan, CI (GMT)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-[#FF7A00]">public</span>
+<span class="">Remote Worldwide</span>
+</span>
+</div>
+</div>
+<!-- Footer Credits -->
+<div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-white/5 text-[11px] text-zinc-500 font-mono">
+<span class="">© 2026 Kevin Assamoi. Tous droits réservés.</span>
+<span class="text-zinc-400 mt-1 sm:mt-0">Single-Screen Web App • Performance 100%</span>
+</div>
+</section>
+</main><footer class="backdrop-blur-md bg-black/40 border-t border-white/5 px-4 sm:px-8 py-2.5 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 shrink-0 z-40 text-[11px] font-mono select-none"><div class="flex items-center gap-2.5 text-zinc-400"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span><span class="text-zinc-300 font-medium">Available worldwide</span></span><span class="text-white/20">•</span><span class="">© 2026 Kevin Assamoi — Product Builder &amp; AI Designer</span></div><div class="flex items-center gap-4 sm:gap-5 text-zinc-400"><a href="https://twitter.com" target="_blank" class="hover:text-[#FF7A00] transition-colors">Twitter / X</a><a href="https://linkedin.com" target="_blank" class="hover:text-[#FF7A00] transition-colors">LinkedIn</a><a href="https://github.com" target="_blank" class="hover:text-[#FF7A00] transition-colors">GitHub</a><a href="mailto:contact@kevinassamoi.com" class="hover:text-[#FF7A00] transition-colors">Email</a><span class="text-white/20">•</span><a href="#" onclick="switchView('contact')" class="hover:text-white transition-colors">Mentions</a></div></footer>
+<!-- IN-VIEW INTERACTIVE PROJECT MODAL (Zero-Scroll Modal Drawer) -->
+<div class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4" id="project-modal">
+<div class="bg-[#121212] border border-white/15 rounded-2xl max-w-2xl w-full p-6 relative shadow-2xl overflow-hidden flex flex-col">
+<button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 flex items-center justify-center text-zinc-300" onclick="closeProjectModal()">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+<div class="flex flex-col gap-4" id="modal-content">
+<!-- Dynamic injection from JS -->
+</div>
+</div>
+</div>
+</div>
+<!-- CLIENT-SIDE ROUTER & INTERACTIVITY SCRIPT -->
+<script>
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+    const viewPanes = document.querySelectorAll('.view-pane');
+    const switchButtons = document.querySelectorAll('.nav-switch, .nav-cta, .nav-brand');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    // Switch View Function with smooth fade
+    function switchView(targetId) {
+      if (!targetId) return;
+
+      // Close mobile drawer if open
+      if (mobileDrawer) mobileDrawer.classList.add('hidden');
+
+      // Update Top Nav Tabs state
+      navTabs.forEach(tab => {
+        const isCurrent = tab.getAttribute('data-target') === targetId;
+        if (isCurrent) {
+          tab.className = "nav-tab px-4 py-1.5 rounded-full text-black bg-[#FF7A00] font-semibold shadow-[0_0_20px_rgba(255,122,0,0.45)] transition-all";
+        } else {
+          tab.className = "nav-tab px-4 py-1.5 rounded-full text-[#A0A0A0] hover:text-white transition-all";
+        }
+      });
+
+      // Update View Panes
+      viewPanes.forEach(pane => {
+        if (pane.id === `view-${targetId}`) {
+          pane.classList.add('active');
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+
+      // Sync hash in URL quietly
+      window.location.hash = targetId;
+    }
+
+    // Attach Nav Click Listeners
+    navTabs.forEach(tab => {
+      tab.addEventListener('click', () => switchView(tab.getAttribute('data-target')));
+    });
+
+    mobileNavItems.forEach(item => {
+      item.addEventListener('click', () => switchView(item.getAttribute('data-target')));
+    });
+
+    switchButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = btn.getAttribute('data-target') || 'hero';
+        switchView(target);
+      });
+    });
+
+    // Mobile Toggle
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileDrawer.classList.toggle('hidden');
+      });
+    }
+
+    // Copy Email Feedback Toast
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const copiedToast = document.getElementById('copied-toast');
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('contact@kevinassamoi.com');
+        copiedToast.classList.remove('opacity-0');
+        setTimeout(() => copiedToast.classList.add('opacity-0'), 2000);
+      });
+    }
+
+    // Filter Buttons in Projects View
+    const filterButtons = document.querySelectorAll('.project-filter');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.className = "project-filter px-3 py-1 rounded-full text-zinc-400 hover:text-white transition-all";
+        });
+        btn.className = "project-filter active px-3 py-1 rounded-full bg-[#FF7A00] text-black font-semibold transition-all";
+
+        const filter = btn.getAttribute('data-filter');
+        projectCards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-cat') === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // In-View Project Modal Data & Handlers
+    const projectData = {
+      aura: {
+        title: "Aura Intelligence",
+        subtitle: "SaaS Enterprise &bull; Next.js 15 &bull; OpenAI API",
+        metric: "+184% Vélocité de production",
+        desc: "Plateforme d'orchestration générative pour équipes de marque mondiales. Intègre un studio visuel avec gouvernance de marque stricte, micro-animations réactives et tokens synchronisés.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuByG89r1e27rZGPwgbNbMjbgNHF2qLTYYCL1lNBi9yxpCswP9vZGzXYKXFs-VcXLHQAzJrvXPlTJW28V_8hN6NnWvXWuKVknk8n0bU6MyagPkRSwReukT-7zZEUylLuTdWDjnMDbfo9zmbQ3BzD7mQ3OOJ8LmLruv8Jtks0QY6V_XN9dOmBXWbsJIVRI32KUDnaQjkprCG2CV3gaihA3ZWCzyVx1ELd2ECtzpDbPKK9ydlrj0ahNSUr3Q"
+      },
+      kromatik: {
+        title: "Kromatik Studio",
+        subtitle: "WebGL Immersion &bull; Three.js &bull; GSAP",
+        metric: "Awwwards Site of the Day",
+        desc: "Direction artistique haut de gamme et expérience de portfolio digital 3D sculpturale mettant à l'honneur des shaders ambre/cuivre et des interactions de scroll cinétiques.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCdL_3Bb7iMuW7r1-2mE2N8LUvYn6y9uzfi0C344Uz9TvRF-5CHDKBigAvu7LLBFtVoPfJLtuNFKFH-nKXcDqer-C0_oR3eErIvGrzrRvHQgxU0PBqaKUIWzZ4E4zZmEBfq9sn3WLgFjHjoxawLx65m4Ac5-EOeh4wuL-ybn-QR060L39K2S_hcF713l5Zeej6vWwwgEGlaSyBaJuU99xRhhSYsTtTN400NJqFEij3993wBj7c2GBFQ-w"
+      },
+      flowpulse: {
+        title: "FlowPulse Wealth",
+        subtitle: "Fintech Mobile &bull; React Native &bull; Design Tokens",
+        metric: "42k+ Utilisateurs actifs",
+        desc: "Application mobile de gestion patrimoniale et de trésorerie automatisée pour créateurs et dirigeants nomades. Design system multi-devises ultra fluide avec authentification biométrique.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCrwugo9rXufkpN1rbIx4KeEsadOu_Wj0PJ7dq9p3WDitc1j1rHECrU6q1ahMcFPb7aLCZbkJmSCzj2FTuX3y6HZMxCJ6GiCvJZXK3Of9e-HUptlIAzyMpwWYoGWE1F8Uw07dNBZxXhxVYWeZpXxFMhxOrL2w9NL-p4NP4KOUZ4_rsSz6OkV1OQagPtDANBaYnHSzEzzPWlAr15ZXL3L4n2t-fEV4cVmPuC2qPi2AC595AY4joQ1AmjQA"
+      }
+    };
+
+    function openProjectModal(key) {
+      const p = projectData[key];
+      if (!p) return;
+      const modal = document.getElementById('project-modal');
+      const content = document.getElementById('modal-content');
+      content.innerHTML = `
+        <div class="relative w-full h-44 rounded-xl overflow-hidden mb-2">
+          <img src="${p.image}" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <span class="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-full bg-[#FF7A00] text-black font-mono text-xs font-bold">${p.metric}</span>
+        </div>
+        <h3 class="text-xl font-bold text-white">${p.title}</h3>
+        <span class="text-xs font-mono text-zinc-400">${p.subtitle}</span>
+        <p class="text-sm text-zinc-300 leading-relaxed">${p.desc}</p>
+        <div class="flex items-center justify-between pt-3 border-t border-white/10 mt-2">
+          <span class="text-xs text-zinc-400 font-mono">Kevin Assamoi Studio &bull; 2024-2026</span>
+          <button onclick="closeProjectModal(); switchView('contact')" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF7A00] hover:underline">
+            <span>Discuter d’un projet similaire</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('project-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Close on backdrop click or ESC
+    document.getElementById('project-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'project-modal') closeProjectModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeProjectModal();
+    });
+
+    // Hash check on initial page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && ['hero', 'about', 'projects', 'skills', 'testimonials', 'contact'].includes(hash)) {
+        switchView(hash);
+      }
+    });
+  </script>
+
+
+</body></html>
