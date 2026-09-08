@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { SiteSettingsData } from '@/lib/types';
+import { normalizeViewId } from './KineticApp';
 
 interface KineticHeaderProps {
   currentView: string;
@@ -30,7 +31,7 @@ export default function KineticHeader({ currentView, onSelectView, settings }: K
 
   const navItems = Array.isArray(settings?.menuItems) && (settings.menuItems as any[]).length > 0
     ? (settings.menuItems as any[]).map((item) => ({
-        id: item.href?.replace(/^#/, '') || 'hero',
+        id: normalizeViewId(item.href || item.name || 'hero'),
         label: item.name || item.label || 'Lien',
       }))
     : defaultNavItems;

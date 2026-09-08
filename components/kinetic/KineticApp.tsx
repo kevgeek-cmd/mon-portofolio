@@ -20,6 +20,17 @@ interface KineticAppProps {
   testimonials?: any[];
 }
 
+export function normalizeViewId(view: string): string {
+  const clean = (view || '').toLowerCase().replace(/^#/, '').trim();
+  if (['hero', 'accueil', 'home', ''].includes(clean)) return 'hero';
+  if (['about', 'a-propos', 'apropos', 'histoire'].includes(clean)) return 'about';
+  if (['projects', 'projets', 'nos-projets', 'portfolio', 'travaux'].includes(clean)) return 'projects';
+  if (['skills', 'competences', 'services', 'expertise'].includes(clean)) return 'skills';
+  if (['testimonials', 'temoignages', 'avis', 'clients'].includes(clean)) return 'testimonials';
+  if (['contact', 'me-contacter', 'messages'].includes(clean)) return 'contact';
+  return 'hero';
+}
+
 export default function KineticApp({
   settings,
   projects = [],
@@ -30,13 +41,12 @@ export default function KineticApp({
 }: KineticAppProps) {
   const [currentView, setCurrentView] = useState('hero');
 
-  // Handle URL hash routing
+  // Handle URL hash routing with automatic alias normalization
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace('#', '');
-      if (['hero', 'about', 'projects', 'skills', 'testimonials', 'contact'].includes(hash)) {
-        setCurrentView(hash);
-      }
+      const normalized = normalizeViewId(hash);
+      setCurrentView(normalized);
     };
 
     handleHash();
@@ -45,8 +55,9 @@ export default function KineticApp({
   }, []);
 
   const switchView = (view: string) => {
-    setCurrentView(view);
-    window.location.hash = view;
+    const normalized = normalizeViewId(view);
+    setCurrentView(normalized);
+    window.location.hash = normalized;
   };
 
   return (

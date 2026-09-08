@@ -52,8 +52,8 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({
-  name = 'VOTRE MARQUE',
-  subtitle = 'AGENCE DIGITALE',
+  name = 'Kevin Assamoi',
+  subtitle = 'Studio • Product',
   logoUrl,
   variant = 'dark',
   className = '',
