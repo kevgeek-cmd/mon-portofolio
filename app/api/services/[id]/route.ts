@@ -7,6 +7,9 @@ const updateServiceSchema = z.object({
   title: z.string().min(1).optional(),
   description: z.string().min(5).optional(),
   icon: z.string().min(1).optional(),
+  image: z.string().optional().nullable(),
+  percentage: z.number().int().min(0).max(100).optional().nullable(),
+  rating: z.number().int().min(1).max(5).optional().nullable(),
   tags: z.string().optional().nullable(),
   isActive: z.boolean().optional(),
   order: z.number().int().optional(),
@@ -27,7 +30,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
     const updated = await prisma.service.update({
       where: { id },
-      data: validated,
+      data: validated as any,
     });
 
     return NextResponse.json({ success: true, service: updated });

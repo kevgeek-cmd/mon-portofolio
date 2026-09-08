@@ -8,6 +8,9 @@ const createServiceSchema = z.object({
   slug: z.string().optional(),
   description: z.string().min(5, 'La description est requise'),
   icon: z.string().min(1, "L'icône est requise"),
+  image: z.string().optional().nullable(),
+  percentage: z.number().int().min(0).max(100).optional().nullable().default(90),
+  rating: z.number().int().min(1).max(5).optional().nullable().default(5),
   tags: z.string().optional().nullable(),
   isActive: z.boolean().optional().default(true),
   order: z.number().int().optional().default(0),
@@ -40,10 +43,13 @@ export async function POST(request: Request) {
         slug,
         description: validated.description,
         icon: validated.icon,
+        image: validated.image || null,
+        percentage: validated.percentage !== undefined ? validated.percentage : 90,
+        rating: validated.rating !== undefined ? validated.rating : 5,
         tags: validated.tags || null,
         isActive: validated.isActive,
         order: validated.order,
-      },
+      } as any,
     });
 
     return NextResponse.json({ success: true, service }, { status: 201 });

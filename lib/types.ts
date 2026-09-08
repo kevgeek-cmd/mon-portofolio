@@ -55,6 +55,9 @@ export interface ServiceItem {
   slug: string;
   description: string;
   icon: string;
+  image?: string | null;
+  percentage?: number | null;
+  rating?: number | null;
   tags?: string | null;
   isActive?: boolean;
   order: number;

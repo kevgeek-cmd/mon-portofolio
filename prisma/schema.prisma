@@ -155,6 +155,9 @@ model Service {
   slug        String   @unique
   description String   @db.Text
   icon        String
+  image       String?
+  percentage  Int?     @default(90)
+  rating      Int?     @default(5)
   tags        String?  @default("Architecture • Performance • Design")
   isActive    Boolean  @default(true)
   order       Int      @default(0)
