@@ -12,10 +12,12 @@ export default function AdminSettingsPage() {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const [settings, setSettings] = useState({
-    // Branding
+    // Branding & Header
     companyName: '',
     companySubtitle: '',
     companyLogoUrl: '',
+    headerCtaText: 'Parlons de votre projet ↗',
+    headerCtaLink: '#contact',
 
     // Hero
     heroBadgeText: '',
@@ -45,6 +47,7 @@ export default function AdminSettingsPage() {
     aboutSubText: '',
     aboutLocation1: '',
     aboutLocation2: '',
+    aboutStackTags: 'Figma Maestro, Design Systems Tokens, Next.js & Tailwind, LLM & Agents',
     aboutCtaText: '',
     aboutCtaLink: '',
     aboutExperienceText: '',
@@ -90,6 +93,9 @@ export default function AdminSettingsPage() {
     contactSecondaryBtnText: '',
     contactWhatsappBtnText: '',
     contactWhatsappUrl: '',
+    contactLocation1: 'Abidjan, CI (GMT)',
+    contactLocation2: 'Paris, France (CET)',
+    contactLocation3: 'Remote Worldwide',
     companyEmail: '',
     companyPhone: '',
     companyAddress: '',
@@ -100,17 +106,20 @@ export default function AdminSettingsPage() {
     copyrightText: '',
 
     // Theme & Menu
-    primaryColor: '#D4AF37',
-    darkBgColor: '#0B0B0C',
+    primaryColor: '#FF7A00',
+    darkBgColor: '#090909',
+    containerBgColor: '#121414',
+    textColor: '#F5F5F5',
     beigeBgColor: '#F7F5F0',
   });
 
   const [menuItems, setMenuItems] = useState<{ name: string; href: string }[]>([
-    { name: 'Accueil', href: '#accueil' },
-    { name: 'Nos projets', href: '#projets' },
-    { name: 'À propos', href: '#a-propos' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'ACCUEIL', href: 'hero' },
+    { name: 'À PROPOS', href: 'about' },
+    { name: 'PROJETS', href: 'projects' },
+    { name: 'EXPERTISE', href: 'skills' },
+    { name: 'AVIS', href: 'testimonials' },
+    { name: 'CONTACT', href: 'contact' },
   ]);
 
   const [seoSettings, setSeoSettings] = useState({
@@ -130,6 +139,8 @@ export default function AdminSettingsPage() {
           companyName: data.settings.companyName || '',
           companySubtitle: data.settings.companySubtitle || '',
           companyLogoUrl: data.settings.companyLogoUrl || '',
+          headerCtaText: data.settings.headerCtaText || 'Parlons de votre projet ↗',
+          headerCtaLink: data.settings.headerCtaLink || '#contact',
 
           heroBadgeText: data.settings.heroBadgeText || '',
           heroTitle: data.settings.heroTitle || '',
@@ -157,6 +168,7 @@ export default function AdminSettingsPage() {
           aboutSubText: data.settings.aboutSubText || '',
           aboutLocation1: data.settings.aboutLocation1 || '',
           aboutLocation2: data.settings.aboutLocation2 || '',
+          aboutStackTags: data.settings.aboutStackTags || 'Figma Maestro, Design Systems Tokens, Next.js & Tailwind, LLM & Agents',
           aboutCtaText: data.settings.aboutCtaText || '',
           aboutCtaLink: data.settings.aboutCtaLink || '',
           aboutExperienceText: data.settings.aboutExperienceText || '',
@@ -198,6 +210,9 @@ export default function AdminSettingsPage() {
           contactSecondaryBtnText: data.settings.contactSecondaryBtnText || '',
           contactWhatsappBtnText: data.settings.contactWhatsappBtnText || '',
           contactWhatsappUrl: data.settings.contactWhatsappUrl || '',
+          contactLocation1: data.settings.contactLocation1 || 'Abidjan, CI (GMT)',
+          contactLocation2: data.settings.contactLocation2 || 'Paris, France (CET)',
+          contactLocation3: data.settings.contactLocation3 || 'Remote Worldwide',
           companyEmail: data.settings.companyEmail || '',
           companyPhone: data.settings.companyPhone || '',
           companyAddress: data.settings.companyAddress || '',
@@ -206,8 +221,10 @@ export default function AdminSettingsPage() {
           footerTagline: data.settings.footerTagline || '',
           copyrightText: data.settings.copyrightText || '',
 
-          primaryColor: data.settings.primaryColor || '#D4AF37',
-          darkBgColor: data.settings.darkBgColor || '#0B0B0C',
+          primaryColor: data.settings.primaryColor || '#FF7A00',
+          darkBgColor: data.settings.darkBgColor || '#090909',
+          containerBgColor: data.settings.containerBgColor || '#121414',
+          textColor: data.settings.textColor || '#F5F5F5',
           beigeBgColor: data.settings.beigeBgColor || '#F7F5F0',
         });
 
@@ -480,6 +497,36 @@ export default function AdminSettingsPage() {
                 Si vide, l'emblème doré vectoriel haute définition sera affiché automatiquement avec le nom de l'entreprise.
               </p>
             </div>
+
+            <div className="pt-4 border-t border-brand-gold/20">
+              <h4 className="text-sm font-bold text-white mb-4">Bouton d'Action En-tête (Header CTA)</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                    Texte du Bouton Header
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Parlons de votre projet ↗"
+                    value={settings.headerCtaText}
+                    onChange={(e) => setSettings({ ...settings, headerCtaText: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                    Lien du Bouton Header
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: #contact ou contact"
+                    value={settings.headerCtaLink}
+                    onChange={(e) => setSettings({ ...settings, headerCtaLink: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -666,6 +713,22 @@ export default function AdminSettingsPage() {
                   className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                Stack Technique / Tags Bento Grid (séparés par des virgules)
+              </label>
+              <input
+                type="text"
+                placeholder="Figma Maestro, Design Systems Tokens, Next.js & Tailwind, LLM & Agents"
+                value={settings.aboutStackTags || ''}
+                onChange={(e) => setSettings({ ...settings, aboutStackTags: e.target.value })}
+                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[11px] text-brand-beige/60 mt-1">
+                Ces badges technologiques s'affichent sous forme de tags dorés dans la carte latérale du Bento Grid.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -972,6 +1035,44 @@ export default function AdminSettingsPage() {
                 />
               </div>
 
+              <div className="mt-4 pt-4 border-t border-brand-gold/15">
+                <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider mb-3">
+                  Fuseaux Horaires & Villes Mondiales (Badges de Disponibilité)
+                </h5>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 font-semibold mb-1">Localisation 1</label>
+                    <input
+                      type="text"
+                      placeholder="Abidjan, CI (GMT)"
+                      value={settings.contactLocation1 || ''}
+                      onChange={(e) => setSettings({ ...settings, contactLocation1: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 font-semibold mb-1">Localisation 2</label>
+                    <input
+                      type="text"
+                      placeholder="Paris, France (CET)"
+                      value={settings.contactLocation2 || ''}
+                      onChange={(e) => setSettings({ ...settings, contactLocation2: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 font-semibold mb-1">Localisation 3</label>
+                    <input
+                      type="text"
+                      placeholder="Remote Worldwide"
+                      value={settings.contactLocation3 || ''}
+                      onChange={(e) => setSettings({ ...settings, contactLocation3: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="mt-4">
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
                   Lien d'Intégration Google Maps (URL iframe src)
@@ -1110,7 +1211,7 @@ export default function AdminSettingsPage() {
                   </div>
 
                   <div className="flex-1">
-                    <label className="block text-[10px] text-brand-gold font-bold uppercase mb-1">Lien / Ancre (ex: #projets)</label>
+                    <label className="block text-[10px] text-brand-gold font-bold uppercase mb-1">Lien / Onglet (ex: hero, about, projects, skills, testimonials, contact)</label>
                     <input
                       type="text"
                       value={item.href}
@@ -1169,13 +1270,13 @@ export default function AdminSettingsPage() {
           <div className="p-8 rounded-3xl bg-brand-darkCard border border-brand-gold/25 shadow-2xl space-y-6">
             <h3 className="text-lg font-bold text-brand-gold flex items-center gap-2 pb-3 border-b border-brand-gold/15">
               <Palette className="w-5 h-5" />
-              Personnalisation des Couleurs du Thème
+              Personnalisation des Couleurs du Thème Kinetic Amber
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="p-4 rounded-2xl bg-brand-dark border border-brand-gold/20 space-y-3">
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider">
-                  Couleur Principale (Accents & Or)
+                  Couleur Accent / Ambre
                 </label>
                 <div className="flex items-center gap-3">
                   <input
@@ -1195,7 +1296,7 @@ export default function AdminSettingsPage() {
 
               <div className="p-4 rounded-2xl bg-brand-dark border border-brand-gold/20 space-y-3">
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider">
-                  Fond Sombre (Mode Dark)
+                  Fond Principal (Dark)
                 </label>
                 <div className="flex items-center gap-3">
                   <input
@@ -1215,19 +1316,39 @@ export default function AdminSettingsPage() {
 
               <div className="p-4 rounded-2xl bg-brand-dark border border-brand-gold/20 space-y-3">
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider">
-                  Fond Clair (Section À propos)
+                  Fond Cartes / Bento
                 </label>
                 <div className="flex items-center gap-3">
                   <input
                     type="color"
-                    value={settings.beigeBgColor}
-                    onChange={(e) => setSettings({ ...settings, beigeBgColor: e.target.value })}
+                    value={settings.containerBgColor || '#121414'}
+                    onChange={(e) => setSettings({ ...settings, containerBgColor: e.target.value })}
                     className="w-12 h-12 rounded-xl bg-transparent cursor-pointer border border-brand-gold/30"
                   />
                   <input
                     type="text"
-                    value={settings.beigeBgColor}
-                    onChange={(e) => setSettings({ ...settings, beigeBgColor: e.target.value })}
+                    value={settings.containerBgColor || '#121414'}
+                    onChange={(e) => setSettings({ ...settings, containerBgColor: e.target.value })}
+                    className="flex-1 p-2.5 rounded-xl bg-brand-darkCard border border-brand-gold/20 text-xs text-white font-mono uppercase"
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-brand-dark border border-brand-gold/20 space-y-3">
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider">
+                  Couleur du Texte Principal
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={settings.textColor || '#F5F5F5'}
+                    onChange={(e) => setSettings({ ...settings, textColor: e.target.value })}
+                    className="w-12 h-12 rounded-xl bg-transparent cursor-pointer border border-brand-gold/30"
+                  />
+                  <input
+                    type="text"
+                    value={settings.textColor || '#F5F5F5'}
+                    onChange={(e) => setSettings({ ...settings, textColor: e.target.value })}
                     className="flex-1 p-2.5 rounded-xl bg-brand-darkCard border border-brand-gold/20 text-xs text-white font-mono uppercase"
                   />
                 </div>

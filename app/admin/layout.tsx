@@ -15,6 +15,8 @@ import {
   LogOut,
   Globe,
   Wrench,
+  Sparkles,
+  MessageSquareQuote,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -33,14 +35,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { name: 'Tableau de bord', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Paramètres & Thème', href: '/admin/settings', icon: Settings },
     { name: 'Projets', href: '/admin/projects', icon: FolderKanban },
+    { name: 'Compétences', href: '/admin/services', icon: Sparkles },
+    { name: 'Témoignages', href: '/admin/testimonials', icon: MessageSquareQuote },
+    { name: 'Outils & Tech', href: '/admin/tools', icon: Wrench },
     { name: 'Pages Sociales', href: '/admin/managed-pages', icon: Globe },
     { name: 'Articles Blog', href: '/admin/blog', icon: FileText },
     { name: 'Vidéos YouTube', href: '/admin/videos', icon: Video },
     { name: 'Galerie Photos', href: '/admin/gallery', icon: ImageIcon },
-    { name: 'Outils & Tech', href: '/admin/tools', icon: Wrench },
     { name: 'Messages & Contact', href: '/admin/messages', icon: Mail },
-    { name: 'Paramètres Site', href: '/admin/settings', icon: Settings },
   ];
 
   return (

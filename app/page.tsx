@@ -12,6 +12,7 @@ export default async function Home() {
   let managedPages: any[] = [];
   let videos: any[] = [];
   let galleryImages: any[] = [];
+  let testimonials: any[] = [];
 
   try {
     const results = await Promise.allSettled([
@@ -25,7 +26,8 @@ export default async function Home() {
       prisma.socialLink.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
       prisma.managedPage.findMany({ where: { isActive: true }, orderBy: { order: 'asc' } }),
       prisma.youtubeVideo.findMany({ orderBy: { order: 'asc' } }),
-      prisma.galleryImage.findMany({ orderBy: { order: 'asc' } })
+      prisma.galleryImage.findMany({ orderBy: { order: 'asc' } }),
+      prisma.testimonial.findMany({ orderBy: { order: 'asc' } }),
     ]);
 
     if (results[0].status === 'fulfilled' && results[0].value) settings = results[0].value;
@@ -36,6 +38,7 @@ export default async function Home() {
     if (results[5].status === 'fulfilled' && Array.isArray(results[5].value)) managedPages = results[5].value;
     if (results[6].status === 'fulfilled' && Array.isArray(results[6].value)) videos = results[6].value;
     if (results[7].status === 'fulfilled' && Array.isArray(results[7].value)) galleryImages = results[7].value;
+    if (results[8].status === 'fulfilled' && Array.isArray(results[8].value)) testimonials = results[8].value;
   } catch (error) {
     console.error('Database connection error in Home page:', error);
   }
@@ -47,6 +50,7 @@ export default async function Home() {
       services={services}
       tools={tools}
       socialLinks={socialLinks}
+      testimonials={testimonials}
     />
   );
 }

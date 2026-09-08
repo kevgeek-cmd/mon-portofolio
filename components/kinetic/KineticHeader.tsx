@@ -16,7 +16,10 @@ export default function KineticHeader({ currentView, onSelectView, settings }: K
   const firstLetter = name.charAt(0) || 'K';
   const subtitle = settings?.companySubtitle || 'Studio • Product';
 
-  const navItems = [
+  const ctaText = settings?.headerCtaText || 'Discutons';
+  const ctaLink = settings?.headerCtaLink || 'contact';
+
+  const defaultNavItems = [
     { id: 'hero', label: 'Accueil' },
     { id: 'about', label: 'À propos' },
     { id: 'projects', label: 'Projets' },
@@ -24,6 +27,13 @@ export default function KineticHeader({ currentView, onSelectView, settings }: K
     { id: 'testimonials', label: 'Témoignages' },
     { id: 'contact', label: 'Contact' },
   ];
+
+  const navItems = Array.isArray(settings?.menuItems) && (settings.menuItems as any[]).length > 0
+    ? (settings.menuItems as any[]).map((item) => ({
+        id: item.href?.replace(/^#/, '') || 'hero',
+        label: item.name || item.label || 'Lien',
+      }))
+    : defaultNavItems;
 
   return (
     <>
@@ -72,10 +82,10 @@ export default function KineticHeader({ currentView, onSelectView, settings }: K
         {/* Right Action Cluster */}
         <div className="flex items-center gap-3">
           <button
-            onClick={() => onSelectView('contact')}
+            onClick={() => onSelectView(ctaLink.replace(/^#/, ''))}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] hover:brightness-110 text-black font-semibold text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full shadow-[0_0_24px_rgba(255,122,0,0.35)] transition-all hover:scale-105 cursor-pointer"
           >
-            <span>Discutons</span>
+            <span>{ctaText}</span>
             <span className="material-symbols-outlined text-sm sm:text-base font-bold">arrow_forward</span>
           </button>
 

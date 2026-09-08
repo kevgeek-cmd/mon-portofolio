@@ -62,10 +62,10 @@ export default function Header({ settings }: HeaderProps) {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center space-x-7">
-          {navLinks.map((link) => (
+          {navLinks.map((link: any) => (
             <Link
               key={link.name}
-              href={link.href}
+              href={link.href || '#'}
               className="text-xs font-medium uppercase tracking-wider text-gray-900 hover:text-blue-600 transition-colors relative py-1 group"
             >
               {link.name}
@@ -78,7 +78,7 @@ export default function Header({ settings }: HeaderProps) {
         <div className="hidden lg:flex items-center space-x-4">
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 px-6, py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-300"
           >
             <span>Parlons de votre projet</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -108,10 +108,10 @@ export default function Header({ settings }: HeaderProps) {
             className="lg:hidden bg-white border-b border-gray-100 px-6 py-6"
           >
             <div className="flex flex-col space-y-4">
-              {navLinks.map((link) => (
+              {navLinks.map((link: any) => (
                 <Link
                   key={link.name}
-                  href={link.href}
+                  href={link.href || '#'}
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-sm uppercase tracking-wider font-semibold text-gray-900 hover:text-blue-600 py-2 border-b border-gray-100"
                 >

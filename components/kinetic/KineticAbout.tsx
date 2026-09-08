@@ -61,18 +61,19 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               Stack de prédilection
             </span>
             <div className="flex flex-wrap gap-1.5 mt-2">
-              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">
-                Figma Maestro
-              </span>
-              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">
-                Design Systems Tokens
-              </span>
-              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-zinc-200">
-                Next.js &amp; Tailwind
-              </span>
-              <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-[#FF7A00]">
-                LLM &amp; Agents
-              </span>
+              {(settings?.aboutStackTags 
+                ? settings.aboutStackTags.split(',').map((s) => s.trim()) 
+                : ['Figma Maestro', 'Design Systems Tokens', 'Next.js & Tailwind', 'LLM & Agents']
+              ).map((tag, idx) => (
+                <span 
+                  key={idx} 
+                  className={`px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] ${
+                    idx === 3 ? 'text-[#FF7A00]' : 'text-zinc-200'
+                  }`}
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -87,9 +88,11 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               <span className="material-symbols-outlined text-zinc-400 text-lg">track_changes</span>
             </div>
             <div>
-              <h4 className="text-base font-bold text-white mb-1">Product Strategy</h4>
+              <h4 className="text-base font-bold text-white mb-1">
+                {settings?.aboutValue1Title || "Product Strategy"}
+              </h4>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Discovery utilisateur, définition d'objectifs ROI, priorisation de features MVP et validation marché en cycles courts.
+                {settings?.aboutValue1Desc || "Discovery utilisateur, définition d'objectifs ROI, priorisation de features MVP et validation marché en cycles courts."}
               </p>
             </div>
           </div>
@@ -101,9 +104,11 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               <span className="material-symbols-outlined text-zinc-400 text-lg">palette</span>
             </div>
             <div>
-              <h4 className="text-base font-bold text-white mb-1">Haute Couture UI/UX</h4>
+              <h4 className="text-base font-bold text-white mb-1">
+                {settings?.aboutValue2Title || "Haute Couture UI/UX"}
+              </h4>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Direction artistique de précision, micro-interactions tactiles, tokens synchronisés et respect absolu des conventions d'ergonomie.
+                {settings?.aboutValue2Desc || "Direction artistique de précision, micro-interactions tactiles, tokens synchronisés et respect absolu des conventions d'ergonomie."}
               </p>
             </div>
           </div>
@@ -115,9 +120,11 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               <span className="material-symbols-outlined text-zinc-400 text-lg">smart_toy</span>
             </div>
             <div>
-              <h4 className="text-base font-bold text-white mb-1">AI Agents &amp; Neural Products</h4>
+              <h4 className="text-base font-bold text-white mb-1">
+                {settings?.aboutValue3Title || "AI Agents & Neural Products"}
+              </h4>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Intégration d'assistants contextuels, chaînes RAG, orchestration de flux génératifs et interfaces human-in-the-loop.
+                {settings?.aboutValue3Desc || "Intégration d'assistants contextuels, chaînes RAG, orchestration de flux génératifs et interfaces human-in-the-loop."}
               </p>
             </div>
           </div>
@@ -129,9 +136,11 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               <span className="material-symbols-outlined text-zinc-400 text-lg">bolt</span>
             </div>
             <div>
-              <h4 className="text-base font-bold text-white mb-1">Rapid Fullstack Prototyping</h4>
+              <h4 className="text-base font-bold text-white mb-1">
+                {settings?.aboutValue4Title || "Rapid Fullstack Prototyping"}
+              </h4>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Du design cliquable au code de production déployé sur infrastructure Vercel en cycles de développement rapides.
+                {settings?.aboutValue4Desc || "Du design cliquable au code de production déployé sur infrastructure Vercel en cycles de développement rapides."}
               </p>
             </div>
           </div>

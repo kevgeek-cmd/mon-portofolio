@@ -17,6 +17,7 @@ interface KineticAppProps {
   services?: any[];
   tools?: any[];
   socialLinks?: SocialLinkItem[];
+  testimonials?: any[];
 }
 
 export default function KineticApp({
@@ -25,6 +26,7 @@ export default function KineticApp({
   services = [],
   tools = [],
   socialLinks = [],
+  testimonials = [],
 }: KineticAppProps) {
   const [currentView, setCurrentView] = useState('hero');
 
@@ -108,6 +110,7 @@ export default function KineticApp({
             <div className="w-full h-full animate-fadeIn flex flex-col">
               <KineticTestimonials 
                 onSelectView={switchView} 
+                testimonials={testimonials}
               />
             </div>
           )}

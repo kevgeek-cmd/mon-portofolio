@@ -83,15 +83,15 @@ export default function KineticContact({ settings }: KineticContactProps) {
         <div className="flex flex-wrap items-center justify-center gap-5 text-zinc-400 font-mono text-[11px] pt-8 mt-6 border-t border-white/5 w-full">
           <span className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-sm text-[#FF7A00]">location_on</span>
-            <span>Abidjan, CI (GMT)</span>
+            <span>{settings?.contactLocation1 || "Abidjan, CI (GMT)"}</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-sm text-[#FF7A00]">location_on</span>
-            <span>Paris, France (CET)</span>
+            <span>{settings?.contactLocation2 || "Paris, France (CET)"}</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-sm text-[#FF7A00]">public</span>
-            <span>Remote Worldwide</span>
+            <span>{settings?.contactLocation3 || "Remote Worldwide"}</span>
           </span>
         </div>
       </div>

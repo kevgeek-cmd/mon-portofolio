@@ -55,6 +55,19 @@ export interface ServiceItem {
   slug: string;
   description: string;
   icon: string;
+  tags?: string | null;
+  isActive?: boolean;
+  order: number;
+}
+
+export interface TestimonialItem {
+  id: string;
+  clientName: string;
+  role: string;
+  company: string;
+  avatar?: string | null;
+  quote: string;
+  rating: number;
   order: number;
 }
 
@@ -92,6 +105,8 @@ export interface SiteSettingsData {
   companyName?: string;
   companySubtitle?: string;
   companyLogoUrl?: string | null;
+  headerCtaText?: string;
+  headerCtaLink?: string;
   heroBadgeText?: string;
   heroTitle?: string;
   heroSubtitle?: string;
@@ -117,6 +132,7 @@ export interface SiteSettingsData {
   aboutSubText?: string;
   aboutLocation1?: string;
   aboutLocation2?: string;
+  aboutStackTags?: string | null;
   aboutCtaText?: string;
   aboutCtaLink?: string;
   aboutImageUrl?: string;
@@ -154,6 +170,9 @@ export interface SiteSettingsData {
   contactSecondaryBtnText?: string;
   contactWhatsappBtnText?: string;
   contactWhatsappUrl?: string;
+  contactLocation1?: string | null;
+  contactLocation2?: string | null;
+  contactLocation3?: string | null;
   companyEmail?: string;
   companyPhone?: string;
   companyAddress?: string;
@@ -163,7 +182,9 @@ export interface SiteSettingsData {
   primaryColor?: string;
   darkBgColor?: string;
   beigeBgColor?: string;
-  menuItems?: { name: string; href: string }[] | null;
+  containerBgColor?: string | null;
+  textColor?: string | null;
+  menuItems?: { id?: string; name: string; href?: string; isActive?: boolean }[] | null;
 }
 
 export interface SeoSettingsData {
