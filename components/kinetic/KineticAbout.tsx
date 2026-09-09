@@ -9,8 +9,11 @@ interface KineticAboutProps {
 }
 
 export default function KineticAbout({ onSelectView, settings }: KineticAboutProps) {
-  const aboutTitle = settings?.aboutTitle || "Je transforme les idées en produits.";
-  const aboutMain = settings?.aboutMainText || "Chaque produit que je conçois commence par une écoute attentive des frictions réelles. Je ne produis pas de simples maquettes : je structure des modèles mentaux fluides, bâtis sur des design systems cohérents et capables d’évoluer à grande échelle.";
+  const aboutBadge = settings?.aboutBadge || "Manifeste & Vision";
+  const aboutTitle = settings?.aboutTitle || "L'innovation et la performance au service de vos ambitions";
+  const aboutSubtitle = settings?.aboutSubText || "Artisanat numérique guidé par le sens, la rigueur et la performance.";
+  const aboutMain = settings?.aboutMainText || "Nous sommes une équipe d'experts dédiée à la conception d'outils numériques performants, modernes et sur mesure pour accélérer votre croissance.";
+  const topTag = settings?.aboutLocation1 || "Design suisse • Next.js fullstack • Architectures IA";
 
   return (
     <section className="w-full h-full flex flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between">
@@ -19,10 +22,16 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
       <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-6 shrink-0">
         <div>
           <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF7A00] font-semibold">
-            Manifeste &amp; Vision
+            {aboutBadge}
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
-            {aboutTitle.includes('produits') ? (
+            {aboutTitle.includes('ambitions') ? (
+              <>
+                {aboutTitle.split('ambitions')[0]}
+                <span className="text-[#FF7A00]">ambitions</span>
+                {aboutTitle.split('ambitions')[1] || ''}
+              </>
+            ) : aboutTitle.includes('produits') ? (
               <>
                 {aboutTitle.split('produits')[0]}
                 <span className="text-[#FF7A00]">produits</span>
@@ -35,7 +44,7 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
         </div>
         <div className="text-xs text-zinc-400 font-mono mt-2 sm:mt-0 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          Design suisse • Next.js fullstack • Architectures IA
+          {topTag}
         </div>
       </div>
 
@@ -50,7 +59,7 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
               <span className="material-symbols-outlined text-xl">psychology</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug">
-              Artisanat numérique guidé par le sens, la rigueur et la performance.
+              {aboutSubtitle}
             </h3>
             <p className="text-xs sm:text-sm text-zinc-400 mt-3 leading-relaxed whitespace-pre-line">
               {aboutMain}
