@@ -9,18 +9,14 @@ interface KineticFooterProps {
   socials?: SocialLinkItem[];
 }
 
-export default function KineticFooter({ onSelectView, settings, socials }: KineticFooterProps) {
-  const name = settings?.companyName || 'Kevin Assamoi';
+export default function KineticFooter({ onSelectView, settings }: KineticFooterProps) {
+  const name = settings?.companyName || 'Kevin Stéphane Assamoi';
   const year = new Date().getFullYear();
   const showStatus = settings?.footerShowStatus !== false;
   const statusText = settings?.footerStatusText || 'Available worldwide';
-  const showSocials = settings?.footerShowSocials !== false;
-  const showMentions = settings?.footerShowMentions !== false;
-
-  const activeSocials = (socials || []).filter(s => s.isActive);
 
   return (
-    <footer className="backdrop-blur-md bg-black/40 border-t border-white/5 px-4 sm:px-8 py-2.5 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 shrink-0 z-40 text-[11px] font-mono select-none">
+    <footer className="backdrop-blur-md bg-black/40 border-t border-white/5 px-4 sm:px-8 py-3 flex items-center justify-between gap-4 shrink-0 z-40 text-[11px] font-mono select-none">
       <div className="flex items-center flex-wrap gap-2.5 text-zinc-400">
         {showStatus && (
           <>
@@ -33,47 +29,6 @@ export default function KineticFooter({ onSelectView, settings, socials }: Kinet
         )}
         <span>© {year} {name} — {settings?.footerTagline || 'Product Builder & AI Designer'}</span>
       </div>
-
-      {(showSocials || showMentions) && (
-        <div className="flex items-center flex-wrap gap-4 sm:gap-5 text-zinc-400">
-          {showSocials && (
-            <>
-              {activeSocials.map((social) => (
-                <a
-                  key={social.id || social.platform}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-[#FF7A00] transition-colors"
-                >
-                  {social.platform}
-                </a>
-              ))}
-              {settings?.companyEmail && (
-                <a
-                  href={`mailto:${settings.companyEmail}`}
-                  className="hover:text-[#FF7A00] transition-colors"
-                >
-                  Email
-                </a>
-              )}
-            </>
-          )}
-
-          {showSocials && showMentions && (
-            <span className="text-white/20">•</span>
-          )}
-
-          {showMentions && (
-            <button
-              onClick={() => onSelectView('contact')}
-              className="hover:text-white transition-colors cursor-pointer"
-            >
-              Mentions
-            </button>
-          )}
-        </div>
-      )}
     </footer>
   );
 }

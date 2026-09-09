@@ -29,7 +29,8 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
           const activeSocials = (socialLinks || []).filter(s => s.isActive);
           if (activeSocials.length === 0 && !settings?.companyEmail) return null;
 
-          const getPlatformIcon = (platform: string) => {
+          const getPlatformIcon = (platform: string, customIcon?: string) => {
+            if (customIcon && customIcon.trim()) return customIcon;
             const p = platform.toLowerCase();
             if (p.includes('linkedin')) return 'work';
             if (p.includes('github')) return 'code';
@@ -37,35 +38,52 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
             if (p.includes('youtube')) return 'smart_display';
             if (p.includes('instagram') || p.includes('tiktok')) return 'photo_camera';
             if (p.includes('facebook')) return 'groups';
+            if (p.includes('whatsapp')) return 'chat';
+            if (p.includes('discord')) return 'forum';
+            if (p.includes('telegram')) return 'send';
+            if (p.includes('figma')) return 'draw';
+            if (p.includes('dribbble')) return 'palette';
+            if (p.includes('behance')) return 'brush';
+            if (p.includes('spotify')) return 'headphones';
+            if (p.includes('twitch')) return 'videogame_asset';
             return 'link';
           };
 
           return (
-            <aside className="hidden xl:flex flex-col items-center gap-3 absolute left-6 top-1/2 -translate-y-1/2 z-20">
+            <aside className="hidden xl:flex flex-col items-center gap-3.5 absolute left-6 top-1/2 -translate-y-1/2 z-30">
               {activeSocials.map((social) => (
-                <a
-                  key={social.id || social.platform}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.platform}
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-                  title={social.platform}
-                >
-                  <span className="material-symbols-outlined text-[17px]">
-                    {getPlatformIcon(social.platform)}
-                  </span>
-                </a>
+                <div key={social.id || social.platform} className="relative group/social">
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.platform}
+                    className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-110 shadow-lg transition-all duration-300"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">
+                      {getPlatformIcon(social.platform, social.icon)}
+                    </span>
+                  </a>
+                  {/* Floating Tooltip */}
+                  <div className="absolute left-12 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-black/90 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-200 z-40 shadow-xl">
+                    {social.platform}
+                  </div>
+                </div>
               ))}
+
               {settings?.companyEmail && (
-                <a
-                  href={`mailto:${settings.companyEmail}`}
-                  aria-label="Email"
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-                  title="Envoyer un email"
-                >
-                  <span className="material-symbols-outlined text-[17px]">mail</span>
-                </a>
+                <div className="relative group/social">
+                  <a
+                    href={`mailto:${settings.companyEmail}`}
+                    aria-label="Email"
+                    className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-110 shadow-lg transition-all duration-300"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">mail</span>
+                  </a>
+                  <div className="absolute left-12 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-black/90 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-200 z-40 shadow-xl">
+                    Email Direct
+                  </div>
+                </div>
               )}
             </aside>
           );

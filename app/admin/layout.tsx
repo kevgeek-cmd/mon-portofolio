@@ -17,6 +17,7 @@ import {
   Wrench,
   Sparkles,
   MessageSquareQuote,
+  Share2,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -37,10 +38,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Tableau de bord', href: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Paramètres & Thème', href: '/admin/settings', icon: Settings },
     { name: 'Projets', href: '/admin/projects', icon: FolderKanban },
+    { name: 'Réseaux Sociaux', href: '/admin/social-links', icon: Share2 },
     { name: 'Compétences', href: '/admin/services', icon: Sparkles },
     { name: 'Témoignages', href: '/admin/testimonials', icon: MessageSquareQuote },
     { name: 'Outils & Tech', href: '/admin/tools', icon: Wrench },
-    { name: 'Pages Sociales', href: '/admin/managed-pages', icon: Globe },
+    { name: 'Pages Gérées (CM)', href: '/admin/managed-pages', icon: Globe },
     { name: 'Articles Blog', href: '/admin/blog', icon: FileText },
     { name: 'Vidéos YouTube', href: '/admin/videos', icon: Video },
     { name: 'Galerie Photos', href: '/admin/gallery', icon: ImageIcon },

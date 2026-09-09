@@ -226,7 +226,7 @@ model YoutubePlaylist {
 
 model SocialLink {
   id        String   @id @default(uuid())
-  platform  String   @unique // Facebook, LinkedIn, Instagram, TikTok, YouTube, GitHub
+  platform  String
   url       String
   icon      String
   isActive  Boolean  @default(true)

@@ -1110,12 +1110,12 @@ export default function AdminSettingsPage() {
                 Visibilité des Éléments du Pied de Page (Footer)
               </h4>
 
-              {/* 1. Statut de disponibilité (Bas Gauche) */}
+              {/* Statut de disponibilité (Bas Gauche) */}
               <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-xs font-bold text-white uppercase tracking-wider block">
-                      Pastille Verte & Statut de Disponibilité (Bas Gauche)
+                      Pastille Verte & Statut de Disponibilité (Pied de page)
                     </label>
                     <p className="text-[11px] text-brand-beige/60 mt-0.5">
                       Affiche le voyant vert et le texte de statut dans le footer.
@@ -1146,49 +1146,6 @@ export default function AdminSettingsPage() {
                     />
                   </div>
                 )}
-              </div>
-
-              {/* 2. Liens Réseaux Sociaux & Mentions (Bas Droite) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 flex items-center justify-between">
-                  <div>
-                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
-                      Liens Réseaux Sociaux (Bas Droite)
-                    </label>
-                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
-                      Twitter / X, LinkedIn, GitHub, Email...
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.footerShowSocials}
-                      onChange={(e) => setSettings({ ...settings, footerShowSocials: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
-                  </label>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 flex items-center justify-between">
-                  <div>
-                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
-                      Lien « Mentions » (Bas Droite)
-                    </label>
-                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
-                      Bouton d'accès aux mentions & contact.
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.footerShowMentions}
-                      onChange={(e) => setSettings({ ...settings, footerShowMentions: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
-                  </label>
-                </div>
               </div>
             </div>
 

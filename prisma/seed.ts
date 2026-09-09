@@ -297,11 +297,10 @@ async function main() {
   ];
 
   for (const s of socialData) {
-    await prisma.socialLink.upsert({
-      where: { platform: s.platform },
-      update: {},
-      create: s,
-    });
+    const existing = await prisma.socialLink.findFirst({ where: { platform: s.platform } });
+    if (!existing) {
+      await prisma.socialLink.create({ data: s });
+    }
   }
   console.log('🌐 Réseaux sociaux initialisés.');
 
