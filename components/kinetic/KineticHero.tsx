@@ -30,11 +30,11 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
   const activeSocials = (socialLinks || []).filter(s => s.isActive);
 
   return (
-    <section className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 lg:px-16 py-6 lg:py-4 pb-12 lg:pb-6 relative overflow-y-auto lg:overflow-hidden custom-scroll gap-6 lg:gap-0">
+    <section className="w-full min-h-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16 py-4 lg:py-3 pb-8 lg:pb-4 relative overflow-y-auto overflow-x-hidden custom-scroll gap-4 lg:gap-8">
       
       {/* Social Vertical Dock (Desktop xl:flex - 100% Synced with /admin/social-links) */}
       {settings?.heroShowSocialBar !== false && activeSocials.length > 0 && (
-        <aside className="hidden xl:flex flex-col items-center gap-2 absolute left-5 top-1/2 -translate-y-1/2 z-30 bg-[#121214]/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
+        <aside className="hidden xl:flex flex-col items-center gap-2 absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-[#121214]/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
           {activeSocials.map((social) => (
             <div key={social.id || social.platform} className="relative group/social">
               <a
@@ -56,8 +56,8 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
       )}
 
       {/* Left Column: Portrait with Cinematic Backlight */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center relative pt-2 lg:pt-0 shrink-0">
-        <div className="relative w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[380px] lg:max-w-[460px] xl:max-w-[500px] aspect-[4/4.6] flex items-center justify-center">
+      <div className="w-full lg:w-5/12 xl:w-1/2 flex items-center justify-center relative pt-1 lg:pt-0 shrink-0">
+        <div className="relative w-full max-w-[240px] xs:max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] xl:max-w-[440px] aspect-[4/4.5] flex items-center justify-center">
           {/* Warm Amber Studio Glow Halo */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7A00]/30 via-[#FF7A00]/15 to-transparent blur-3xl pointer-events-none" />
           
@@ -74,7 +74,7 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
           
           {/* Micro Floating Credential Capsule */}
           {settings?.heroShowFloatingBadge !== false && Boolean(settings?.heroBadgeFloatingText?.trim()) && (
-            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 sm:gap-2 bg-[#121212]/90 border border-white/10 backdrop-blur-xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full shadow-xl">
+            <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 flex items-center gap-1.5 sm:gap-2 bg-[#121212]/90 border border-white/10 backdrop-blur-xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full shadow-xl">
               <span className="material-symbols-outlined text-[#FF7A00] text-xs sm:text-sm">
                 {settings?.heroBadgeFloatingIcon || 'auto_awesome'}
               </span>
@@ -87,10 +87,10 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
       </div>
 
       {/* Right Column: Monolith Narrative & Switchers */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center py-2 lg:py-2 lg:pl-8 xl:pl-14 z-10 my-auto">
+      <div className="w-full lg:w-7/12 xl:w-1/2 flex flex-col justify-center py-1 lg:py-2 lg:pl-4 xl:pl-8 z-10 my-auto">
         {/* Availability Pill Badge */}
         {showHeroBadge && (
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md px-3 py-1 rounded-full w-fit mb-3 sm:mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md px-3 py-1 rounded-full w-fit mb-2.5 sm:mb-3 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#FF7A00] shadow-[0_0_10px_rgba(255,122,0,0.9)] animate-pulse" />
             <span className="font-mono text-[9px] sm:text-[10px] text-zinc-300 uppercase tracking-widest font-semibold">
               {heroBadge}
@@ -99,7 +99,7 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
         )}
 
         {/* Giant Headline */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
+        <h1 className="text-2xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
           {heroTitle.includes('Kevin') ? (
             <>
               {heroTitle.split('Kevin')[0]}
@@ -111,27 +111,27 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
         </h1>
 
         {/* Subtitle Eyebrow */}
-        <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] text-primary font-semibold mt-2 sm:mt-3">
+        <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.18em] text-primary font-semibold mt-1.5 sm:mt-2">
           {heroSkills}
         </p>
 
         {/* Descriptive Narrative */}
-        <p className="text-zinc-400 text-xs sm:text-sm lg:text-base max-w-lg mt-3 sm:mt-4 leading-relaxed whitespace-pre-line">
+        <p className="text-zinc-400 text-xs sm:text-sm lg:text-[13px] xl:text-sm max-w-lg mt-2 sm:mt-3 leading-relaxed whitespace-pre-line">
           {heroSubtitle}
         </p>
 
         {/* CTAs Navigation Links */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mt-5 sm:mt-6">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-4 sm:mt-5">
           <button 
             onClick={() => onSelectView('projects')}
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] text-black font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-[0_8px_25px_rgba(255,122,0,0.38)] hover:scale-105 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] text-black font-bold text-xs sm:text-sm px-5 sm:px-6 py-2 sm:py-2.5 rounded-full shadow-[0_8px_25px_rgba(255,122,0,0.38)] hover:scale-105 transition-all cursor-pointer"
           >
             <span>Voir mes projets</span>
             <span className="material-symbols-outlined text-base">arrow_forward</span>
           </button>
           <button 
             onClick={() => onSelectView('contact')}
-            className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs sm:text-sm px-4 sm:px-5 py-2.5 sm:py-3 rounded-full backdrop-blur-md hover:scale-105 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full backdrop-blur-md hover:scale-105 transition-all cursor-pointer"
           >
             <span className="material-symbols-outlined text-base text-[#FF7A00]">mail</span>
             <span>Me contacter</span>
@@ -140,31 +140,31 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
 
         {/* Bottom Metrics Bar (Configurable & Dynamic from CMS) */}
         {showStats && (
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-5 sm:pt-6 mt-5 border-t border-white/5 max-w-lg pb-2">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-3.5 sm:pt-4 mt-3.5 sm:mt-4 border-t border-white/5 max-w-lg">
             <div className="flex flex-col">
-              <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <span className="text-lg sm:text-2xl xl:text-3xl font-extrabold text-white tracking-tight">
                 {statProjects}<span className="text-[#FF7A00]">+</span>
               </span>
-              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelProjects}</span>
+              <span className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelProjects}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <span className="text-lg sm:text-2xl xl:text-3xl font-extrabold text-white tracking-tight">
                 {statExperience}<span className="text-[#FF7A00]">+</span>
               </span>
-              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelExperience}</span>
+              <span className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelExperience}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-3xl font-extrabold text-[#FF7A00] tracking-tight">
+              <span className="text-lg sm:text-2xl xl:text-3xl font-extrabold text-[#FF7A00] tracking-tight">
                 {statPassion}<span className="text-white">%</span>
               </span>
-              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelPassion}</span>
+              <span className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelPassion}</span>
             </div>
           </div>
         )}
 
         {/* Mobile Social Strip (Visible on mobile and tablet < xl) */}
         {settings?.heroShowSocialBar !== false && activeSocials.length > 0 && (
-          <div className="flex xl:hidden items-center flex-wrap gap-2 pt-3 mt-3 border-t border-white/5">
+          <div className="flex xl:hidden items-center flex-wrap gap-2 pt-2.5 mt-2.5 border-t border-white/5">
             <span className="text-[10px] font-mono uppercase text-zinc-400 mr-1">Réseaux :</span>
             {activeSocials.map((social) => (
               <a
