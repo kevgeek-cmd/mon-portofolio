@@ -283,6 +283,7 @@ model Settings {
 
   // Hero Section
   heroBadgeText  String   @default("Disponible pour de nouveaux projets")
+  heroShowBadge  Boolean  @default(true)
   heroTitle      String   @default("Je transforme des idées en expériences digitales")
   heroSubtitle   String   @default("Référent digital polyvalent, j'accompagne les marques dans leur croissance...")
   heroSkills     String   @default("Communication, Design, IA, Développement, Vidéo, Photo")
@@ -293,6 +294,7 @@ model Settings {
   heroSecondaryCtaLink String @default("#contact")
   heroImageMain       String?
   heroShowSocialBar   Boolean @default(true)
+  heroShowStats       Boolean @default(true)
   heroBadgeFloatingText String? @default("AI & PRODUCT CRAFT")
   heroBadgeFloatingIcon String? @default("auto_awesome")
   heroShowFloatingBadge Boolean @default(true)

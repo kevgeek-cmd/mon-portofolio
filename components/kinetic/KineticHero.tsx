@@ -12,66 +12,52 @@ interface KineticHeroProps {
 
 export default function KineticHero({ onSelectView, settings, socialLinks }: KineticHeroProps) {
   const heroBadge = settings?.heroBadgeText || 'Disponible pour de nouveaux projets';
+  const showHeroBadge = settings?.heroShowBadge !== false && Boolean(heroBadge?.trim());
   const heroTitle = settings?.heroTitle || "Hi, I’m Kevin.";
   const heroSkills = settings?.heroSkills || 'Product Builder • UI/UX Designer • AI Builder';
   const heroSubtitle = settings?.heroSubtitle || 'J’aide les marques et les entrepreneurs à transformer leurs idées en produits digitaux élégants, utiles et mémorables.';
-  const statProjects = settings?.statProjects || 10;
-  const statExperience = settings?.statExperience || 3;
-  const statPassion = settings?.statPassion || 100;
+  
+  const showStats = settings?.heroShowStats !== false;
+  const statProjects = settings?.statProjects ?? 30;
+  const statLabelProjects = settings?.statLabelProjects || 'Projets réalisés';
+  const statExperience = settings?.statExperience ?? 3;
+  const statLabelExperience = settings?.statLabelExperience || "Années d'expérience";
+  const statPassion = settings?.statPassion ?? 100;
+  const statLabelPassion = settings?.statLabelPassion || 'Passionné';
   
   const heroImage = settings?.heroImageMain || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDuu1invwLa0s2-XMZsz8SbKym4O7yKwbAMqL4BYePgxqw_VujC864oZhcRArkspYHdO1mUZdOhSgFOfypIq_1DCXmEiwin_ZQpNcXeM9owavpajrxJMu8w3gdhhRq0wv_moFY5662UIbwPxwEhmMvh-KQGrvyW8_6wd6H7TP0LedRFiu3YBUZ-uepTMWg2ZNWKJicrti0VyudqU-eP_VYEsrNBMlbqEK-lKF04Epp7Z8THxqsYs7FeQS800nAW9J379hE';
 
+  const activeSocials = (socialLinks || []).filter(s => s.isActive);
+
   return (
-    <section className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 lg:px-16 py-6 lg:py-0 relative overflow-y-auto lg:overflow-hidden custom-scroll gap-6 lg:gap-0">
+    <section className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-4 sm:px-10 lg:px-16 py-6 lg:py-4 pb-12 lg:pb-6 relative overflow-y-auto lg:overflow-hidden custom-scroll gap-6 lg:gap-0">
       
-      {/* Social Vertical Dock (Desktop xl:flex) */}
-      {settings?.heroShowSocialBar !== false && (
-        (() => {
-          const activeSocials = (socialLinks || []).filter(s => s.isActive);
-          if (activeSocials.length === 0 && !settings?.companyEmail) return null;
-
-          return (
-            <aside className="hidden xl:flex flex-col items-center gap-2 absolute left-5 top-1/2 -translate-y-1/2 z-30 bg-[#121214]/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
-              {activeSocials.map((social) => (
-                <div key={social.id || social.platform} className="relative group/social">
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.platform}
-                    className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/5 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-105 transition-all duration-200"
-                  >
-                    <SocialIcon platform={social.platform} icon={social.icon} className="w-3.5 h-3.5 shrink-0" />
-                  </a>
-                  {/* Floating Tooltip */}
-                  <div className="absolute left-11 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md bg-zinc-900/95 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-150 z-50 shadow-2xl">
-                    {social.platform}
-                  </div>
-                </div>
-              ))}
-
-              {settings?.companyEmail && (
-                <div className="relative group/social">
-                  <a
-                    href={`mailto:${settings.companyEmail}`}
-                    aria-label="Email"
-                    className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/5 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-105 transition-all duration-200"
-                  >
-                    <SocialIcon platform="Email" icon="mail" className="w-3.5 h-3.5 shrink-0" />
-                  </a>
-                  <div className="absolute left-11 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md bg-zinc-900/95 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-150 z-50 shadow-2xl">
-                    Email Direct
-                  </div>
-                </div>
-              )}
-            </aside>
-          );
-        })()
+      {/* Social Vertical Dock (Desktop xl:flex - 100% Synced with /admin/social-links) */}
+      {settings?.heroShowSocialBar !== false && activeSocials.length > 0 && (
+        <aside className="hidden xl:flex flex-col items-center gap-2 absolute left-5 top-1/2 -translate-y-1/2 z-30 bg-[#121214]/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
+          {activeSocials.map((social) => (
+            <div key={social.id || social.platform} className="relative group/social">
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.platform}
+                className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/5 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-105 transition-all duration-200"
+              >
+                <SocialIcon platform={social.platform} icon={social.icon} className="w-3.5 h-3.5 shrink-0" />
+              </a>
+              {/* Floating Tooltip */}
+              <div className="absolute left-11 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md bg-zinc-900/95 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-150 z-50 shadow-2xl">
+                {social.platform}
+              </div>
+            </div>
+          ))}
+        </aside>
       )}
 
       {/* Left Column: Portrait with Cinematic Backlight */}
       <div className="w-full lg:w-1/2 flex items-center justify-center relative pt-2 lg:pt-0 shrink-0">
-        <div className="relative w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[380px] lg:max-w-[460px] xl:max-w-[520px] aspect-[4/4.6] flex items-center justify-center">
+        <div className="relative w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[380px] lg:max-w-[460px] xl:max-w-[500px] aspect-[4/4.6] flex items-center justify-center">
           {/* Warm Amber Studio Glow Halo */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7A00]/30 via-[#FF7A00]/15 to-transparent blur-3xl pointer-events-none" />
           
@@ -101,14 +87,16 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
       </div>
 
       {/* Right Column: Monolith Narrative & Switchers */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center py-2 lg:py-0 lg:pl-8 xl:pl-14 z-10">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center py-2 lg:py-2 lg:pl-8 xl:pl-14 z-10 my-auto">
         {/* Availability Pill Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md px-3 py-1 rounded-full w-fit mb-3 sm:mb-4 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#FF7A00] shadow-[0_0_10px_rgba(255,122,0,0.9)] animate-pulse" />
-          <span className="font-mono text-[9px] sm:text-[10px] text-zinc-300 uppercase tracking-widest font-semibold">
-            {heroBadge}
-          </span>
-        </div>
+        {showHeroBadge && (
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md px-3 py-1 rounded-full w-fit mb-3 sm:mb-4 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#FF7A00] shadow-[0_0_10px_rgba(255,122,0,0.9)] animate-pulse" />
+            <span className="font-mono text-[9px] sm:text-[10px] text-zinc-300 uppercase tracking-widest font-semibold">
+              {heroBadge}
+            </span>
+          </div>
+        )}
 
         {/* Giant Headline */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
@@ -133,7 +121,7 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
         </p>
 
         {/* CTAs Navigation Links */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mt-5 sm:mt-7">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mt-5 sm:mt-6">
           <button 
             onClick={() => onSelectView('projects')}
             className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A00] to-[#FF9326] text-black font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-[0_8px_25px_rgba(255,122,0,0.38)] hover:scale-105 transition-all cursor-pointer"
@@ -150,61 +138,47 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
           </button>
         </div>
 
-        {/* Bottom Metrics Bar */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-5 sm:pt-6 mt-5 border-t border-white/5 max-w-lg">
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
-              {statProjects}<span className="text-[#FF7A00]">+</span>
-            </span>
-            <span className="text-[11px] sm:text-xs text-zinc-400 font-medium">Projets réalisés</span>
+        {/* Bottom Metrics Bar (Configurable & Dynamic from CMS) */}
+        {showStats && (
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-5 sm:pt-6 mt-5 border-t border-white/5 max-w-lg pb-2">
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+                {statProjects}<span className="text-[#FF7A00]">+</span>
+              </span>
+              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelProjects}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+                {statExperience}<span className="text-[#FF7A00]">+</span>
+              </span>
+              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelExperience}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-3xl font-extrabold text-[#FF7A00] tracking-tight">
+                {statPassion}<span className="text-white">%</span>
+              </span>
+              <span className="text-[11px] sm:text-xs text-zinc-400 font-medium leading-tight mt-0.5">{statLabelPassion}</span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
-              {statExperience}<span className="text-[#FF7A00]">+</span>
-            </span>
-            <span className="text-[11px] sm:text-xs text-zinc-400 font-medium">Années d'exp.</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-3xl font-extrabold text-[#FF7A00] tracking-tight">
-              {statPassion}<span className="text-white">%</span>
-            </span>
-            <span className="text-[11px] sm:text-xs text-zinc-400 font-medium">Passionné</span>
-          </div>
-        </div>
+        )}
 
         {/* Mobile Social Strip (Visible on mobile and tablet < xl) */}
-        {settings?.heroShowSocialBar !== false && (
-          (() => {
-            const activeSocials = (socialLinks || []).filter(s => s.isActive);
-            if (activeSocials.length === 0 && !settings?.companyEmail) return null;
-
-            return (
-              <div className="flex xl:hidden items-center flex-wrap gap-2 pt-4 mt-4 border-t border-white/5">
-                <span className="text-[10px] font-mono uppercase text-zinc-400 mr-1">Réseaux :</span>
-                {activeSocials.map((social) => (
-                  <a
-                    key={social.id || social.platform}
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.platform}
-                    className="w-7 h-7 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] transition-colors"
-                  >
-                    <SocialIcon platform={social.platform} icon={social.icon} className="w-3.5 h-3.5" />
-                  </a>
-                ))}
-                {settings?.companyEmail && (
-                  <a
-                    href={`mailto:${settings.companyEmail}`}
-                    aria-label="Email"
-                    className="w-7 h-7 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] transition-colors"
-                  >
-                    <SocialIcon platform="Email" icon="mail" className="w-3.5 h-3.5" />
-                  </a>
-                )}
-              </div>
-            );
-          })()
+        {settings?.heroShowSocialBar !== false && activeSocials.length > 0 && (
+          <div className="flex xl:hidden items-center flex-wrap gap-2 pt-3 mt-3 border-t border-white/5">
+            <span className="text-[10px] font-mono uppercase text-zinc-400 mr-1">Réseaux :</span>
+            {activeSocials.map((social) => (
+              <a
+                key={social.id || social.platform}
+                href={social.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.platform}
+                className="w-7 h-7 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] transition-colors"
+              >
+                <SocialIcon platform={social.platform} icon={social.icon} className="w-3.5 h-3.5" />
+              </a>
+            ))}
+          </div>
         )}
 
       </div>

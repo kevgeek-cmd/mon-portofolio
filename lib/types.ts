@@ -111,6 +111,7 @@ export interface SiteSettingsData {
   headerCtaText?: string;
   headerCtaLink?: string;
   heroBadgeText?: string;
+  heroShowBadge?: boolean;
   heroTitle?: string;
   heroSubtitle?: string;
   heroSkills?: string;
@@ -121,6 +122,7 @@ export interface SiteSettingsData {
   heroSecondaryCtaLink?: string;
   heroImageMain?: string | null;
   heroShowSocialBar?: boolean;
+  heroShowStats?: boolean;
   heroBadgeFloatingText?: string | null;
   heroBadgeFloatingIcon?: string | null;
   heroShowFloatingBadge?: boolean;

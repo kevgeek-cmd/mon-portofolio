@@ -21,6 +21,7 @@ export default function AdminSettingsPage() {
 
     // Hero
     heroBadgeText: '',
+    heroShowBadge: true,
     heroTitle: '',
     heroSubtitle: '',
     heroSkills: '',
@@ -31,6 +32,7 @@ export default function AdminSettingsPage() {
     heroSecondaryCtaLink: '',
     heroImageMain: '',
     heroShowSocialBar: true,
+    heroShowStats: true,
     heroBadgeFloatingText: 'AI & PRODUCT CRAFT',
     heroBadgeFloatingIcon: 'auto_awesome',
     heroShowFloatingBadge: true,
@@ -151,6 +153,7 @@ export default function AdminSettingsPage() {
           headerCtaLink: data.settings.headerCtaLink || '#contact',
 
           heroBadgeText: data.settings.heroBadgeText || '',
+          heroShowBadge: data.settings.heroShowBadge !== false,
           heroTitle: data.settings.heroTitle || '',
           heroSubtitle: data.settings.heroSubtitle || '',
           heroSkills: data.settings.heroSkills || '',
@@ -161,6 +164,7 @@ export default function AdminSettingsPage() {
           heroSecondaryCtaLink: data.settings.heroSecondaryCtaLink || '',
           heroImageMain: data.settings.heroImageMain || '',
           heroShowSocialBar: data.settings.heroShowSocialBar !== false,
+          heroShowStats: data.settings.heroShowStats !== false,
           heroBadgeFloatingText: data.settings.heroBadgeFloatingText ?? 'AI & PRODUCT CRAFT',
           heroBadgeFloatingIcon: data.settings.heroBadgeFloatingIcon || 'auto_awesome',
           heroShowFloatingBadge: data.settings.heroShowFloatingBadge !== false,
@@ -201,14 +205,14 @@ export default function AdminSettingsPage() {
           aboutValue4Title: data.settings.aboutValue4Title || '',
           aboutValue4Desc: data.settings.aboutValue4Desc || '',
 
-          statProjects: data.settings.statProjects || 30,
-          statLabelProjects: data.settings.statLabelProjects || '',
-          statClients: data.settings.statClients || 15,
-          statLabelClients: data.settings.statLabelClients || '',
-          statExperience: data.settings.statExperience || 3,
-          statLabelExperience: data.settings.statLabelExperience || '',
-          statPassion: data.settings.statPassion || 100,
-          statLabelPassion: data.settings.statLabelPassion || '',
+          statProjects: data.settings.statProjects ?? 30,
+          statLabelProjects: data.settings.statLabelProjects || 'Projets réalisés',
+          statClients: data.settings.statClients ?? 15,
+          statLabelClients: data.settings.statLabelClients || 'Clients satisfaits',
+          statExperience: data.settings.statExperience ?? 3,
+          statLabelExperience: data.settings.statLabelExperience || "Années d'expérience",
+          statPassion: data.settings.statPassion ?? 100,
+          statLabelPassion: data.settings.statLabelPassion || 'Passionné',
 
           expertiseSectionTitle: data.settings.expertiseSectionTitle || '',
           projectsSectionTitle: data.settings.projectsSectionTitle || '',
@@ -554,18 +558,44 @@ export default function AdminSettingsPage() {
               Contenu de la Section Hero (Bannière d'Accueil)
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Badge Supérieur
+            {/* Badge Supérieur (Disponible pour de nouveaux projets) */}
+            <div className="p-5 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                    Badge Supérieur de Disponibilité (Au-dessus du Titre)
+                  </label>
+                  <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                    Pastille verte clignotante avec statut de disponibilité.
+                  </p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.heroShowBadge}
+                    onChange={(e) => setSettings({ ...settings, heroShowBadge: e.target.checked })}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
                 </label>
-                <input
-                  type="text"
-                  value={settings.heroBadgeText}
-                  onChange={(e) => setSettings({ ...settings, heroBadgeText: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
               </div>
+              {settings.heroShowBadge && (
+                <div>
+                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                    Texte du Badge
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.heroBadgeText}
+                    onChange={(e) => setSettings({ ...settings, heroBadgeText: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                    placeholder="Ex: DISPONIBLE POUR DE NOUVEAUX PROJETS"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
                   Titre Principal (Hero)
@@ -577,30 +607,29 @@ export default function AdminSettingsPage() {
                   className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
                 />
               </div>
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Compétences (sous-titre orange)
+                </label>
+                <input
+                  type="text"
+                  placeholder="COMMUNICATION DIGITALE, DESIGN, IA..."
+                  value={settings.heroSkills}
+                  onChange={(e) => setSettings({ ...settings, heroSkills: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Sous-titre / Description (Hero)
+                Texte Narratif / Description (Hero)
               </label>
               <textarea
                 rows={3}
                 value={settings.heroSubtitle}
                 onChange={(e) => setSettings({ ...settings, heroSubtitle: e.target.value })}
                 className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Compétences (séparées par des virgules)
-              </label>
-              <input
-                type="text"
-                placeholder="Communication, Design, IA, Développement..."
-                value={settings.heroSkills}
-                onChange={(e) => setSettings({ ...settings, heroSkills: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
               />
             </div>
 
@@ -630,6 +659,110 @@ export default function AdminSettingsPage() {
                     <input type="text" value={settings.heroSecondaryCtaLink} onChange={e => setSettings({...settings, heroSecondaryCtaLink: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Statistiques / Métriques du Bas du Hero */}
+            <div className="pt-4 border-t border-brand-gold/20 space-y-4">
+              <div className="p-5 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Bloc des 3 Statistiques / Métriques (Bas du Hero)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Affiche les 3 indicateurs chiffrés sous les boutons d'action (ex: 30+ Projets, 3+ Années, 100% Passionné).
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.heroShowStats}
+                      onChange={(e) => setSettings({ ...settings, heroShowStats: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+
+                {settings.heroShowStats && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-white/5">
+                    {/* Stat 1 */}
+                    <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-3">
+                      <span className="text-[11px] font-mono text-[#FF7A00] font-bold uppercase block">Métrique 1</span>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Nombre / Valeur</label>
+                        <input
+                          type="number"
+                          value={settings.statProjects}
+                          onChange={(e) => setSettings({ ...settings, statProjects: parseInt(e.target.value) || 0 })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="30"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Libellé</label>
+                        <input
+                          type="text"
+                          value={settings.statLabelProjects}
+                          onChange={(e) => setSettings({ ...settings, statLabelProjects: e.target.value })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="Projets réalisés"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Stat 2 */}
+                    <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-3">
+                      <span className="text-[11px] font-mono text-[#FF7A00] font-bold uppercase block">Métrique 2</span>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Nombre / Valeur</label>
+                        <input
+                          type="number"
+                          value={settings.statExperience}
+                          onChange={(e) => setSettings({ ...settings, statExperience: parseInt(e.target.value) || 0 })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="3"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Libellé</label>
+                        <input
+                          type="text"
+                          value={settings.statLabelExperience}
+                          onChange={(e) => setSettings({ ...settings, statLabelExperience: e.target.value })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="Années d'expérience"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Stat 3 */}
+                    <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-3">
+                      <span className="text-[11px] font-mono text-[#FF7A00] font-bold uppercase block">Métrique 3</span>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Pourcentage (%)</label>
+                        <input
+                          type="number"
+                          value={settings.statPassion}
+                          onChange={(e) => setSettings({ ...settings, statPassion: parseInt(e.target.value) || 0 })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="100"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Libellé</label>
+                        <input
+                          type="text"
+                          value={settings.statLabelPassion}
+                          onChange={(e) => setSettings({ ...settings, statLabelPassion: e.target.value })}
+                          className="w-full p-2.5 rounded-lg bg-brand-dark border border-brand-gold/20 text-sm text-white"
+                          placeholder="Passionné"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -4,9 +4,33 @@ Report Summary
 ┌───────────────────┬──────┬─────────────────┬─────────┐
 │      Target       │ Type │ Vulnerabilities │ Secrets │
 ├───────────────────┼──────┼─────────────────┼─────────┤
-│ package-lock.json │ npm  │        0        │    -    │
+│ package-lock.json │ npm  │        4        │    -    │
 └───────────────────┴──────┴─────────────────┴─────────┘
 Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
 
+
+package-lock.json (npm)
+=======================
+Total: 4 (HIGH: 2, CRITICAL: 2)
+
+┌──────────────┬─────────────────────┬──────────┬────────┬───────────────────┬─────────────────┬────────────────────────────────────────────────────────────┐
+│   Library    │    Vulnerability    │ Severity │ Status │ Installed Version │  Fixed Version  │                           Title                            │
+├──────────────┼─────────────────────┼──────────┼────────┼───────────────────┼─────────────────┼────────────────────────────────────────────────────────────┤
+│ @tiptap/core │ GHSA-j95f-988m-3j2f │ HIGH     │ fixed  │ 3.29.2            │ 3.30.5          │ Tiptap: Quadratic ReDoS in block and inline Markdown       │
+│              │                     │          │        │                   │                 │ attribute parsing                                          │
+│              │                     │          │        │                   │                 │ https://github.com/advisories/GHSA-j95f-988m-3j2f          │
+├──────────────┼─────────────────────┼──────────┤        ├───────────────────┼─────────────────┼────────────────────────────────────────────────────────────┤
+│ next         │ CVE-2026-75604      │ CRITICAL │        │ 16.3.1            │ 15.5.24, 16.3.3 │ Next.js: Unauthenticated Remote Code Execution on          │
+│              │                     │          │        │                   │                 │ windows-hosted servers                                     │
+│              │                     │          │        │                   │                 │ https://avd.aquasec.com/nvd/cve-2026-75604                 │
+│              ├─────────────────────┤          │        │                   │                 ├────────────────────────────────────────────────────────────┤
+│              │ GHSA-2xp9-vwfh-vxw4 │          │        │                   │                 │ Next.js: Unauthenticated Remote Code Execution in Image    │
+│              │                     │          │        │                   │                 │ Optimization API when AVIF files...                        │
+│              │                     │          │        │                   │                 │ https://github.com/advisories/GHSA-2xp9-vwfh-vxw4          │
+├──────────────┼─────────────────────┼──────────┤        ├───────────────────┼─────────────────┼────────────────────────────────────────────────────────────┤
+│ sharp        │ GHSA-rgj7-g3m4-5g8c │ HIGH     │        │ 0.35.3            │ 0.35.4          │ sharp: Vulnerabilities in libheif: GHSA-g89c-p67h-r497 and │
+│              │                     │          │        │                   │                 │ GHSA-2jg2-4ch7-h545                                        │
+│              │                     │          │        │                   │                 │ https://github.com/advisories/GHSA-rgj7-g3m4-5g8c          │
+└──────────────┴─────────────────────┴──────────┴────────┴───────────────────┴─────────────────┴────────────────────────────────────────────────────────────┘
