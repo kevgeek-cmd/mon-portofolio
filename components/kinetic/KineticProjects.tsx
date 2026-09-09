@@ -77,7 +77,7 @@ export default function KineticProjects({ onSelectView, projects }: KineticProje
   });
 
   return (
-    <section className="w-full h-full flex flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between">
+    <section className="w-full h-full flex flex-col px-4 sm:px-10 lg:px-16 py-6 sm:py-8 overflow-y-auto custom-scroll justify-between">
       
       {/* Header with Interactive Filter Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-5 shrink-0 gap-4">

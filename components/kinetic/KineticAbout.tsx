@@ -16,7 +16,7 @@ export default function KineticAbout({ onSelectView, settings }: KineticAboutPro
   const topTag = settings?.aboutLocation1 || "Design suisse • Next.js fullstack • Architectures IA";
 
   return (
-    <section className="w-full h-full flex flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between">
+    <section className="w-full h-full flex flex-col px-4 sm:px-10 lg:px-16 py-6 sm:py-8 overflow-y-auto custom-scroll justify-between">
       
       {/* Header Strip */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/5 pb-4 mb-6 shrink-0">

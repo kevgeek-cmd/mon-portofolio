@@ -22,7 +22,7 @@ export default function KineticContact({ settings }: KineticContactProps) {
   };
 
   return (
-    <section className="w-full h-full flex flex-col px-6 sm:px-12 lg:px-16 py-8 overflow-y-auto custom-scroll justify-between">
+    <section className="w-full h-full flex flex-col px-4 sm:px-10 lg:px-16 py-6 sm:py-8 overflow-y-auto custom-scroll justify-between">
       
       {/* Central Card Container */}
       <div className="max-w-3xl w-full mx-auto my-auto flex flex-col items-center text-center">

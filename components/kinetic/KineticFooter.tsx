@@ -16,18 +16,18 @@ export default function KineticFooter({ onSelectView, settings }: KineticFooterP
   const statusText = settings?.footerStatusText || 'Available worldwide';
 
   return (
-    <footer className="backdrop-blur-md bg-black/40 border-t border-white/5 px-4 sm:px-8 py-3 flex items-center justify-between gap-4 shrink-0 z-40 text-[11px] font-mono select-none">
-      <div className="flex items-center flex-wrap gap-2.5 text-zinc-400">
+    <footer className="backdrop-blur-md bg-black/40 border-t border-white/5 px-3 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 shrink-0 z-40 text-[10px] sm:text-[11px] font-mono select-none">
+      <div className="flex items-center flex-wrap gap-2 text-zinc-400">
         {showStatus && (
           <>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               <span className="text-zinc-300 font-medium">{statusText}</span>
             </span>
-            <span className="text-white/20">•</span>
+            <span className="text-white/20 hidden xs:inline">•</span>
           </>
         )}
-        <span>© {year} {name} — {settings?.footerTagline || 'Product Builder & AI Designer'}</span>
+        <span className="truncate">© {year} {name} — {settings?.footerTagline || 'Product Builder & AI Designer'}</span>
       </div>
     </footer>
   );
