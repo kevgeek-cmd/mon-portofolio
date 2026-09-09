@@ -659,309 +659,217 @@ export default function AdminSettingsPage() {
 
         {/* Tab 3: About & 4 Values */}
         {activeTab === 'about' && (
-          <div className="p-8 rounded-3xl bg-brand-darkCard border border-brand-gold/25 shadow-2xl space-y-6">
-            <h3 className="text-lg font-bold text-brand-gold flex items-center gap-2 pb-3 border-b border-brand-gold/15">
-              <Info className="w-5 h-5" />
-              Contenu de la Section À Propos & Valeurs Clés
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Badge de la Section
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutBadge}
-                  onChange={(e) => setSettings({ ...settings, aboutBadge: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  URL Image de Présentation
-                </label>
-                <ImageUploader
-                  value={settings.aboutImageUrl || ''}
-                  onChange={(url) => setSettings({ ...settings, aboutImageUrl: url })}
-                  placeholder="URL de l'image"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Localisation 1 (ex: Basé en Côte d'Ivoire)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutLocation1}
-                  onChange={(e) => setSettings({ ...settings, aboutLocation1: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Localisation 2 (ex: Disponible à distance)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutLocation2}
-                  onChange={(e) => setSettings({ ...settings, aboutLocation2: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Stack Technique / Tags Bento Grid (séparés par des virgules)
-              </label>
-              <input
-                type="text"
-                placeholder="Figma Maestro, Design Systems Tokens, Next.js & Tailwind, LLM & Agents"
-                value={settings.aboutStackTags || ''}
-                onChange={(e) => setSettings({ ...settings, aboutStackTags: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
-              <p className="text-[11px] text-brand-beige/60 mt-1">
-                Ces badges technologiques s'affichent sous forme de tags dorés dans la carte latérale du Bento Grid.
+          <div className="p-8 rounded-3xl bg-brand-darkCard border border-brand-gold/25 shadow-2xl space-y-8">
+            <div className="border-b border-brand-gold/15 pb-4">
+              <h3 className="text-lg font-bold text-brand-gold flex items-center gap-2">
+                <Info className="w-5 h-5" />
+                Contenu de la Vue « À Propos » (Manifeste & Vision)
+              </h3>
+              <p className="text-xs text-brand-beige/60 mt-1">
+                Personnalisez chaque bloc affiché sur la page À propos de votre portfolio.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Texte du Bouton (À propos)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutCtaText}
-                  onChange={(e) => setSettings({ ...settings, aboutCtaText: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Lien du Bouton
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutCtaLink}
-                  onChange={(e) => setSettings({ ...settings, aboutCtaLink: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Titre Général de la Section
-              </label>
-              <input
-                type="text"
-                value={settings.aboutTitle}
-                onChange={(e) => setSettings({ ...settings, aboutTitle: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Paragraphe Principal (Présentation de l'Entreprise)
-              </label>
-              <textarea
-                rows={3}
-                value={settings.aboutMainText}
-                onChange={(e) => setSettings({ ...settings, aboutMainText: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Paragraphe Secondaire (Mission & Vision)
-              </label>
-              <textarea
-                rows={3}
-                value={settings.aboutSubText}
-                onChange={(e) => setSettings({ ...settings, aboutSubText: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold resize-none"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Badge Statistique (ex: 100% ou 3)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutBadgeStat}
-                  onChange={(e) => setSettings({ ...settings, aboutBadgeStat: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Texte badge statistique (ex: d'expérience dans le digital)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutExperienceText}
-                  onChange={(e) => setSettings({ ...settings, aboutExperienceText: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                  Label Badge (ex: Excellence & Rigueur)
-                </label>
-                <input
-                  type="text"
-                  value={settings.aboutBadgeLabel}
-                  onChange={(e) => setSettings({ ...settings, aboutBadgeLabel: e.target.value })}
-                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-                />
-              </div>
-            </div>
-
-            {/* 4 Core Values */}
-            <div className="pt-4 border-t border-brand-gold/20">
-              <h4 className="text-sm font-bold text-white mb-4">Les 4 Piliers / Valeurs</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
-                  <span className="text-xs font-bold text-brand-gold">Valeur 1</span>
-                  <input
-                    type="text"
-                    placeholder="Icône (ex: Lightbulb)"
-                    value={settings.aboutValue1Icon}
-                    onChange={(e) => setSettings({ ...settings, aboutValue1Icon: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Titre"
-                    value={settings.aboutValue1Title}
-                    onChange={(e) => setSettings({ ...settings, aboutValue1Title: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <textarea
-                    rows={2}
-                    placeholder="Description"
-                    value={settings.aboutValue1Desc}
-                    onChange={(e) => setSettings({ ...settings, aboutValue1Desc: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
-                  />
-                </div>
-
-                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
-                  <span className="text-xs font-bold text-brand-gold">Valeur 2</span>
-                  <input
-                    type="text"
-                    placeholder="Icône (ex: Wrench)"
-                    value={settings.aboutValue2Icon}
-                    onChange={(e) => setSettings({ ...settings, aboutValue2Icon: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Titre"
-                    value={settings.aboutValue2Title}
-                    onChange={(e) => setSettings({ ...settings, aboutValue2Title: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <textarea
-                    rows={2}
-                    placeholder="Description"
-                    value={settings.aboutValue2Desc}
-                    onChange={(e) => setSettings({ ...settings, aboutValue2Desc: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
-                  />
-                </div>
-
-                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
-                  <span className="text-xs font-bold text-brand-gold">Valeur 3</span>
-                  <input
-                    type="text"
-                    placeholder="Icône (ex: TrendingUp)"
-                    value={settings.aboutValue3Icon}
-                    onChange={(e) => setSettings({ ...settings, aboutValue3Icon: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Titre"
-                    value={settings.aboutValue3Title}
-                    onChange={(e) => setSettings({ ...settings, aboutValue3Title: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <textarea
-                    rows={2}
-                    placeholder="Description"
-                    value={settings.aboutValue3Desc}
-                    onChange={(e) => setSettings({ ...settings, aboutValue3Desc: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
-                  />
-                </div>
-
-                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/15 space-y-3">
-                  <span className="text-xs font-bold text-brand-gold">Valeur 4</span>
-                  <input
-                    type="text"
-                    placeholder="Icône (ex: Sparkles)"
-                    value={settings.aboutValue4Icon}
-                    onChange={(e) => setSettings({ ...settings, aboutValue4Icon: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Titre"
-                    value={settings.aboutValue4Title}
-                    onChange={(e) => setSettings({ ...settings, aboutValue4Title: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
-                  />
-                  <textarea
-                    rows={2}
-                    placeholder="Description"
-                    value={settings.aboutValue4Desc}
-                    onChange={(e) => setSettings({ ...settings, aboutValue4Desc: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Section */}
-            <div className="pt-4 border-t border-brand-gold/20">
-              <h4 className="text-sm font-bold text-white mb-4">Statistiques du Bannière (Compteurs)</h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* 1. En-tête de la page */}
+            <div className="p-6 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+              <span className="text-xs font-mono uppercase font-bold text-[#FF7A00] tracking-wider block">
+                1. En-tête de la Section
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Projets Réalisés</label>
-                  <input type="number" value={settings.statProjects} onChange={e => setSettings({...settings, statProjects: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Projets réalisés)</label>
-                  <input type="text" value={settings.statLabelProjects} onChange={e => setSettings({...settings, statLabelProjects: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                    Badge Supérieur (Haut Gauche)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: MANIFESTE & VISION"
+                    value={settings.aboutBadge}
+                    onChange={(e) => setSettings({ ...settings, aboutBadge: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Clients Satisfaits</label>
-                  <input type="number" value={settings.statClients} onChange={e => setSettings({...settings, statClients: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Clients satisfaits)</label>
-                  <input type="text" value={settings.statLabelClients} onChange={e => setSettings({...settings, statLabelClients: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+                  <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                    Tag / Spécialités (Haut Droite)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Basé en Côte d'Ivoire • Disponible à distance"
+                    value={settings.aboutLocation1}
+                    onChange={(e) => setSettings({ ...settings, aboutLocation1: e.target.value })}
+                    className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                  />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Années d'Expérience</label>
-                  <input type="number" value={settings.statExperience} onChange={e => setSettings({...settings, statExperience: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Années d'expérience)</label>
-                  <input type="text" value={settings.statLabelExperience} onChange={e => setSettings({...settings, statLabelExperience: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                  Grand Titre Principal de la Section
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ex: L'innovation et la performance au service de vos ambitions"
+                  value={settings.aboutTitle}
+                  onChange={(e) => setSettings({ ...settings, aboutTitle: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+            </div>
+
+            {/* 2. Carte Principale Gauche */}
+            <div className="p-6 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+              <span className="text-xs font-mono uppercase font-bold text-[#FF7A00] tracking-wider block">
+                2. Carte Principale de Gauche (Manifeste & Présentation)
+              </span>
+              <div>
+                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                  Titre / Accroche en gras de la carte
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ex: Artisanat numérique guidé par le sens, la rigueur et la performance."
+                  value={settings.aboutSubText}
+                  onChange={(e) => setSettings({ ...settings, aboutSubText: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                  Texte descriptif / Paragraphe de présentation
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Ex: Nous sommes une équipe d'experts dédiée à la conception d'outils numériques performants..."
+                  value={settings.aboutMainText}
+                  onChange={(e) => setSettings({ ...settings, aboutMainText: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">
+                  Stack de prédilection (Badges Bento, séparés par des virgules)
+                </label>
+                <input
+                  type="text"
+                  placeholder="Figma Maestro, Design Systems Tokens, Next.js & Tailwind, LLM & Agents"
+                  value={settings.aboutStackTags || ''}
+                  onChange={(e) => setSettings({ ...settings, aboutStackTags: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+            </div>
+
+            {/* 3. Les 4 Cartes de Valeurs */}
+            <div className="p-6 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+              <span className="text-xs font-mono uppercase font-bold text-[#FF7A00] tracking-wider block">
+                3. Les 4 Cartes de Valeurs & Piliers (01, 02, 03, 04)
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* 01 */}
+                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/20 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-mono text-[#FF7A00]">Pilier 01</span>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Titre</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Écoute & Conseil"
+                      value={settings.aboutValue1Title}
+                      onChange={(e) => setSettings({ ...settings, aboutValue1Title: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Description</label>
+                    <textarea
+                      rows={3}
+                      placeholder="Description du pilier 01..."
+                      value={settings.aboutValue1Desc}
+                      onChange={(e) => setSettings({ ...settings, aboutValue1Desc: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Passion (%)</label>
-                  <input type="number" value={settings.statPassion} onChange={e => setSettings({...settings, statPassion: parseInt(e.target.value) || 0})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white mb-2" />
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Texte (ex: Passion & Engagement)</label>
-                  <input type="text" value={settings.statLabelPassion} onChange={e => setSettings({...settings, statLabelPassion: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
+
+                {/* 02 */}
+                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/20 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-mono text-[#FF7A00]">Pilier 02</span>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Titre</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Qualité & Performance"
+                      value={settings.aboutValue2Title}
+                      onChange={(e) => setSettings({ ...settings, aboutValue2Title: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Description</label>
+                    <textarea
+                      rows={3}
+                      placeholder="Description du pilier 02..."
+                      value={settings.aboutValue2Desc}
+                      onChange={(e) => setSettings({ ...settings, aboutValue2Desc: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
+                    />
+                  </div>
+                </div>
+
+                {/* 03 */}
+                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/20 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-mono text-[#FF7A00]">Pilier 03</span>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Titre</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Innovation Continue"
+                      value={settings.aboutValue3Title}
+                      onChange={(e) => setSettings({ ...settings, aboutValue3Title: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Description</label>
+                    <textarea
+                      rows={3}
+                      placeholder="Description du pilier 03..."
+                      value={settings.aboutValue3Desc}
+                      onChange={(e) => setSettings({ ...settings, aboutValue3Desc: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
+                    />
+                  </div>
+                </div>
+
+                {/* 04 */}
+                <div className="p-4 rounded-xl bg-brand-dark border border-brand-gold/20 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold font-mono text-[#FF7A00]">Pilier 04</span>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Titre</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Engagement & Rigueur"
+                      value={settings.aboutValue4Title}
+                      onChange={(e) => setSettings({ ...settings, aboutValue4Title: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-brand-beige/70 mb-1">Description</label>
+                    <textarea
+                      rows={3}
+                      placeholder="Description du pilier 04..."
+                      value={settings.aboutValue4Desc}
+                      onChange={(e) => setSettings({ ...settings, aboutValue4Desc: e.target.value })}
+                      className="w-full p-2.5 rounded-lg bg-brand-darkCard border border-brand-gold/20 text-xs text-white resize-none"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
