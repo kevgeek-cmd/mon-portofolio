@@ -292,6 +292,10 @@ model Settings {
   heroSecondaryCtaText String @default("Me contacter")
   heroSecondaryCtaLink String @default("#contact")
   heroImageMain       String?
+  heroShowSocialBar   Boolean @default(true)
+  heroBadgeFloatingText String? @default("AI & PRODUCT CRAFT")
+  heroBadgeFloatingIcon String? @default("auto_awesome")
+  heroShowFloatingBadge Boolean @default(true)
   heroWidget1Icon     String  @default("🎬")
   heroWidget1Title    String  @default("Montage Vidéo")
   heroWidget1Subtitle String  @default("Premiere Pro, After Effects")
@@ -365,8 +369,12 @@ model Settings {
   mapEmbedUrl    String?  @default("")
 
   // Footer & General
-  footerTagline  String   @default("Concepteur de solutions digitales d'excellence.")
-  copyrightText  String   @default("© 2026 Votre Entreprise. Tous droits réservés.")
+  footerTagline      String   @default("Concepteur de solutions digitales d'excellence.")
+  copyrightText      String   @default("© 2026 Votre Entreprise. Tous droits réservés.")
+  footerStatusText   String?  @default("Available worldwide")
+  footerShowStatus   Boolean  @default(true)
+  footerShowSocials  Boolean  @default(true)
+  footerShowMentions Boolean  @default(true)
 
   // Colors & Theme
   primaryColor   String   @default("#FF7A00")

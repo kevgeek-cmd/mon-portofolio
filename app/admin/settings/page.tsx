@@ -30,6 +30,10 @@ export default function AdminSettingsPage() {
     heroSecondaryCtaText: '',
     heroSecondaryCtaLink: '',
     heroImageMain: '',
+    heroShowSocialBar: true,
+    heroBadgeFloatingText: 'AI & PRODUCT CRAFT',
+    heroBadgeFloatingIcon: 'auto_awesome',
+    heroShowFloatingBadge: true,
     heroWidget1Icon: '',
     heroWidget1Title: '',
     heroWidget1Subtitle: '',
@@ -104,6 +108,10 @@ export default function AdminSettingsPage() {
     // Footer
     footerTagline: '',
     copyrightText: '',
+    footerStatusText: 'Available worldwide',
+    footerShowStatus: true,
+    footerShowSocials: true,
+    footerShowMentions: true,
 
     // Theme & Menu
     primaryColor: '#FF7A00',
@@ -152,6 +160,10 @@ export default function AdminSettingsPage() {
           heroSecondaryCtaText: data.settings.heroSecondaryCtaText || '',
           heroSecondaryCtaLink: data.settings.heroSecondaryCtaLink || '',
           heroImageMain: data.settings.heroImageMain || '',
+          heroShowSocialBar: data.settings.heroShowSocialBar !== false,
+          heroBadgeFloatingText: data.settings.heroBadgeFloatingText ?? 'AI & PRODUCT CRAFT',
+          heroBadgeFloatingIcon: data.settings.heroBadgeFloatingIcon || 'auto_awesome',
+          heroShowFloatingBadge: data.settings.heroShowFloatingBadge !== false,
           heroWidget1Icon: data.settings.heroWidget1Icon || '',
           heroWidget1Title: data.settings.heroWidget1Title || '',
           heroWidget1Subtitle: data.settings.heroWidget1Subtitle || '',
@@ -220,6 +232,10 @@ export default function AdminSettingsPage() {
 
           footerTagline: data.settings.footerTagline || '',
           copyrightText: data.settings.copyrightText || '',
+          footerStatusText: data.settings.footerStatusText ?? 'Available worldwide',
+          footerShowStatus: data.settings.footerShowStatus !== false,
+          footerShowSocials: data.settings.footerShowSocials !== false,
+          footerShowMentions: data.settings.footerShowMentions !== false,
 
           primaryColor: data.settings.primaryColor || '#FF7A00',
           darkBgColor: data.settings.darkBgColor || '#090909',
@@ -617,41 +633,96 @@ export default function AdminSettingsPage() {
               </div>
             </div>
 
+            {/* Barre Latérale Sociale & Capsule Flottante Photo */}
+            <div className="pt-4 border-t border-brand-gold/20 space-y-6">
+              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#FF7A00]" />
+                Barre Latérale Gauche & Capsule sur la Photo
+              </h4>
+
+              <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Barre Verticale d'Icônes Réseaux Sociaux (Gauche)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Affiche les bulles d'icônes circulaires à gauche de l'écran (gérées dans le menu Pages Sociales).
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.heroShowSocialBar}
+                      onChange={(e) => setSettings({ ...settings, heroShowSocialBar: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-white/5">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Capsule Flottante sur la Photo (Bas Droite du Portrait)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Badge lumineux affiché sur votre photo de profil.
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.heroShowFloatingBadge}
+                      onChange={(e) => setSettings({ ...settings, heroShowFloatingBadge: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+
+                {settings.heroShowFloatingBadge && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <div>
+                      <label className="block text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-2">
+                        Texte de la Capsule
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: AI & PRODUCT CRAFT"
+                        value={settings.heroBadgeFloatingText || ''}
+                        onChange={(e) => setSettings({ ...settings, heroBadgeFloatingText: e.target.value })}
+                        className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-2">
+                        Icône (Material Symbols, ex: auto_awesome, code, bolt, psychology)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: auto_awesome"
+                        value={settings.heroBadgeFloatingIcon || ''}
+                        onChange={(e) => setSettings({ ...settings, heroBadgeFloatingIcon: e.target.value })}
+                        className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="pt-4 border-t border-brand-gold/20">
-              <h4 className="text-sm font-bold text-white mb-4">Widgets & Images</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Image Principale (Toi)</label>
-                  <ImageUploader
-                    value={settings.heroImageMain || ''}
-                    onChange={(url) => setSettings({ ...settings, heroImageMain: url })}
-                    placeholder="/images/hero-main.png"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Icône Widget Vidéo (ex: 🎬)</label>
-                  <input type="text" value={settings.heroWidget1Icon} onChange={e => setSettings({...settings, heroWidget1Icon: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Widget Vidéo</label>
-                  <input type="text" value={settings.heroWidget1Title} onChange={e => setSettings({...settings, heroWidget1Title: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Widget Vidéo</label>
-                  <input type="text" value={settings.heroWidget1Subtitle} onChange={e => setSettings({...settings, heroWidget1Subtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Titre Widget Croissance</label>
-                  <input type="text" value={settings.heroWidget2Title} onChange={e => setSettings({...settings, heroWidget2Title: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Valeur Widget Croissance (+125%)</label>
-                  <input type="text" value={settings.heroWidget2Value} onChange={e => setSettings({...settings, heroWidget2Value: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Sous-titre Widget Croissance</label>
-                  <input type="text" value={settings.heroWidget2Subtitle} onChange={e => setSettings({...settings, heroWidget2Subtitle: e.target.value})} className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white" />
-                </div>
+              <h4 className="text-sm font-bold text-white mb-4">Photo Principale de Profil</h4>
+              <div className="max-w-md">
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">Image Principale (Portrait Hero)</label>
+                <ImageUploader
+                  value={settings.heroImageMain || ''}
+                  onChange={(url) => setSettings({ ...settings, heroImageMain: url })}
+                  placeholder="/images/hero-main.png"
+                />
               </div>
             </div>
           </div>
@@ -1005,29 +1076,120 @@ export default function AdminSettingsPage() {
               Pied de page & Optimisation SEO
             </h3>
 
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Slogan du Footer
-              </label>
-              <input
-                type="text"
-                value={settings.footerTagline}
-                onChange={(e) => setSettings({ ...settings, footerTagline: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Slogan du Footer (ex: Product Builder & AI Designer)
+                </label>
+                <input
+                  type="text"
+                  value={settings.footerTagline}
+                  onChange={(e) => setSettings({ ...settings, footerTagline: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
+                  Texte Copyright
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ex: © 2026 Nexus Digital. Tous droits réservés."
+                  value={settings.copyrightText}
+                  onChange={(e) => setSettings({ ...settings, copyrightText: e.target.value })}
+                  className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-brand-gold uppercase tracking-wider mb-2">
-                Texte Copyright
-              </label>
-              <input
-                type="text"
-                placeholder="Ex: © 2026 Nexus Digital. Tous droits réservés."
-                value={settings.copyrightText}
-                onChange={(e) => setSettings({ ...settings, copyrightText: e.target.value })}
-                className="w-full p-3.5 rounded-xl bg-brand-dark border border-brand-gold/20 text-sm text-white focus:outline-none focus:border-brand-gold"
-              />
+            {/* Contrôles du Pied de Page / Footer */}
+            <div className="pt-4 border-t border-brand-gold/20 space-y-4">
+              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#FF7A00]" />
+                Visibilité des Éléments du Pied de Page (Footer)
+              </h4>
+
+              {/* 1. Statut de disponibilité (Bas Gauche) */}
+              <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Pastille Verte & Statut de Disponibilité (Bas Gauche)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Affiche le voyant vert et le texte de statut dans le footer.
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.footerShowStatus}
+                      onChange={(e) => setSettings({ ...settings, footerShowStatus: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+
+                {settings.footerShowStatus && (
+                  <div className="pt-2">
+                    <label className="block text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-2">
+                      Texte du Statut
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Available worldwide"
+                      value={settings.footerStatusText || ''}
+                      onChange={(e) => setSettings({ ...settings, footerStatusText: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-brand-dark border border-brand-gold/20 text-xs text-white focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* 2. Liens Réseaux Sociaux & Mentions (Bas Droite) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Liens Réseaux Sociaux (Bas Droite)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Twitter / X, LinkedIn, GitHub, Email...
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.footerShowSocials}
+                      onChange={(e) => setSettings({ ...settings, footerShowSocials: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-brand-dark/60 border border-brand-gold/15 flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-bold text-white uppercase tracking-wider block">
+                      Lien « Mentions » (Bas Droite)
+                    </label>
+                    <p className="text-[11px] text-brand-beige/60 mt-0.5">
+                      Bouton d'accès aux mentions & contact.
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.footerShowMentions}
+                      onChange={(e) => setSettings({ ...settings, footerShowMentions: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FF7A00]"></div>
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div className="pt-4 border-t border-brand-gold/20 space-y-4">

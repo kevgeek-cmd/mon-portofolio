@@ -23,43 +23,54 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
   return (
     <section className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-12 lg:px-16 py-6 lg:py-0 relative overflow-y-auto lg:overflow-hidden custom-scroll">
       
-      {/* Social Vertical Bar */}
-      <aside className="hidden xl:flex flex-col items-center gap-3 absolute left-6 top-1/2 -translate-y-1/2 z-20">
-        <a 
-          href={socialLinks?.find(s => s.platform.toLowerCase().includes('linkedin'))?.url || "https://linkedin.com"} 
-          target="_blank" 
-          rel="noreferrer"
-          aria-label="LinkedIn" 
-          className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-        >
-          <span className="material-symbols-outlined text-[17px]">work</span>
-        </a>
-        <a 
-          href={socialLinks?.find(s => s.platform.toLowerCase().includes('github'))?.url || "https://github.com"} 
-          target="_blank" 
-          rel="noreferrer"
-          aria-label="GitHub" 
-          className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-        >
-          <span className="material-symbols-outlined text-[17px]">code</span>
-        </a>
-        <a 
-          href={socialLinks?.find(s => s.platform.toLowerCase().includes('twitter') || s.platform.toLowerCase().includes('x'))?.url || "https://twitter.com"} 
-          target="_blank" 
-          rel="noreferrer"
-          aria-label="X / Twitter" 
-          className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-        >
-          <span className="material-symbols-outlined text-[17px]">sports_volleyball</span>
-        </a>
-        <a 
-          href={`mailto:${settings?.companyEmail || 'contact@kevinassamoi.com'}`}
-          aria-label="Email" 
-          className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
-        >
-          <span className="material-symbols-outlined text-[17px]">mail</span>
-        </a>
-      </aside>
+      {/* Social Vertical Bar (Dynamic & Toggleable from CMS) */}
+      {settings?.heroShowSocialBar !== false && (
+        (() => {
+          const activeSocials = (socialLinks || []).filter(s => s.isActive);
+          if (activeSocials.length === 0 && !settings?.companyEmail) return null;
+
+          const getPlatformIcon = (platform: string) => {
+            const p = platform.toLowerCase();
+            if (p.includes('linkedin')) return 'work';
+            if (p.includes('github')) return 'code';
+            if (p.includes('twitter') || p.includes('x')) return 'sports_volleyball';
+            if (p.includes('youtube')) return 'smart_display';
+            if (p.includes('instagram') || p.includes('tiktok')) return 'photo_camera';
+            if (p.includes('facebook')) return 'groups';
+            return 'link';
+          };
+
+          return (
+            <aside className="hidden xl:flex flex-col items-center gap-3 absolute left-6 top-1/2 -translate-y-1/2 z-20">
+              {activeSocials.map((social) => (
+                <a
+                  key={social.id || social.platform}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.platform}
+                  className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
+                  title={social.platform}
+                >
+                  <span className="material-symbols-outlined text-[17px]">
+                    {getPlatformIcon(social.platform)}
+                  </span>
+                </a>
+              ))}
+              {settings?.companyEmail && (
+                <a
+                  href={`mailto:${settings.companyEmail}`}
+                  aria-label="Email"
+                  className="w-9 h-9 rounded-full bg-white/5 border border-white/5 hover:border-[#FF7A00]/40 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/10 transition-all"
+                  title="Envoyer un email"
+                >
+                  <span className="material-symbols-outlined text-[17px]">mail</span>
+                </a>
+              )}
+            </aside>
+          );
+        })()
+      )}
 
       {/* Left Column: Portrait with Cinematic Backlight */}
       <div className="w-full lg:w-1/2 h-full flex items-center justify-center relative pt-4 lg:pt-0">
@@ -78,13 +89,17 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0D0D0D] via-transparent to-transparent opacity-85 z-10 pointer-events-none" />
           <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 z-10 pointer-events-none" />
           
-          {/* Micro Floating Credential Capsule */}
-          <div className="absolute bottom-6 right-5 z-20 hidden sm:flex items-center gap-2 bg-[#121212]/90 border border-white/10 backdrop-blur-xl px-3.5 py-1.5 rounded-full shadow-xl">
-            <span className="material-symbols-outlined text-[#FF7A00] text-sm">auto_awesome</span>
-            <span className="font-mono text-[10px] text-white uppercase tracking-wider font-semibold">
-              AI &amp; Product Craft
-            </span>
-          </div>
+          {/* Micro Floating Credential Capsule (Customizable / Removable from CMS) */}
+          {settings?.heroShowFloatingBadge !== false && Boolean(settings?.heroBadgeFloatingText?.trim()) && (
+            <div className="absolute bottom-6 right-5 z-20 hidden sm:flex items-center gap-2 bg-[#121212]/90 border border-white/10 backdrop-blur-xl px-3.5 py-1.5 rounded-full shadow-xl">
+              <span className="material-symbols-outlined text-[#FF7A00] text-sm">
+                {settings?.heroBadgeFloatingIcon || 'auto_awesome'}
+              </span>
+              <span className="font-mono text-[10px] text-white uppercase tracking-wider font-semibold">
+                {settings?.heroBadgeFloatingText || 'AI & Product Craft'}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

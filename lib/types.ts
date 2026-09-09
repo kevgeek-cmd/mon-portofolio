@@ -120,6 +120,10 @@ export interface SiteSettingsData {
   heroSecondaryCtaText?: string;
   heroSecondaryCtaLink?: string;
   heroImageMain?: string | null;
+  heroShowSocialBar?: boolean;
+  heroBadgeFloatingText?: string | null;
+  heroBadgeFloatingIcon?: string | null;
+  heroShowFloatingBadge?: boolean;
   heroWidget1Icon?: string;
   heroWidget1Title?: string;
   heroWidget1Subtitle?: string;
@@ -182,6 +186,10 @@ export interface SiteSettingsData {
   mapEmbedUrl?: string | null;
   footerTagline?: string;
   copyrightText?: string;
+  footerStatusText?: string | null;
+  footerShowStatus?: boolean;
+  footerShowSocials?: boolean;
+  footerShowMentions?: boolean;
   primaryColor?: string;
   darkBgColor?: string;
   beigeBgColor?: string;
