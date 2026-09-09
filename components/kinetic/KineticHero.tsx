@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { SiteSettingsData, SocialLinkItem } from '@/lib/types';
+import { SocialIcon } from '@/components/ui/SocialIcons';
 
 interface KineticHeroProps {
   onSelectView: (view: string) => void;
@@ -23,34 +24,14 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
   return (
     <section className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-12 lg:px-16 py-6 lg:py-0 relative overflow-y-auto lg:overflow-hidden custom-scroll">
       
-      {/* Social Vertical Bar (Dynamic & Toggleable from CMS) */}
+      {/* Social Vertical Dock (Dynamic & Toggleable from CMS) */}
       {settings?.heroShowSocialBar !== false && (
         (() => {
           const activeSocials = (socialLinks || []).filter(s => s.isActive);
           if (activeSocials.length === 0 && !settings?.companyEmail) return null;
 
-          const getPlatformIcon = (platform: string, customIcon?: string) => {
-            if (customIcon && customIcon.trim()) return customIcon;
-            const p = platform.toLowerCase();
-            if (p.includes('linkedin')) return 'work';
-            if (p.includes('github')) return 'code';
-            if (p.includes('twitter') || p.includes('x')) return 'sports_volleyball';
-            if (p.includes('youtube')) return 'smart_display';
-            if (p.includes('instagram') || p.includes('tiktok')) return 'photo_camera';
-            if (p.includes('facebook')) return 'groups';
-            if (p.includes('whatsapp')) return 'chat';
-            if (p.includes('discord')) return 'forum';
-            if (p.includes('telegram')) return 'send';
-            if (p.includes('figma')) return 'draw';
-            if (p.includes('dribbble')) return 'palette';
-            if (p.includes('behance')) return 'brush';
-            if (p.includes('spotify')) return 'headphones';
-            if (p.includes('twitch')) return 'videogame_asset';
-            return 'link';
-          };
-
           return (
-            <aside className="hidden xl:flex flex-col items-center gap-3.5 absolute left-6 top-1/2 -translate-y-1/2 z-30">
+            <aside className="hidden xl:flex flex-col items-center gap-2 absolute left-5 top-1/2 -translate-y-1/2 z-30 bg-[#121214]/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
               {activeSocials.map((social) => (
                 <div key={social.id || social.platform} className="relative group/social">
                   <a
@@ -58,14 +39,12 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.platform}
-                    className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-110 shadow-lg transition-all duration-300"
+                    className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/5 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-105 transition-all duration-200"
                   >
-                    <span className="material-symbols-outlined text-[18px]">
-                      {getPlatformIcon(social.platform, social.icon)}
-                    </span>
+                    <SocialIcon platform={social.platform} icon={social.icon} className="w-3.5 h-3.5 shrink-0" />
                   </a>
                   {/* Floating Tooltip */}
-                  <div className="absolute left-12 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-black/90 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-200 z-40 shadow-xl">
+                  <div className="absolute left-11 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md bg-zinc-900/95 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-150 z-50 shadow-2xl">
                     {social.platform}
                   </div>
                 </div>
@@ -76,11 +55,11 @@ export default function KineticHero({ onSelectView, settings, socialLinks }: Kin
                   <a
                     href={`mailto:${settings.companyEmail}`}
                     aria-label="Email"
-                    className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-110 shadow-lg transition-all duration-300"
+                    className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/5 hover:border-[#FF7A00]/60 flex items-center justify-center text-zinc-400 hover:text-[#FF7A00] hover:bg-[#FF7A00]/15 hover:scale-105 transition-all duration-200"
                   >
-                    <span className="material-symbols-outlined text-[18px]">mail</span>
+                    <SocialIcon platform="Email" icon="mail" className="w-3.5 h-3.5 shrink-0" />
                   </a>
-                  <div className="absolute left-12 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-black/90 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-200 z-40 shadow-xl">
+                  <div className="absolute left-11 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md bg-zinc-900/95 border border-white/10 text-[11px] font-mono font-medium text-white whitespace-nowrap opacity-0 pointer-events-none group-hover/social:opacity-100 group-hover/social:translate-x-1 transition-all duration-150 z-50 shadow-2xl">
                     Email Direct
                   </div>
                 </div>
